@@ -1,0 +1,30 @@
+{
+  "name": "brio",
+  "version": "1.0.0",
+  "description": "brio webserver",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/noise42/BRIO.git"
+  },
+  "keywords": [
+    "brio",
+    "RNA",
+    "secondary",
+    "structure"
+  ],
+  "author": "BioinfoX",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/noise42/BRIO/issues"
+  },
+  "homepage": "https://github.com/noise42/BRIO#readme",
+  "dependencies": {
+    "ejs": "^3.0.1",
+    "express": "^4.17.1"
+  }
+}
