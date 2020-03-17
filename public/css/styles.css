@@ -1,0 +1,16 @@
+/*styles.css*/
+
+fieldset.form-fieldset {
+
+	border : 2px solid #222222;
+	margin : 0 1%;
+	padding: 0 5%;
+	display: inline-block;
+}
+
+legend.form-fieldset {
+
+	width:inherit; /* Or auto */
+    padding:0 10px; /* To give a bit of padding on the left and right */
+    border-bottom:none;
+}

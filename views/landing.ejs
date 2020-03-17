@@ -1,12 +1,17 @@
+<!-- local CSS 
+  personal styles.css goes after bootstrap to avoid unwanted overrides -->
 <link rel="stylesheet" href="/css/bootstrap.min.css">
-<!--link rel="stylesheet" href="/styles.css"-->
+<link rel="stylesheet" href="/css/styles.css">
+
+<!-- js from CDN -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 
+<!-- body -->
 <h1>BRIO</h1>
-<!-- MENU -->
+<!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">BRIO</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,10 +23,10 @@
         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Documentation</a>
+        <a class="nav-link" href="/documentation">Documentation</a>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle" href="/downloads" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Downloads
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -30,7 +35,7 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">About</a>
+        <a class="nav-link" href="/about">About</a>
       </li>
     </ul>
   </div>
@@ -39,9 +44,10 @@
 
 
 <!-- INPUT FORM -->
+
 <div class="form-header">
   <% if (Object.keys(errors).length === 0) { %>
-    <h2>Input form</h2>
+    <h2>Input form (choose one)</h2>
   <% } else { %>
     <h2 class="errors-heading">Oops, please correct the following:</h2>
     <ul class="errors-list">
@@ -53,22 +59,46 @@
 </div>
 
 <form method="post" action="/" novalidate>
-  <div class="form-field <%= errors.message ? 'form-field-invalid' : '' %>" >
-    <label for="inputRNA">Input RNA</label>
-    <textarea class="input" id="inputRNA" name="inputRNA" autofocus><%= data.message %></textarea>
-    <% if (errors.message) { %>
-      <div class="error"><%= errors.message.msg %></div>
-    <% } %>
-  </div>
+  <fieldset class='form-fieldset'>
+    <legend class='form-fieldset'>Input your sequence(s)</legend>
+    <div class="form-field <%= errors.message ? 'form-field-invalid' : '' %>" >
+      <label for="inputRNA">Input RNA</label>
+      <textarea class="input" id="inputRNA" name="inputRNA" autofocus><%= data.message %></textarea>
+      <% if (errors.message) { %>
+        <div class="error"><%= errors.message.msg %></div>
+      <% } %>
+    </div>
 
-  <div class="form-field <%= errors.email ? 'form-field-invalid' : '' %>">
-    <label for="email">Email</label>
-    <input class="input" id="email" name="email" type="email" value="<%= data.email %>" />
-    <% if (errors.email) { %>
-      <div class="error"><%= errors.email.msg %></div>
-    <% } %>
-  </div>
-  <div class="form-actions">
-    <button class="btn" type="submit">Go!</button>
-  </div>
+    <div class="form-field <%= errors.email ? 'form-field-invalid' : '' %>">
+      <label for="email">Email</label>
+      <input class="input" id="email" name="email" type="email" value="<%= data.email %>" />
+      <% if (errors.email) { %>
+        <div class="error"><%= errors.email.msg %></div>
+      <% } %>
+    </div>
+    <div class="form-actions">
+      <button class="btn" type="submit">Go!</button>
+    </div>
+  </fieldset>
+    <fieldset class='form-fieldset'>
+    <legend class='form-fieldset'>Upload your sequence(s)</legend>
+    <div class="form-field <%= errors.message ? 'form-field-invalid' : '' %>" >
+      <label for="inputRNA">Input File</label>
+      <textarea class="input" id="inputRNA" name="inputRNA" autofocus><%= data.message %></textarea>
+      <% if (errors.message) { %>
+        <div class="error"><%= errors.message.msg %></div>
+      <% } %>
+    </div>
+
+    <div class="form-field <%= errors.email ? 'form-field-invalid' : '' %>">
+      <label for="email">Email</label>
+      <input class="input" id="email" name="email" type="email" value="<%= data.email %>" />
+      <% if (errors.email) { %>
+        <div class="error"><%= errors.email.msg %></div>
+      <% } %>
+    </div>
+    <div class="form-actions">
+      <button class="btn" type="submit">Go!</button>
+    </div>
+  </fieldset>
 </form>
