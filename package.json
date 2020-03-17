@@ -24,7 +24,9 @@
   },
   "homepage": "https://github.com/noise42/BRIO#readme",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "ejs": "^3.0.1",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "express-validator": "^6.4.0"
   }
 }

@@ -1,13 +1,33 @@
 <h1>BRIO</h1>
 
+<div class="form-header">
+  <% if (Object.keys(errors).length === 0) { %>
+    <h2>Send us a message</h2>
+  <% } else { %>
+    <h2 class="errors-heading">Oops, please correct the following:</h2>
+    <ul class="errors-list">
+      <% Object.values(errors).forEach(error => { %>
+        <li><%= error.msg %></li>
+      <% }) %>
+    </ul>
+  <% } %>
+</div>
+
 <form method="post" action="/" novalidate>
-  <div class="form-field">
+  <div class="form-field <%= errors.message ? 'form-field-invalid' : '' %>" >
     <label for="inputRNA">Input RNA</label>
-    <textarea class="input" id="inputRNA" name="inputRNA" autofocus></textarea>
+    <textarea class="input" id="inputRNA" name="inputRNA" autofocus><%= data.message %></textarea>
+    <% if (errors.message) { %>
+      <div class="error"><%= errors.message.msg %></div>
+    <% } %>
   </div>
-  <div class="form-field">
+
+  <div class="form-field <%= errors.email ? 'form-field-invalid' : '' %>">
     <label for="email">Email</label>
-    <input class="input" id="email" name="email" type="email" value="" />
+    <input class="input" id="email" name="email" type="email" value="<%= data.email %>" />
+    <% if (errors.email) { %>
+      <div class="error"><%= errors.email.msg %></div>
+    <% } %>
   </div>
   <div class="form-actions">
     <button class="btn" type="submit">Go!</button>
