@@ -58,47 +58,70 @@
   <% } %>
 </div>
 
-<form method="post" action="/" novalidate>
-  <fieldset class='form-fieldset'>
-    <legend class='form-fieldset'>Input your sequence(s)</legend>
-    <div class="form-field <%= errors.message ? 'form-field-invalid' : '' %>" >
-      <label for="inputRNA">Input RNA</label>
-      <textarea class="input" id="inputRNA" name="inputRNA" autofocus><%= data.message %></textarea>
-      <% if (errors.message) { %>
-        <div class="error"><%= errors.message.msg %></div>
-      <% } %>
-    </div>
 
-    <div class="form-field <%= errors.email ? 'form-field-invalid' : '' %>">
-      <label for="email">Email</label>
-      <input class="input" id="email" name="email" type="email" value="<%= data.email %>" />
-      <% if (errors.email) { %>
-        <div class="error"><%= errors.email.msg %></div>
-      <% } %>
-    </div>
-    <div class="form-actions">
-      <button class="btn" type="submit">Go!</button>
-    </div>
-  </fieldset>
+  <!--TEXT SEQUENCE-->
+<div class='form'>
+  <form method="post" action="/go/textInput" novalidate>
+
     <fieldset class='form-fieldset'>
-    <legend class='form-fieldset'>Upload your sequence(s)</legend>
-    <div class="form-field <%= errors.message ? 'form-field-invalid' : '' %>" >
-      <label for="inputRNA">Input File</label>
-      <textarea class="input" id="inputRNA" name="inputRNA" autofocus><%= data.message %></textarea>
-      <% if (errors.message) { %>
-        <div class="error"><%= errors.message.msg %></div>
-      <% } %>
-    </div>
+      <legend class='form-fieldset'>Input your sequence(s)</legend>
+      <div class="form-field <%= errors.message ? 'form-field-invalid' : '' %>" >
+        <label for="inputRNA">Input RNA</label>
+        <textarea class="input" id="inputRNA" name="inputRNA" autofocus><%= data.message %></textarea>
+        <% if (errors.message) { %>
+          <div class="error"><%= errors.message.msg %></div>
+        <% } %>
+      </div>
 
-    <div class="form-field <%= errors.email ? 'form-field-invalid' : '' %>">
-      <label for="email">Email</label>
-      <input class="input" id="email" name="email" type="email" value="<%= data.email %>" />
-      <% if (errors.email) { %>
-        <div class="error"><%= errors.email.msg %></div>
-      <% } %>
-    </div>
-    <div class="form-actions">
-      <button class="btn" type="submit">Go!</button>
-    </div>
-  </fieldset>
-</form>
+      <div class="form-field <%= errors.email ? 'form-field-invalid' : '' %>">
+        <label for="email">Email</label>
+        <input class="input" id="email" name="email" type="email" value="<%= data.email %>" />
+        <% if (errors.email) { %>
+          <div class="error"><%= errors.email.msg %></div>
+        <% } %>
+      </div>
+      <div class="form-actions">
+        <button class="btn" type="submit">Go!</button>
+      </div>
+    </fieldset>
+  </form>
+</div>
+  <!---->
+
+  <!--FILE UPLOAD-->
+<div class='form'>
+  <form method="post" action="/go/fileInput" novalidate>
+    <fieldset class='form-fieldset'>
+      <legend class='form-fieldset'>Upload your sequence(s)</legend>
+      <div class="form-field <%= errors.message ? 'form-field-invalid' : '' %>" >
+        
+        <!--input file-->
+        <label for="fileRNA">Input File</label>
+        <input type="file" class="input" id="fileRNA" name="fileRNA">
+        <% if (errors.message) { %>
+          <div class="error"><%= errors.message.msg %></div>
+        <% } %>
+        <br>
+        <!--background file?-->
+        <label for="fileBackground">Background File (optional)</label>
+        <input type="file" class="input" id="fileBackground" name="fileBackground">
+        <% if (errors.message) { %>
+          <div class="error"><%= errors.message.msg %></div>
+        <% } %>
+
+      </div>
+
+      <div class="form-field <%= errors.email ? 'form-field-invalid' : '' %>">
+        <label for="email">Email</label>
+        <input class="input" id="email" name="email" type="email" value="<%= data.email %>" />
+        <% if (errors.email) { %>
+          <div class="error"><%= errors.email.msg %></div>
+        <% } %>
+      </div>
+      <div class="form-actions">
+        <button class="btn" type="submit">Go!</button>
+      </div>
+    </fieldset>
+  </form>
+</div>
+  <!---->
