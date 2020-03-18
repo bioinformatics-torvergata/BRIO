@@ -1,12 +1,37 @@
-//routes.js
-
+// Require express module
 const express = require('express');
 
-const spawn = require("child_process").spawn;
+// Require useful stuff
+const router = express.Router();
+
+
+// Require controller modules
+var input_validation_controller = require('../controllers/inputValidationController')
+//var ciccia_controller = require('../controllers/cicciaController')
+//var output_controller = require('../controllers/outputController')
+
+
+// shortest nuc 3
+// shortest str 11
+const MIN_LEN_RNA_SEQ = 3
+
 
 const { check, validationResult, matchedData } = require('express-validator');
+const spawn = require("child_process").spawn;
 
-const router = express.Router();
+
+// if there is a file, then ...
+//     //check file
+// else
+//     check input_form
+//	   
+//	   if sequence --> check regular expression like [ACGUTacgut]+ and min length is the min motif length
+
+//	   if sequence + structure --> check regular expression like [ACGUTacgut]+ and [\(\)\.]+
+//	   if structure --> error, the sequence is mandatory with the structure
+
+
+//check email: IS IT MANDATORY? MAYBE ONLY WITH FILE?
 
 //POST request from input form
 /*
@@ -16,12 +41,18 @@ const router = express.Router();
 	get to loading
 	return output
 */
+
 router.post('/textInput',[
 
 	check('inputRNA')
-	.isLength({min:1})
-	.withMessage('There is a problem with your input')
-	.trim(), //sanitizers
+	.trim()
+	.escape()	// It removes HTML characters (ToDo: MAYBE IT IS PROBLEMATIC FOR THE STRUCTURE ALPHABET)
+	.isLength({ min: MIN_LEN_RNA_SEQ })
+	.withMessage('The RNA has to be at least ' + MIN_LEN_RNA_SEQ + ' ribonucleotides.')
+	//.matches([ACGUTacgut]+) 	// ToDo: we need a regular expression+
+	.isAlpha()
+	.withMessage('The RNA has to contain only valid ribonucleotides.'),
+
 
 	check('email')
 	.isEmail()
@@ -32,6 +63,8 @@ router.post('/textInput',[
 	*/
 	.trim()
 	.normalizeEmail()
+
+
 
 	], (req, res) => {
 		const errors = validationResult(req);
@@ -73,9 +106,6 @@ router.post('/textInput',[
 
 router.post('/fileInput',[
 
-	//check file
-
-	//check email
 	check('email')
 	.isEmail()
 	.withMessage('That email does not look right')
