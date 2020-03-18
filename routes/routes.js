@@ -1,6 +1,7 @@
 //routes.js
 
 const express = require('express');
+const spawn = require("child_process").spawn;
 
 const { check, validationResult, matchedData } = require('express-validator');
 
@@ -13,6 +14,14 @@ router.get('/', (req, res) => {
   });
 });
 
+//POST request from input form
+/*
+	validation - in test
+	sanitization - in test
+	run scripts - in test
+	get to loading
+	return output
+*/
 router.post('/',[
 
 	check('inputRNA')
@@ -36,6 +45,26 @@ router.post('/',[
 			data: req.body,
 			errors: errors.mapped()
 		});
+
+		//python script
+		//per come e' attualmente lo lancia comunque, 
+		//come si controlla se c'è un errore in maniera corretta?
+
+		const pythonProcess = spawn('python',["scripts/python.py", 
+			"abcdeFgH1", 
+			"fileProva.txt"
+			]);
+
+		pythonProcess.stdout.on('data',(data) => {
+			console.log('stdout: ' + data); //test stream python -> node
+		});
+		pythonProcess.stderr.on('data',(data) => {
+			console.error('stderr: ' + data); //test stream python -> node
+		});
+		pythonProcess.on('close', (code, signal) => {
+			console.log('process exited with code: '+code +
+			'\nsignal: ' + signal);
+		})
 
 		const data = matchedData(req);
 		console.log('Sanitized', data);

@@ -1,0 +1,4 @@
+results/**
+
+#to stage an empty folder
+!results/.gitkeep 
