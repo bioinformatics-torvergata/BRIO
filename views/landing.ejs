@@ -2,11 +2,13 @@
   personal styles.css goes after bootstrap to avoid unwanted overrides -->
 <link rel="stylesheet" href="/css/bootstrap.min.css">
 <link rel="stylesheet" href="/css/styles.css">
-
+<link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet"/>
 <!-- js from CDN -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.jquery.min.js"></script>
+
 
 
 <!-- body -->
@@ -80,6 +82,21 @@
           <div class="error"><%= errors.email.msg %></div>
         <% } %>
       </div>
+
+      <!-- FORM OPTIONS -->
+      <div class="form-options">
+
+          <select data-placeholder="Click here to filter..." multiple class="chosen-select" name="options">
+             <option value=""></option>
+             <option> Human (hg19)</option>
+             <option> Mouse (mm9)</option>
+             <option> PAR-CLIP</option>
+             <option> eCLIP</option>
+          </select>
+
+      </div>
+
+      <!-- ACTION -->
       <div class="form-actions">
         <button class="btn" type="submit">Go!</button>
       </div>
@@ -118,6 +135,22 @@
           <div class="error"><%= errors.email.msg %></div>
         <% } %>
       </div>
+
+
+      <!-- FORM OPTIONS -->
+      <div class="form-options">
+
+          <select data-placeholder="Click here to filter..." multiple class="chosen-select" name="options">
+             <option value=""></option>
+             <option> Human (hg19)</option>
+             <option> Mouse (mm9)</option>
+             <option> PAR-CLIP</option>
+             <option> eCLIP</option>
+          </select>
+
+      </div>
+
+      <!-- ACTION -->
       <div class="form-actions">
         <button class="btn" type="submit">Go!</button>
       </div>
@@ -125,3 +158,8 @@
   </form>
 </div>
   <!---->
+<script>
+  $(".chosen-select").chosen({
+  no_results_text: "Oops, nothing found!"
+})
+</script>
