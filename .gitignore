@@ -2,3 +2,10 @@ results/**
 
 #to stage an empty folder
 !results/.gitkeep 
+
+# editor beckup files
+*~
+
+# for MAC users...
+.DS_Store
+
