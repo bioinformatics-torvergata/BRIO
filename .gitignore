@@ -3,7 +3,7 @@ results/**
 #to stage an empty folder
 !results/.gitkeep 
 
-# editor beckup files
+# editor backup files
 *~
 
 # for MAC users...
