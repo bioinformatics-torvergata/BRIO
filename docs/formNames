@@ -1,0 +1,9 @@
+#formNames
+
+name	description	type
+
+inputRNA	textarea	string
+fileRNA	upload	file_handler
+backgroundRNA	upload_background	file_handler
+email 	email	string
+options	combobox	?	

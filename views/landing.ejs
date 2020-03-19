@@ -61,12 +61,13 @@
 </div>
 
 
-  <!--TEXT SEQUENCE-->
+  <!--INPUT-->
 <div class='form'>
-  <form method="post" action="/go/textInput" novalidate>
+  <form method="post" action="/go/fileInput" novalidate>
 
+    <!--TEXT-->
     <fieldset class='form-fieldset'>
-      <legend class='form-fieldset'>Input your sequence(s)</legend>
+      <legend class='form-fieldset'>Input your RNA(s)</legend>
       <div class="form-field <%= errors.message ? 'form-field-invalid' : '' %>" >
         <label for="inputRNA">Input RNA</label>
         <textarea class="input" id="inputRNA" name="inputRNA" autofocus><%= data.message %></textarea>
@@ -75,41 +76,8 @@
         <% } %>
       </div>
 
-      <div class="form-field <%= errors.email ? 'form-field-invalid' : '' %>">
-        <label for="email">Email</label>
-        <input class="input" id="email" name="email" type="email" value="<%= data.email %>" />
-        <% if (errors.email) { %>
-          <div class="error"><%= errors.email.msg %></div>
-        <% } %>
-      </div>
-
-      <!-- FORM OPTIONS -->
-      <div class="form-options">
-
-          <select data-placeholder="Click here to filter..." multiple class="chosen-select" name="options">
-             <option value=""></option>
-             <option> Human (hg19)</option>
-             <option> Mouse (mm9)</option>
-             <option> PAR-CLIP</option>
-             <option> eCLIP</option>
-          </select>
-
-      </div>
-
-      <!-- ACTION -->
-      <div class="form-actions">
-        <button class="btn" type="submit">Go!</button>
-      </div>
-    </fieldset>
-  </form>
-</div>
-  <!---->
-
-  <!--FILE UPLOAD-->
-<div class='form'>
-  <form method="post" action="/go/fileInput" novalidate>
-    <fieldset class='form-fieldset'>
-      <legend class='form-fieldset'>Upload your sequence(s)</legend>
+    <!--UPLOAD-->
+      <legend class='form-fieldset'>Upload your RNA(s)</legend>
       <div class="form-field <%= errors.message ? 'form-field-invalid' : '' %>" >
         
         <!--input file-->
@@ -152,7 +120,7 @@
 
       <!-- ACTION -->
       <div class="form-actions">
-        <button class="btn" type="submit">Go!</button>
+        <button class="btn btn-primary" type="submit">Go!</button>
       </div>
     </fieldset>
   </form>
