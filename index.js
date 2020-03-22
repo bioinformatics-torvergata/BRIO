@@ -1,12 +1,19 @@
 var express = require('express');
 var app = express();
+
+const path = require('path');
+
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
+const sanitizer = require('sanitize')(); //var name = sanitizer.value(req.name, 'string');
 
 const middlewares = [
   bodyParser.urlencoded({extended: true}),
   express.static('public'),
-  fileUpload(),
+  fileUpload(
+    //useTempFiles : true,
+    //tempFileDir : '/tmp/'
+  ),
 ];
 
 const routes = require('./routes/routes');

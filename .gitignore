@@ -9,3 +9,5 @@ results/**
 # for MAC users...
 .DS_Store
 
+# To avoid re-installable stuff
+/node_modules

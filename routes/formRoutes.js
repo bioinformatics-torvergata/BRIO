@@ -1,114 +1,64 @@
-// Require express module
+// Require modules
 const express = require('express');
 
-// Require useful stuff
-const router = express.Router();
-
-
-// Require controller modules
 var input_validation_controller = require('../controllers/inputValidationController')
 //var ciccia_controller = require('../controllers/cicciaController')
 //var output_controller = require('../controllers/outputController')
 
+// Useful stuff
+const router = express.Router();
 
-// shortest nuc 3
-// shortest str 11
+// shortest RNA sequence in the dataset: 3 nt
+// shortest RNA structure in the dataset: 11 nt
 const MIN_LEN_RNA_SEQ = 3
-
+const MAX_INPUT_SIZE = 50000 // bytes/characters
 
 const { body, validationResult, matchedData } = require('express-validator');
 const spawn = require("child_process").spawn;
 
-
-// if there is a file, then ...
-//     input_sequences <- file
-// else
-//     input_sequences <- textbox
-
-// each element in input_sequence.split('>'):
-// - len(element) == 2 or 3 (header + seq or header + seq + struct)
-// - element[1] --> check length >= MIN_LEN_RNA_SEQ and regular expression like [ACGUTacgut]+ 
-// - if exists element[2] --> len(element[2]) == len(element[1]) and regular expression like [\(\)\.]+
-// at least 1 valid element
-
-// response code 303 (See Other)
-
-//POST request from input form
-/*
-	validation - in test
-	sanitization - in test
-	run scripts - in test
-	get to loading
-	return output
-*/
-
-MAX_INPUT_SIZE = 50000 // bytes/characters
-
-const reg_exp_rna_molecule = new RegExp('^[ACGUTacgut]+$');
-const reg_exp_rna_secondary_structure = new RegExp('^[\(\)\.]+$');
-
 var valid_rnas_str = ''
+var not_valid_inputs_str = ''
+var not_valid_rna_molecules_str = ''
+var not_valid_secondary_structures_str = ''
 
-check_rna_sequences = function(value, {req}) {
-	if (value.length > MAX_INPUT_SIZE){
-		throw new Error('Input too big (' + value.length + ' characters, but the max is ' + MAX_INPUT_SIZE + ')');
+_check_rna_sequences = function(input_rna_sequences_str) {
+	if (input_rna_sequences_str.replace(/^>/, '').length == 0){
+		throw new Error('Input empty.');
+	}
+	if (input_rna_sequences_str.length > MAX_INPUT_SIZE){
+		throw new Error('Input too big (' + input_rna_sequences_str.length + ' characters, but the max is ' + MAX_INPUT_SIZE + ')');
 	}
 
-	valid_rnas_str = ''
-	var not_valid_inputs_str = ''
-	var not_valid_rna_molecules_str = ''
-	var not_valid_secondary_structures_str = ''
-
-	value.replace(/^>/, '').split('>').forEach(function(header_seq_struct) {
-		console.log('----')
+	// The '>' symbol will be re-added for each input RNA
+	input_rna_sequences_str.replace(/^>/, '').split('>').forEach(function(header_seq_struct) {
 		header_seq_struct_list = header_seq_struct.replace(/\n$/, '').split('\n').map(function(val, index){
 			return val.replace(/\r$/, '')
 		})
 
-		//console.log(header_seq_struct_list)
-		//console.log(rna_molecule.test(header_seq_struct_list[1]) + ' - ' + header_seq_struct_list[1])
-
+		// (header + rna_seq) or (header + rna_seq + rna_sec_struct)
 		if (header_seq_struct_list.length != 2 && header_seq_struct_list.length != 3){
 			not_valid_inputs_str +=  '>' + header_seq_struct
 			return
 		}
 
-		if (!reg_exp_rna_molecule.test(header_seq_struct_list[1])){
+		if (
+			!input_validation_controller.check_rna_sequence(header_seq_struct_list[1]) ||
+			header_seq_struct_list[1].length < MIN_LEN_RNA_SEQ
+		){
 			not_valid_rna_molecules_str += '>' + header_seq_struct
 			return
 		}
 
+		// if (header + rna_seq + rna_sec_struct)
 		if (header_seq_struct_list.length == 3){
+			// if lenght(rna_seq) != lenght(rna_sec_struct)
 			if (header_seq_struct_list[1].length != header_seq_struct_list[2].length){
 				not_valid_secondary_structures_str += '>' + header_seq_struct
 				return
 			}
 
-			if (!reg_exp_rna_secondary_structure.test(header_seq_struct_list[2])){
-				not_valid_secondary_structures_str += '>' + header_seq_struct
-				return
-			}
-
-			//-------------------------------
-			// secondary structure validation
-			// ToDo: to improve
-			var count = 0
-			for (var i = 0; i < header_seq_struct_list[2].length; i++) {
-				console.log('count: ' + count)
-				if (header_seq_struct_list[2][i] == '('){
-					count += 1
-				}else if(header_seq_struct_list[2][i] == ')'){
-					if (co)
-					count -= 1
-				}
-				if (count < 0){
-					break
-				}
-			}
-			//-------------------------------
-			
-			if (count != 0){
-				not_valid_secondary_structures_str += '>' + header_seq_struct
+			if (!input_validation_controller.check_rna_secondary_structure(header_seq_struct_list[2])){
+				not_valid_rna_molecules_str += '>' + header_seq_struct
 				return
 			}
 		}
@@ -116,49 +66,64 @@ check_rna_sequences = function(value, {req}) {
 		valid_rnas_str +=  '>' + header_seq_struct
 	});
 
-	//console.log('valid_rnas_str:\n' + valid_rnas_str);
-	//console.log('not_valid_inputs_str:\n' + not_valid_inputs_str);
-	//console.log('not_valid_rna_molecules_str:\n' + not_valid_rna_molecules_str);
-	//console.log('not_valid_secondary_structures_str:\n' + not_valid_secondary_structures_str);
+	/*console.log('valid_rnas_str:\n' + valid_rnas_str);
+	console.log('not_valid_inputs_str:\n' + not_valid_inputs_str);
+	console.log('not_valid_rna_molecules_str:\n' + not_valid_rna_molecules_str);
+	console.log('not_valid_secondary_structures_str:\n' + not_valid_secondary_structures_str);*/
 
-	xxx_str = not_valid_inputs_str + not_valid_rna_molecules_str + not_valid_secondary_structures_str
-	if (xxx_str == ''){
-		return true;
-	}else{
-		throw new Error('Input sequences are not valid');
-	}
+	return
 };
 
+check_user_input_handler = function(value, {req}) {
+	valid_rnas_str = ''
+	not_valid_inputs_str = ''
+	not_valid_rna_molecules_str = ''
+	not_valid_secondary_structures_str = ''
+
+	_check_rna_sequences(
+		req.files ? req.files.fileRNA.data.toString('utf8') : value
+	)
+
+	const not_valid_rnas_str = not_valid_inputs_str + not_valid_rna_molecules_str + not_valid_secondary_structures_str
+	if (not_valid_rnas_str == ''){
+		return true
+	}else{
+		throw new Error(not_valid_rnas_str.substr(1).split('>').length + ' invalid RNA molecule(s).');
+	}
+}
+
 router.post('/fileInput',
-	body('inputRNA', 'The RNA is not valid')
-		.custom(check_rna_sequences),
-	input_validation_controller.check_email(),
+	body('inputRNA').trim().custom(check_user_input_handler),
+	input_validation_controller.check_email_handler(),
 
 	(req, res) => {
 		const errors = validationResult(req);
 
-		if (!errors.isEmpty()){
+		if (!errors.isEmpty() && ('email' in errors.mapped() || valid_rnas_str == '')){
 			res.render('landing', {
-				data: req.body,
+				inputRNA: req.body.inputRNA,
+				email: req.body.email,
 				errors: errors.mapped()
 			});
-
-		}else{ //se non ci sono errori
-			console.log(valid_rnas_str)
-
+		}else{
+			// There are no errors or there is at least one valid RNA
 			res.render('loading',{
-				data: '',
-				errors: '',
+				valid_rnas: valid_rnas_str,
+				not_valid_inputs: not_valid_inputs_str,
+				not_valid_rna_molecules: not_valid_rna_molecules_str,
+				not_valid_secondary_structures: not_valid_secondary_structures_str,
+				email: req.body.email,
+				errors: errors.mapped(),
 			});
 		}
 	}
 )
 
+// Take useful stuff and remove
 router.post('/fileInput2',[
-
 	body('inputRNA')
 	.trim()
-	.escape()	// It removes HTML characters (ToDo: MAYBE IT IS PROBLEMATIC FOR THE STRUCTURE ALPHABET)
+	.escape()
 	.isLength({ min: MIN_LEN_RNA_SEQ })
 	.withMessage('The RNA has to be at least ' + MIN_LEN_RNA_SEQ + ' ribonucleotides.')
 	//.matches([ACGUTacgut]+) 	// ToDo: we need a regular expression+
@@ -175,8 +140,6 @@ router.post('/fileInput2',[
 	*/
 	.trim()
 	.normalizeEmail()
-
-
 
 	], (req, res) => {
 		const errors = validationResult(req);
@@ -214,8 +177,10 @@ router.post('/fileInput2',[
 
 		const data = matchedData(req);
 		console.log('Sanitized', data);
-	});
+	}
+);
 
+// Take useful stuff and remove
 router.post('/fileInput2',[
 
 	body('email')
@@ -266,6 +231,7 @@ router.post('/fileInput2',[
 
 		const data = matchedData(req);
 		console.log('Sanitized', data);
-	});
+	}
+);
 
 module.exports = router;
