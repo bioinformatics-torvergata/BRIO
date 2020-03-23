@@ -51,7 +51,7 @@ _check_rna_sequences = function(input_rna_sequences_str) {
 
 		// if (header + rna_seq + rna_sec_struct)
 		if (header_seq_struct_list.length == 3){
-			// if lenght(rna_seq) != lenght(rna_sec_struct)
+			// if lenghts(rna_seq) != lenght(rna_sec_struct)
 			if (header_seq_struct_list[1].length != header_seq_struct_list[2].length){
 				not_valid_secondary_structures_str += '>' + header_seq_struct
 				return
@@ -161,60 +161,6 @@ router.post('/fileInput2',[
 			const pythonProcess = spawn('python',["scripts/python.py", 
 				"folderProvaText", 
 				"fileTextProva.txt"
-				]);
-
-			pythonProcess.stdout.on('data',(data) => {
-				console.log('stdout: ' + data); //test stream python -> node
-			});
-			pythonProcess.stderr.on('data',(data) => {
-				console.error('stderr: ' + data); //test stream python -> node
-			});
-			pythonProcess.on('close', (code, signal) => {
-				console.log('process exited with code: '+code +
-				'\nsignal: ' + signal);
-			})
-		}
-
-		const data = matchedData(req);
-		console.log('Sanitized', data);
-	}
-);
-
-// Take useful stuff and remove
-router.post('/fileInput2',[
-
-	body('email')
-	.isEmail()
-	.withMessage('That email does not look right')
-	.bail() //sanitizers. 
-	/*Bail stops if any previous check failed (to avoid 
-	normalizing an empty email which returns "@") 
-	*/
-	.trim()
-	.normalizeEmail()
-
-	], (req, res) => {
-
-	//callback della post
-	
-		const errors = validationResult(req);
-		if (!errors.isEmpty()) {
-			res.render('landing', {
-				data: req.body,
-				errors: errors.mapped()
-			});
-
-		}else{ //se non ci sono errori
-
-			res.render('loading',{
-				data: '',
-				errors: '',
-			});
-
-		//python script
-			const pythonProcess = spawn('python',["scripts/python.py", 
-				"folderProvaUpload", 
-				"fileuploadedProva.txt"
 				]);
 
 			pythonProcess.stdout.on('data',(data) => {

@@ -8,6 +8,8 @@ router.get('/', (req, res) => {
   res.render('landing', {
   	data: {},
   	errors: {},
+  	inputRNA: '',
+  	email: '',
   });
 });
 
