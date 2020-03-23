@@ -27,6 +27,11 @@ var not_valid_rna_molecules_background_str = ''
 var not_valid_secondary_structures_background_str = ''
 
 _check_rna_sequences = function(input_rna_sequences_str) {
+	var valid_rnas_xxx_str = ''
+	var not_valid_inputs_xxx_str = ''
+	var not_valid_rna_molecules_xxx_str = ''
+	var not_valid_secondary_structures_xxx_str = ''
+
 	if (input_rna_sequences_str.replace(/^>/, '').length == 0){
 		throw new Error('Input empty.');
 	}
@@ -42,7 +47,7 @@ _check_rna_sequences = function(input_rna_sequences_str) {
 
 		// (header + rna_seq) or (header + rna_seq + rna_sec_struct)
 		if (header_seq_struct_list.length != 2 && header_seq_struct_list.length != 3){
-			not_valid_inputs_str +=  '>' + header_seq_struct
+			not_valid_inputs_xxx_str +=  '>' + header_seq_struct
 			return
 		}
 
@@ -50,7 +55,7 @@ _check_rna_sequences = function(input_rna_sequences_str) {
 			!input_validation_controller.check_rna_sequence(header_seq_struct_list[1]) ||
 			header_seq_struct_list[1].length < MIN_LEN_RNA_SEQ
 		){
-			not_valid_rna_molecules_str += '>' + header_seq_struct
+			not_valid_rna_molecules_xxx_str += '>' + header_seq_struct
 			return
 		}
 
@@ -58,35 +63,25 @@ _check_rna_sequences = function(input_rna_sequences_str) {
 		if (header_seq_struct_list.length == 3){
 			// if length(rna_seq) != length(rna_sec_struct)
 			if (header_seq_struct_list[1].length != header_seq_struct_list[2].length){
-				not_valid_secondary_structures_str += '>' + header_seq_struct
+				not_valid_secondary_structures_xxx_str += '>' + header_seq_struct
 				return
 			}
 
 			if (!input_validation_controller.check_rna_secondary_structure(header_seq_struct_list[2])){
-				not_valid_rna_molecules_str += '>' + header_seq_struct
+				not_valid_secondary_structures_xxx_str += '>' + header_seq_struct
 				return
 			}
 		}
 
-		valid_rnas_str +=  '>' + header_seq_struct
+		valid_rnas_xxx_str +=  '>' + header_seq_struct
 	});
 
-	/*console.log('valid_rnas_str:\n' + valid_rnas_str);
-	console.log('not_valid_inputs_str:\n' + not_valid_inputs_str);
-	console.log('not_valid_rna_molecules_str:\n' + not_valid_rna_molecules_str);
-	console.log('not_valid_secondary_structures_str:\n' + not_valid_secondary_structures_str);*/
-
-	return
+	return [valid_rnas_xxx_str, not_valid_inputs_xxx_str, not_valid_rna_molecules_xxx_str, not_valid_secondary_structures_xxx_str]
 };
 
 check_user_input_handler = function(value, {req}) {
-	valid_rnas_str = ''
-	not_valid_inputs_str = ''
-	not_valid_rna_molecules_str = ''
-	not_valid_secondary_structures_str = ''
-
-	_check_rna_sequences(
-		req.files ? req.files.fileRNA.data.toString('utf8') : value
+	[valid_rnas_str, not_valid_inputs_str, not_valid_rna_molecules_str, not_valid_secondary_structures_str] = _check_rna_sequences(
+		req.files && req.files.fileRNA ? req.files.fileRNA.data.toString('utf8') : value
 	)
 
 	const not_valid_rnas_str = not_valid_inputs_str + not_valid_rna_molecules_str + not_valid_secondary_structures_str
@@ -97,28 +92,29 @@ check_user_input_handler = function(value, {req}) {
 	}
 }
 
-check_user_input_handler = function(value, {req}) {
-	valid_rnas_str = ''
-	not_valid_inputs_str = ''
-	not_valid_rna_molecules_str = ''
-	not_valid_secondary_structures_str = ''
+check_user_background_handler = function(value, {req}) {
+	[valid_rnas_background_str, not_valid_inputs_background_str, not_valid_inputs_background_str, not_valid_secondary_structures_background_str] = ['', '', '', '']
+	
+	if (req.files && req.files.fileBackground){
+		[valid_rnas_background_str, not_valid_inputs_background_str, not_valid_inputs_background_str, not_valid_secondary_structures_background_str] = _check_rna_sequences(
+			req.files.fileBackground.data.toString('utf8')
+		)
 
-	_check_rna_sequences(
-		req.files ? req.files.fileRNA.data.toString('utf8') : value
-	)
-
-	const not_valid_rnas_str = not_valid_inputs_str + not_valid_rna_molecules_str + not_valid_secondary_structures_str
-	if (not_valid_rnas_str == ''){
-		return true
+		const not_valid_rnas_background_str = not_valid_inputs_background_str + not_valid_inputs_background_str + not_valid_secondary_structures_background_str
+		if (not_valid_rnas_background_str == ''){
+			return true
+		}else{
+			throw new Error(not_valid_rnas_background_str.substr(1).split('>').length + ' invalid RNA molecule(s in the background file.');
+		}
 	}else{
-		throw new Error(not_valid_rnas_str.substr(1).split('>').length + ' invalid RNA molecule(s).');
+		return true
 	}
 }
 
 router.post('/fileInput',
 	body('inputRNA').trim().custom(check_user_input_handler),
+	body('inputRNA').trim().custom(check_user_background_handler),
 	input_validation_controller.check_email_handler(),
-
 	(req, res) => {
 		const errors = validationResult(req);
 
