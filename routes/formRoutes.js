@@ -122,19 +122,19 @@ router.post('/fileInput',
 	(req, res) => {
 		const errors = validationResult(req);
 
-		res.render(!errors.isEmpty() ? 'landing' : 'loading',
+		res.render(errors.isEmpty() ? 'loading' : 'landing',
 		{
 			inputRNA: req.body.inputRNA,
 			email: req.body.email,
 			inputRNA_processed: {
 				'valid_rnas': valid_rnas_str,
-				'not_valid_inputs': not_valid_rna_molecules_str,
+				'not_valid_inputs': not_valid_inputs_str,
 				'not_valid_rna_molecules': not_valid_rna_molecules_str,
 				'not_valid_secondary_structures': not_valid_secondary_structures_str
 			},
 			inputBackground_processed: {
 				'valid_rnas': valid_rnas_background_str,
-				'not_valid_inputs': not_valid_rna_molecules_background_str,
+				'not_valid_inputs': not_valid_inputs_background_str,
 				'not_valid_rna_molecules': not_valid_rna_molecules_background_str,
 				'not_valid_secondary_structures': not_valid_secondary_structures_background_str
 			},

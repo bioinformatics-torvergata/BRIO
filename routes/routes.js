@@ -8,10 +8,8 @@ router.get('/', (req, res) => {
   res.render('landing', {
     inputRNA: '',
     email: '',
-    valid_rnas: '',
-    not_valid_inputs: '',
-    not_valid_rna_molecules: '',
-    not_valid_secondary_structures: '',
+    inputRNA_processed: {},
+    inputBackground_processed: {},
     errors: {},
   });
 });

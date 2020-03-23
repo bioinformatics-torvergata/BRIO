@@ -123,8 +123,33 @@
       </div>
     </fieldset>
   </form>
+
+  <% if (Object.keys(errors).length != 0 && (!errors.email || Object.keys(errors).length > 1)) { %>
+  <h3> There are problems with your input:</h3>
+    ********(to do with fashion tabs)********
+
+    <div>
+        Valid input RNA(s):<br/>
+        <%= inputRNA_processed.valid_rnas %>
+    </div>
+    <br/>
+    <div>
+        Not valid input(s):<br/>
+        <%= inputRNA_processed.not_valid_inputs %>
+    </div>
+    <br/>
+    <div>
+        Not valid RNA molecule(s):<br/>
+        <%= inputRNA_processed.not_valid_rna_molecules %>
+    </div>
+    <br/>
+    <div>
+        Not valid secondary structure(s):<br/>
+        <%= inputRNA_processed.not_valid_secondary_structures %>
+    </div>  
+  <% } %>
 </div>
-  <!---->
+
 <script>
   $(".chosen-select").chosen({
   no_results_text: "Oops, nothing found!"

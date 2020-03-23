@@ -5,8 +5,10 @@
 </div>
 <br/><br/>
 <div>
-    Valid RNA(s):<br/>
+    Input RNA(s):<br/>
     <%= inputRNA_processed.valid_rnas %>
 </div>
 <br/>
-
+<% if (errors) { %>
+    <div class="error"><% console.log(errors) %></div>
+  <% } %>
