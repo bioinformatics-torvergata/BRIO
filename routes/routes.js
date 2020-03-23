@@ -6,10 +6,13 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
   res.render('landing', {
-  	data: {},
-  	errors: {},
-  	inputRNA: '',
-  	email: '',
+    inputRNA: '',
+    email: '',
+    valid_rnas: '',
+    not_valid_inputs: '',
+    not_valid_rna_molecules: '',
+    not_valid_secondary_structures: '',
+    errors: {},
   });
 });
 

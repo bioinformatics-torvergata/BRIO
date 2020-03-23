@@ -21,6 +21,11 @@ var not_valid_inputs_str = ''
 var not_valid_rna_molecules_str = ''
 var not_valid_secondary_structures_str = ''
 
+var valid_rnas_background_str = ''
+var not_valid_inputs_background_str = ''
+var not_valid_rna_molecules_background_str = ''
+var not_valid_secondary_structures_background_str = ''
+
 _check_rna_sequences = function(input_rna_sequences_str) {
 	if (input_rna_sequences_str.replace(/^>/, '').length == 0){
 		throw new Error('Input empty.');
@@ -51,7 +56,7 @@ _check_rna_sequences = function(input_rna_sequences_str) {
 
 		// if (header + rna_seq + rna_sec_struct)
 		if (header_seq_struct_list.length == 3){
-			// if lenghts(rna_seq) != lenght(rna_sec_struct)
+			// if length(rna_seq) != length(rna_sec_struct)
 			if (header_seq_struct_list[1].length != header_seq_struct_list[2].length){
 				not_valid_secondary_structures_str += '>' + header_seq_struct
 				return
@@ -92,6 +97,24 @@ check_user_input_handler = function(value, {req}) {
 	}
 }
 
+check_user_input_handler = function(value, {req}) {
+	valid_rnas_str = ''
+	not_valid_inputs_str = ''
+	not_valid_rna_molecules_str = ''
+	not_valid_secondary_structures_str = ''
+
+	_check_rna_sequences(
+		req.files ? req.files.fileRNA.data.toString('utf8') : value
+	)
+
+	const not_valid_rnas_str = not_valid_inputs_str + not_valid_rna_molecules_str + not_valid_secondary_structures_str
+	if (not_valid_rnas_str == ''){
+		return true
+	}else{
+		throw new Error(not_valid_rnas_str.substr(1).split('>').length + ' invalid RNA molecule(s).');
+	}
+}
+
 router.post('/fileInput',
 	body('inputRNA').trim().custom(check_user_input_handler),
 	input_validation_controller.check_email_handler(),
@@ -99,28 +122,29 @@ router.post('/fileInput',
 	(req, res) => {
 		const errors = validationResult(req);
 
-		if (!errors.isEmpty() && ('email' in errors.mapped() || valid_rnas_str == '')){
-			res.render('landing', {
-				inputRNA: req.body.inputRNA,
-				email: req.body.email,
-				errors: errors.mapped()
-			});
-		}else{
-			// There are no errors or there is at least one valid RNA
-			res.render('loading',{
-				valid_rnas: valid_rnas_str,
-				not_valid_inputs: not_valid_inputs_str,
-				not_valid_rna_molecules: not_valid_rna_molecules_str,
-				not_valid_secondary_structures: not_valid_secondary_structures_str,
-				email: req.body.email,
-				errors: errors.mapped(),
-			});
-		}
+		res.render(!errors.isEmpty() ? 'landing' : 'loading',
+		{
+			inputRNA: req.body.inputRNA,
+			email: req.body.email,
+			inputRNA_processed: {
+				'valid_rnas': valid_rnas_str,
+				'not_valid_inputs': not_valid_rna_molecules_str,
+				'not_valid_rna_molecules': not_valid_rna_molecules_str,
+				'not_valid_secondary_structures': not_valid_secondary_structures_str
+			},
+			inputBackground_processed: {
+				'valid_rnas': valid_rnas_background_str,
+				'not_valid_inputs': not_valid_rna_molecules_background_str,
+				'not_valid_rna_molecules': not_valid_rna_molecules_background_str,
+				'not_valid_secondary_structures': not_valid_secondary_structures_background_str
+			},
+			errors: errors.mapped(),
+		});
 	}
 )
 
 // Take useful stuff and remove
-router.post('/fileInput2',[
+/*router.post('/fileInput2',[
 	body('inputRNA')
 	.trim()
 	.escape()
@@ -135,9 +159,9 @@ router.post('/fileInput2',[
 	.isEmail()
 	.withMessage('That email does not look right')
 	.bail() //sanitizers. 
-	/*Bail stops if any previous check failed (to avoid 
-	normalizing an empty email which returns "@") 
-	*/
+	//Bail stops if any previous check failed (to avoid 
+	//normalizing an empty email which returns "@") 
+	
 	.trim()
 	.normalizeEmail()
 
@@ -179,5 +203,6 @@ router.post('/fileInput2',[
 		console.log('Sanitized', data);
 	}
 );
+*/
 
 module.exports = router;
