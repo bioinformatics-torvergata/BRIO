@@ -44,7 +44,6 @@ _check_rna_sequences = function(input_rna_sequences_str, input_name_str) {
 		header_seq_struct_list = header_seq_struct.replace(/\n$/, '').split('\n').map(function(val, index){
 			return val.replace(/\r$/, '')
 		})
-		console.log(header_seq_struct_list)
 
 		// (header + rna_seq) or (header + rna_seq + rna_sec_struct)
 		if (header_seq_struct_list.length != 2 && header_seq_struct_list.length != 3){
@@ -116,6 +115,29 @@ router.post('/fileInput',
 	body('fileBackground').custom(check_user_background_handler),
 	input_validation_controller.check_email_handler(),
 	(req, res) => {
+		/*
+		//Decide where to put business logic (cicciaController?
+		const pythonProcess = spawn('python', ["scripts/python.py", 
+			"folderProvaText", 
+			"fileTextProva.txt"
+		]);
+		*/
+
+		const pythonProcess = spawn('python', ["scripts/_completeWithDotBracketAndBEAR.py", 
+			valid_rnas_str, 
+		]);
+		pythonProcess.stdout.on('data',(data) => {
+			console.log('stdout:\n' + data); //test stream python -> node
+		});
+		/*pythonProcess.stderr.on('data',(data) => {
+			console.error('stderr: ' + data); //test stream python -> node
+		});
+		pythonProcess.on('close', (code, signal) => {
+			console.log('scripts/_completeWithDotBracketAndBEAR.py exited with code: '+code +
+			'\nsignal: ' + signal);
+		})*/
+		
+
 		const errors = validationResult(req);
 
 		res.render(errors.isEmpty() ? 'loading' : 'landing',
@@ -140,65 +162,48 @@ router.post('/fileInput',
 )
 
 // Take useful stuff and remove
-/*router.post('/fileInput2',[
-	body('inputRNA')
-	.trim()
-	.escape()
-	.isLength({ min: MIN_LEN_RNA_SEQ })
-	.withMessage('The RNA has to be at least ' + MIN_LEN_RNA_SEQ + ' ribonucleotides.')
-	//.matches([ACGUTacgut]+) 	// ToDo: we need a regular expression+
-	.isAlpha()
-	.withMessage('The RNA has to contain only valid ribonucleotides.'),
+/*
+
+body('inputRNA')
+.trim()
+.escape()
+.isLength({ min: MIN_LEN_RNA_SEQ })
+.withMessage('The RNA has to be at least ' + MIN_LEN_RNA_SEQ + ' ribonucleotides.')
+//.matches([ACGUTacgut]+) 	// ToDo: we need a regular expression+
+.isAlpha()
+.withMessage('The RNA has to contain only valid ribonucleotides.')
 
 
-	body('email')
-	.isEmail()
-	.withMessage('That email does not look right')
-	.bail() //sanitizers. 
-	//Bail stops if any previous check failed (to avoid 
-	//normalizing an empty email which returns "@") 
-	
-	.trim()
-	.normalizeEmail()
+body('email')
+.isEmail()
+.withMessage('That email does not look right')
+.bail() //sanitizers. 
+//Bail stops if any previous check failed (to avoid 
+//normalizing an empty email which returns "@") 
 
-	], (req, res) => {
-		const errors = validationResult(req);
+.trim()
+.normalizeEmail()
 
-		if (!errors.isEmpty()){
-			res.render('landing', {
-				data: req.body,
-				errors: errors.mapped()
-			});
+(req, res) => {
+	const errors = validationResult(req);
 
-		}else{ //se non ci sono errori
+	if (!errors.isEmpty()){
+		res.render('landing', {
+			data: req.body,
+			errors: errors.mapped()
+		});
 
-			res.render('loading',{
-				data: '',
-				errors: '',
-			});
+	}else{ //se non ci sono errori
 
-		//python script
-			const pythonProcess = spawn('python',["scripts/python.py", 
-				"folderProvaText", 
-				"fileTextProva.txt"
-				]);
-
-			pythonProcess.stdout.on('data',(data) => {
-				console.log('stdout: ' + data); //test stream python -> node
-			});
-			pythonProcess.stderr.on('data',(data) => {
-				console.error('stderr: ' + data); //test stream python -> node
-			});
-			pythonProcess.on('close', (code, signal) => {
-				console.log('process exited with code: '+code +
-				'\nsignal: ' + signal);
-			})
-		}
-
-		const data = matchedData(req);
-		console.log('Sanitized', data);
+		res.render('loading',{
+			data: '',
+			errors: '',
+		});
 	}
-);
+
+	const data = matchedData(req);
+	console.log('Sanitized', data);
+}
 */
 
 module.exports = router;
