@@ -75,13 +75,15 @@
       <!-- FORM OPTIONS -->
       <div class="form-options">
 
-          <select data-placeholder="Click here to filter..." multiple class="chosen-select" name="options">
-             <option value=""></option>
-             <option> Human (hg19)</option>
-             <option> Mouse (mm9)</option>
-             <option> PAR-CLIP</option>
-             <option> eCLIP</option>
+          <select data-placeholder="Select species..." multiple class="chosen-select" name="options_species">
+             <option selected>Human (hg19)</option>
+             <option>Mouse (mm9)</option>
           </select>
+
+          <select data-placeholder="Select experiments..." multiple class="chosen-select" name="options_experiemnts">
+            <option selected>PAR-CLIP</option>
+            <option selected>eCLIP</option>
+         </select>
 
       </div>
 
