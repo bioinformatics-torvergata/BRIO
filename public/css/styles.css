@@ -2,11 +2,9 @@
 
 div.form {
 	display: inline-block;
-
 }
 
 fieldset.form-fieldset {
-
 	border : 2px solid #222222;
 	margin : 0 1%;
 	padding: 0 5%;
@@ -18,4 +16,11 @@ legend.form-fieldset {
 	width:inherit; /* Or auto */
     padding:0 5%; /* To give a bit of padding on the left and right */
     border-bottom:none;
+}
+
+#WS_description{
+    text-align:center;
+    color: rgba(82,130,180, 0.8);
+	-webkit-text-stroke: 1px #0D3184;
+	font-size:1.5em;
 }
