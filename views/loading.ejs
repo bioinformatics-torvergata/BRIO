@@ -1,3 +1,9 @@
+<!DOCTYPE html>
+<html>
+<head>
+	</head>
+<body>
+<%- include ("partials/header.ejs") %>
 <h1>Loading</h1>
 <div>
     Email:<br/>
@@ -12,3 +18,7 @@
 <% if (inputBackground_processed.valid_rnas != '') { %>
     <%= inputBackground_processed.valid_rnas %>
 <% } %>
+
+<%- include ("partials/footer.ejs") %>
+</body>
+</html>
