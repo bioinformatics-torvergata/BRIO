@@ -24,3 +24,8 @@ legend.form-fieldset {
 	-webkit-text-stroke: 1px #0D3184;
 	font-size:1.5em;
 }
+
+.doc_bubble {
+	border: 2px solid #222222;
+
+}

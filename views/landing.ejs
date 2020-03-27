@@ -30,11 +30,12 @@
 
 
   <!--INPUT-->
-<div class='form'>
+<div class='form container'>
   <form method="post" action="/go/fileInput" novalidate enctype="multipart/form-data">
 
-    <!--TEXT-->
-    <fieldset class='form-fieldset'>
+    
+    <fieldset class='form-fieldset container-fluid'>
+      <!--TEXT-->
       <legend class='form-fieldset'>Input your RNA(s)</legend>
       <div class="form-field <%= errors.message ? 'form-field-invalid' : '' %>" >
         <label for="inputRNA">Input RNA</label>
