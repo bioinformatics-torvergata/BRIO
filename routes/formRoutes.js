@@ -123,6 +123,7 @@ router.post('/fileInput',
 		]);
 		*/
 
+		// AVOID BLOCKING CALLS
 		const pythonProcess = spawn('python', ["scripts/_completeWithDotBracketAndBEAR.py", 
 			valid_rnas_str, 
 		]);

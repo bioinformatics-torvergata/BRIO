@@ -17,10 +17,36 @@ import re
 from random import choice
 from string import ascii_uppercase
 
+DIR_STRUCT_MOTIFS = '/home/andrea/Scrivania/motifs_str/'
+DIR_NUCLEOTIDE_MOTIFS = '/home/andrea/Scrivania/motifs_nuc/'
+
+def run_search(dir_base, path_motif, path_input_seq_struct_bear, str_else_nuc, path_output):
+    if str_else_nuc:
+        with open(path_output, 'w') as output_file:
+            subprocess.call(
+                [
+                    'java', '-jar', os.path.join(dir_base, 'scripts', 'search1.2.jar'),
+                    path_motif,
+                    path_input_seq_struct_bear
+                ],
+                stdout=output_file
+            )
+    else:
+        subprocess.call(
+            [
+                'python3', os.path.join(dir_base, 'scripts', 'Search_nt.py'),
+                path_motif,
+                path_input_seq_struct_bear,
+                path_output
+            ]
+        )
+
+
+
 dir_base = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
 dir_user = os.path.join(dir_base, 'results',
-    ''.join(choice(ascii_uppercase) for i in range(20))
+    ''.join(choice(ascii_uppercase) for i in range(32))
 )
 outer = re.compile(" (.+)$")
 
@@ -54,7 +80,7 @@ if missing_dotbracket_and_bear_rna_molecules:
     with open(path_missing_dot_bracket_input, 'w') as fw:
         fw.write(missing_dotbracket_and_bear_rna_molecules)
 
-    # Calculate dotbracket: do I have to wait? It is a blocking call
+    # Calculate dotbracket
     missing_bear_rna_molecules_added_dot_bracket = subprocess.check_output(
         [os.path.join(dir_base, 'scripts', 'RNAfold'), '--noPS', path_missing_dot_bracket_input]
     )
@@ -75,3 +101,37 @@ if missing_bear_rna_molecules_all:
     subprocess.call(
         ['java', '-jar', os.path.join(dir_base, 'scripts', 'BearEncoder_new.jar'), path_missing_bear_input, path_complete_input]
     )
+
+dir_user_output_str = os.path.join(dir_user, 'out_search_str')
+if not os.path.exists(dir_user_output_str):
+    os.makedirs(dir_user_output_str)
+
+for filename_motif in os.listdir(DIR_STRUCT_MOTIFS):
+    path_str_output = os.path.join(dir_user_output_str, filename_motif.split('.')[0] + '_out_search.str.txt')
+    # os.system('cp -R /home/sangiovanni/public_html/brio/motifs_logo/str/ '+folder+'/logos/')
+    run_search(dir_base, os.path.join(DIR_STRUCT_MOTIFS, filename_motif), path_complete_input, True, path_str_output)
+    break
+
+
+dir_user_output_nuc = os.path.join(dir_user, 'out_search_nuc')
+if not os.path.exists(dir_user_output_nuc):
+    os.makedirs(dir_user_output_nuc)
+
+for filename_motif in os.listdir(DIR_NUCLEOTIDE_MOTIFS):
+    path_str_output = os.path.join(dir_user_output_nuc, filename_motif.split('.')[0] + '_out_search.nuc.txt')
+    # os.system('cp -R /home/sangiovanni/public_html/brio/motifs_logo/nuc/ '+folder+'/logos/')
+    run_search(dir_base, os.path.join(DIR_NUCLEOTIDE_MOTIFS, filename_motif), path_complete_input, False, path_str_output)
+    break
+
+
+
+
+
+
+
+
+
+
+print('END')
+
+# To delete path_missing_dot_bracket_input path_missing_bear_input

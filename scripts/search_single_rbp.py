@@ -1,8 +1,10 @@
-import re
-import os
+
 import sys
+import os
 
 import functions
+import re
+
 
 file_bear=sys.argv[1]
 folder=sys.argv[2]

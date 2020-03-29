@@ -6,9 +6,6 @@ import functions
 
 
 
-
-
-
 file_bear=sys.argv[1]
 folder=sys.argv[2]
 
