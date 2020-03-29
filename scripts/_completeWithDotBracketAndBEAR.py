@@ -17,8 +17,6 @@ import re
 from random import choice
 from string import ascii_uppercase
 
-DIR_STRUCT_MOTIFS = '/home/andrea/Scrivania/motifs_str/'
-DIR_NUCLEOTIDE_MOTIFS = '/home/andrea/Scrivania/motifs_nuc/'
 
 def run_search(dir_base, path_motif, path_input_seq_struct_bear, str_else_nuc, path_output):
     if str_else_nuc:
@@ -44,6 +42,9 @@ def run_search(dir_base, path_motif, path_input_seq_struct_bear, str_else_nuc, p
 
 
 dir_base = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+
+dir_struct_motifs = os.path.join(dir_base, 'some_motifs_str/')
+dir_nucleotide_motifs = os.path.join(dir_base, 'some_motifs_nuc/')
 
 dir_user = os.path.join(dir_base, 'results',
     ''.join(choice(ascii_uppercase) for i in range(32))
@@ -106,22 +107,22 @@ dir_user_output_str = os.path.join(dir_user, 'out_search_str')
 if not os.path.exists(dir_user_output_str):
     os.makedirs(dir_user_output_str)
 
-for filename_motif in os.listdir(DIR_STRUCT_MOTIFS):
+for filename_motif in os.listdir(dir_struct_motifs):
     path_str_output = os.path.join(dir_user_output_str, filename_motif.split('.')[0] + '_out_search.str.txt')
     # os.system('cp -R /home/sangiovanni/public_html/brio/motifs_logo/str/ '+folder+'/logos/')
-    run_search(dir_base, os.path.join(DIR_STRUCT_MOTIFS, filename_motif), path_complete_input, True, path_str_output)
-    break
+    run_search(dir_base, os.path.join(dir_struct_motifs, filename_motif), path_complete_input, True, path_str_output)
+
 
 
 dir_user_output_nuc = os.path.join(dir_user, 'out_search_nuc')
 if not os.path.exists(dir_user_output_nuc):
     os.makedirs(dir_user_output_nuc)
 
-for filename_motif in os.listdir(DIR_NUCLEOTIDE_MOTIFS):
+for filename_motif in os.listdir(dir_nucleotide_motifs):
     path_str_output = os.path.join(dir_user_output_nuc, filename_motif.split('.')[0] + '_out_search.nuc.txt')
     # os.system('cp -R /home/sangiovanni/public_html/brio/motifs_logo/nuc/ '+folder+'/logos/')
-    run_search(dir_base, os.path.join(DIR_NUCLEOTIDE_MOTIFS, filename_motif), path_complete_input, False, path_str_output)
-    break
+    run_search(dir_base, os.path.join(dir_nucleotide_motifs, filename_motif), path_complete_input, False, path_str_output)
+
 
 
 
