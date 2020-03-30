@@ -11,6 +11,10 @@ fieldset.form-fieldset {
 	display: inline-block;
 }
 
+fieldset.form-options {
+	text-align: center;
+}
+
 legend.form-fieldset {
 
 	width:inherit; /* Or auto */

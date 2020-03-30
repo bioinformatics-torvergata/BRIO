@@ -33,10 +33,11 @@
 <div class='form container'>
   <form method="post" action="/go/fileInput" novalidate enctype="multipart/form-data">
 
-    
-    <fieldset class='form-fieldset container-fluid'>
+    <table class='container-fluid'><tr><td>
+
+    <fieldset class='form-fieldset container'>
       <!--TEXT-->
-      <legend class='form-fieldset'>Input your RNA(s)</legend>
+      <h3 class='form-fieldset'>Input your RNA(s)</h3>
       <div class="form-field <%= errors.message ? 'form-field-invalid' : '' %>" >
         <label for="inputRNA">Input RNA</label>
         <textarea class="input" id="inputRNA" name="inputRNA" autofocus><%= inputRNA %></textarea>
@@ -44,9 +45,13 @@
           <div class="error"><%= errors.message.msg %></div>
         <% } %>
       </div>
+    </fieldset>
 
+    </td><td>
+
+    <fieldset class='form-fieldset container'>
       <!--UPLOAD-->
-      <legend class='form-fieldset'>Upload your RNA(s)</legend>
+      <h3 class='form-fieldset'>Upload your RNA(s)</h3>
       <div class="form-field <%= errors.message ? 'form-field-invalid' : '' %>" >
         
         <!--input file-->
@@ -64,7 +69,13 @@
         <% } %>
       
       </div>
+    </fieldset>
 
+    </td></tr></table>
+
+    <!-- FORM OPTIONS + MAIL-->
+
+    <fieldset class='form-fieldset form-options container-fluid'>
       <div class="form-field <%= errors.email ? 'form-field-invalid' : '' %>">
         <label for="email">Email</label>
         <input class="input" id="email" name="email" type="email" value="<%= email %>" />
@@ -73,7 +84,6 @@
         <% } %>
       </div>
 
-      <!-- FORM OPTIONS -->
       <div class="form-options">
 
           <select data-placeholder="Select species..." multiple class="chosen-select" name="options_species">
@@ -92,6 +102,7 @@
       <div class="form-actions">
         <button class="btn btn-primary" type="submit">Go!</button>
       </div>
+
     </fieldset>
   </form>
 
