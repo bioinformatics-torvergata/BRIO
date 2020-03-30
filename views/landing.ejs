@@ -38,9 +38,9 @@
     <fieldset class='form-fieldset container'>
       <!--TEXT-->
       <h3 class='form-fieldset'>Input your RNA(s)</h3>
-      <div class="form-field <%= errors.message ? 'form-field-invalid' : '' %>" >
+      <div class="form-field form-group <%= errors.message ? 'form-field-invalid' : '' %>" >
         <label for="inputRNA">Input RNA</label>
-        <textarea class="input" id="inputRNA" name="inputRNA" autofocus><%= inputRNA %></textarea>
+        <textarea class="input form-control" id="inputRNA" name="inputRNA" autofocus><%= inputRNA %></textarea>
         <% if (errors.message) { %>
           <div class="error"><%= errors.message.msg %></div>
         <% } %>
@@ -51,7 +51,7 @@
 
     <fieldset class='form-fieldset container'>
       <!--UPLOAD-->
-      <h3 class='form-fieldset'>Upload your RNA(s)</h3>
+      <h3 class='form-fieldset'> or upload your RNA(s)</h3>
       <div class="form-field <%= errors.message ? 'form-field-invalid' : '' %>" >
         
         <!--input file-->
@@ -76,22 +76,22 @@
     <!-- FORM OPTIONS + MAIL-->
 
     <fieldset class='form-fieldset form-options container-fluid'>
-      <div class="form-field <%= errors.email ? 'form-field-invalid' : '' %>">
+      <div class="form-field form-group <%= errors.email ? 'form-field-invalid' : '' %>">
         <label for="email">Email</label>
-        <input class="input" id="email" name="email" type="email" value="<%= email %>" />
+        <input class="input form-control" id="email" name="email" type="email" value="<%= email %>" />
         <% if (errors.email) { %>
           <div class="error"><%= errors.email.msg %></div>
         <% } %>
       </div>
 
-      <div class="form-options">
+      <div class="form-options form-group">
 
-          <select data-placeholder="Select species..." multiple class="chosen-select" name="options_species">
+          <select data-placeholder="Select species..." multiple class="chosen-select form-control" name="options_species">
              <option selected>Human (hg19)</option>
              <option>Mouse (mm9)</option>
           </select>
 
-          <select data-placeholder="Select experiments..." multiple class="chosen-select" name="options_experiments">
+          <select data-placeholder="Select experiments..." multiple class="chosen-select form-control" name="options_experiments">
             <option selected>PAR-CLIP</option>
             <option selected>eCLIP</option>
          </select>
