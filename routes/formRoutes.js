@@ -124,16 +124,16 @@ router.post('/fileInput',
 		*/
 
 		// AVOID BLOCKING CALLS
-		const pythonProcess = spawn('python', ["scripts/_completeWithDotBracketAndBEAR.py", 
-			valid_rnas_str, 
+		const pythonProcess = spawn('python3', ["scripts/_completeWithDotBracketAndBEAR.py", 
+			valid_rnas_str, valid_rnas_background_str
 		]);
 		pythonProcess.stdout.on('data',(data) => {
 			console.log('stdout:\n' + data); //test stream python -> node
 		});
-		/*pythonProcess.stderr.on('data',(data) => {
+		pythonProcess.stderr.on('data',(data) => {
 			console.error('stderr: ' + data); //test stream python -> node
 		});
-		pythonProcess.on('close', (code, signal) => {
+		/*pythonProcess.on('close', (code, signal) => {
 			console.log('scripts/_completeWithDotBracketAndBEAR.py exited with code: '+code +
 			'\nsignal: ' + signal);
 		})*/
