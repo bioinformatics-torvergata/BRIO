@@ -163,7 +163,7 @@ search_struct_motifs = 'str' #else ''
 search_seq_motifs = 'nuc' #else ''
 
 dir_user = os.path.join(dir_base, 'results',
-    'AAA'#''.join(choice(ascii_uppercase) for i in range(32))
+    ''.join(choice(ascii_uppercase) for i in range(32))
 )
 
 
@@ -196,6 +196,13 @@ for str_or_nuc, dir_str_or_nuc_motifs in zip(
     [search_struct_motifs, search_seq_motifs],
     [dir_struct_motifs, dir_nucleotide_motifs]
 ):
+    # To load this one-time only when the server starts and for all the users(?)
+    protein_to_domains_dict = {}
+    with open(os.path.join(dir_base, 'resources', 'dict_prot_dom.txt')) as f:
+        for line in f:
+            line_list = line.strip('\n').split('\t')
+            protein_to_domains_dict[line_list[0].upper()] = line_list[1:]
+
     if str_or_nuc in struct_seq_to_path_dict.keys():
         # For input and (eventually) the background
         for path_complete_input_rna_molecules_xxx, dir_user_output_xxx in zip(
@@ -209,24 +216,25 @@ for str_or_nuc, dir_str_or_nuc_motifs in zip(
 
                 # os.system('cp -R /home/sangiovanni/public_html/brio/motifs_logo/{}/ '+folder+'/logos/'.format(str_or_nuc))
                 for filename_motif in os.listdir(dir_str_or_nuc_motifs):
-                    path_str_output = os.path.join(dir_user_output_xxx, filename_motif.split('.')[0] + '_out_search.{}.txt'.format(str_or_nuc))
+                    path_str_or_nuc_output = os.path.join(dir_user_output_xxx, filename_motif.split('.')[0] + '_out_search.{}.txt'.format(str_or_nuc))
                     run_search(
                         dir_base,
                         os.path.join(dir_str_or_nuc_motifs, filename_motif),
                         path_complete_input_rna_molecules_xxx,
                         str_or_nuc == 'str',
-                        path_str_output
+                        path_str_or_nuc_output
                     )
 
 
-        # To load this one-time only when the server starts(?)
+        # To load this one-time only when the server starts and for all the users(?)
         str_or_nuc_motif_dict = {}
         with open(os.path.join(dir_base, 'resources', 'dict_{}.txt'.format(str_or_nuc))) as f:
             for line in f:
                 key, value = line.strip('\n').split('\t')
                 str_or_nuc_motif_dict[key] = float(value)
 
-        to_write = ''
+
+        result_to_write_list = []
         dir_user_output_base = struct_seq_to_path_dict[str_or_nuc][0]
         for name_result in os.listdir(dir_user_output_base):
             motif_key = name_result.split('_out_')[0]+'.{}txt'.format('' if str_or_nuc == 'str' else 'nuc.')
@@ -257,31 +265,45 @@ for str_or_nuc, dir_str_or_nuc_motifs in zip(
             n_motif = str(motif_key.split('_')[-2])
             RBP_name = str(motif_key.split('_')[1])
             #scrivo modello, regione, numero motivo, perc|oddsratio|p-value, nome del file con i risultati (che potra' essere scaricato), nome rbp
-            to_write += motif_name+"\t"+regione+"\t"+n_motif+"\t"+str(round(perc,2))+"|"+str(round(oddsratio,2))+"|"+str(pvalue)+"\t"+motif_key+"\t"+RBP_name+"\n"
+            row_to_write = motif_name+"\t"+regione+"\t"+n_motif+"\t"+str(round(perc,2))+"|"+str(round(oddsratio,2))+"|"+str(pvalue)+"\t"+motif_key+"\t"+RBP_name
+
+            # Add domains
+            if RBP_name.upper() in protein_to_domains_dict.keys():
+                row_to_write += '\t' + '\t'.join(
+                    [protein_to_domains_dict[RBP_name.upper()][-1]] + protein_to_domains_dict[RBP_name.upper()][:-1]
+                )
+
+            result_to_write_list.append(row_to_write)
+
+        path_str_or_nuc_search_out = os.path.join(dir_user, 'search_out.{}.txt'.format(str_or_nuc))
+        with open(path_str_or_nuc_search_out, 'w') as f:
+            f.write('\n'.join(result_to_write_list) + '\n')
+        
 
 
-            with open(os.path.join(dir_user, 'tmp.{}.search_out_no_domains.txt'.format(str_or_nuc)), 'w') as f:
-                f.write(to_write)
+        '''
+        # MAYBE TO DELETE
+        # =============================================
+        # # Domains search
+        # =================
+        # To load this one-time only when the server starts and for all the users(?)
+        make_search_str_or_nuc_list = []
+        with open(os.path.join(dir_base, 'resources', 'dict_dom_searchMotifs_{}.txt'.format(str_or_nuc))) as f:
+            for line in f:
+                make_search_str_or_nuc_list += line.strip('\n').split('\t')[1:]
 
-'''
-# Nucleotide motifs
-dir_user_output_nuc = os.path.join(dir_user, 'out_search_nuc')
-if not os.path.exists(dir_user_output_nuc):
-    os.makedirs(dir_user_output_nuc)
+        str_or_nuc_motifs_to_search_set = set(os.listdir(dir_str_or_nuc_motifs)).intersection(set(make_search_str_or_nuc_list))
 
-for filename_motif in os.listdir(dir_nucleotide_motifs):
-    path_str_output = os.path.join(dir_user_output_nuc, filename_motif.split('.')[0] + '_out_search.nuc.txt')
-    # os.system('cp -R /home/sangiovanni/public_html/brio/motifs_logo/nuc/ '+folder+'/logos/')
-    run_search(dir_base, os.path.join(dir_nucleotide_motifs, filename_motif), path_complete_input, False, path_str_output)
-    break
+        dir_user_output_base = struct_seq_to_path_dict[str_or_nuc][0]
+        for single_search_str_or_nuc in sorted(str_or_nuc_motifs_to_search_set):
+            #file_out=folder+'out_search_str/'+motif.split('.')[0]+'_out_search.str.txt'
+            path_str_or_nuc_output = os.path.join(dir_user_output_base, single_search_str_or_nuc.split('.')[0] + '_out_search.{}.txt'.format(str_or_nuc))
 
-if is_there_a_background:
-    pass # TO DO
-
-
-#complete_search.py dir_user
-'''
-
+            file_name_logo=single_search_str_or_nuc.split('.txt')[0]
+            print(path_str_or_nuc_output)
+            #os.system('cp /home/sangiovanni/public_html/brio/motifs_logo/str/'+file_name_logo+'* '+folder+'/logos/')
+            #run_search('motifs_str/', motif, file_bear,file_out,'str',folder)
+        '''
 
 
 

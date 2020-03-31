@@ -1,0 +1,182 @@
+AARS	Homo sapiens
+AATF	Homo sapiens
+ABCF1	ABC|transporter1	ABC|transporter2	Homo sapiens
+AGGF1	FHA	G-patch	Homo sapiens
+AGO2	DOMAIN: The Piwi domain may perform RNA cleavage by a mechanism similar to that of RNase H. However, while RNase H utilizes a triad of Asp-Asp-Glu (DDE) for metal ion coordination, this protein appears to utilize a triad of Asp-Asp-His (DDH).	Homo sapiens
+AGO	PAZ	Piwi	Homo sapiens
+AKAP1	DOMAIN: RII-alpha binding site, predicted to form an amphipathic helix, could participate in protein-protein interactions with a complementary surface on the R-subunit dimer.	Homo sapiens
+AKAP8L	Homo sapiens
+ALKBH5	Alpha-ketoglutarate binding	Homo sapiens
+APOBEC3C	Homo sapiens
+AQR	DOMAIN: Contains an N-terminal domain with structural similarity to ARM repeat regions this domain functions as scaffold for protein-protein interactions, but is not required for RNA binding or for ATP-dependent RNA helicase activity. {ECO:0000269|PubMed:25599396}.	Homo sapiens
+BCCIP	Homo sapiens
+BCLAF1	Homo sapiens
+BUD13	Homo sapiens
+C17ORF85	RRM	Homo sapiens
+C22ORF28	Homo sapiens
+CAPRIN1	G3BP1-binding	Homo sapiens
+CDC40	Homo sapiens
+Cirbp	RRMx1	Mus musculus
+CPEB4	DOMAIN: The 2 RRM domains and the C-terminal region mediate interaction with CPE-containing RNA (PubMed:24990967). The interdomain linker (564-579) acts as a hinge to fix the relative orientation of the 2 RRMs (PubMed:24990967). The ZZ domain (509-566) coordinates 2 Zn ions and is probably implicated in mediating interactions with other proteins in addition to increasing the affinity of the RRMs for the CPEs (By similarity). Unlike in CPEB1, a continuous polar interface is formed between the 2 RRMs (PubMed:24990967). {ECO:0000250|UniProtKB:Q9BZB8, ECO:0000269|PubMed:24990967}.	Homo sapiens
+CPSF6	DOMAIN: Contains an Arg/Ser-rich domain composed of arginine-serine dipeptide repeats within the C-terminal region that is necessary and sufficient for activating mRNA 3'-processing and alternative polyadenylation (APA). {ECO:0000269|PubMed:29276085}.	Homo sapiens
+CSTF2	RRM	Homo sapiens
+CSTF2T	RRMx1	Homo sapiens
+DDX21	DOMAIN: The helicase and foldase activities reside in two separate domains, the helicase in the N-terminus and the foldase in the C-terminus. {ECO:0000269|PubMed:9461305}. DOMAIN: The 3 X 5 AA repeats seem to be critical for the RNA folding activity. {ECO:0000250}.	Homo sapiens
+DDX24	Helicase|ATP-binding	Helicase|C-terminal	Homo sapiens
+DDX3X	Helicase|ATP-binding	Helicase|C-terminal	Homo sapiens
+DDX42	Helicase|ATP-binding	Helicase|C-terminal	Homo sapiens
+DDX51	DOMAIN: The Q motif is unique to and characteristic of the DEAD box family of RNA helicases and controls ATP binding and hydrolysis.	Homo sapiens
+DDX52	Helicase|ATP-binding	Helicase|C-terminal	Homo sapiens
+DDX55	DOMAIN: The Q motif is unique to and characteristic of the DEAD box family of RNA helicases and controls ATP binding and hydrolysis.	Homo sapiens
+DDX59	DOMAIN: The Q motif is unique to and characteristic of the DEAD box family of RNA helicases and controls ATP binding and hydrolysis.	Homo sapiens
+DDX6	Helicase|ATP-binding	Helicase|C-terminal	Homo sapiens
+DGCR8	DOMAIN: Both DRBM domains are required for efficient binding to pri-miRNA. The region between residues 276 and 498 has an autoinhibitory function on pri-miRNA processing activity.	Homo sapiens
+DHX30	DRBM	Helicase|ATP-binding	Helicase|C-terminal	Homo sapiens
+DKC1	PUA	Homo sapiens
+DROSHA	Homo sapiens
+EFTUD2	Homo sapiens
+EIF3D	DOMAIN: The RNA gate region regulates mRNA cap recognition to prevent promiscuous mRNA-binding before assembly of EIF3D into the full eukaryotic translation initiation factor 3 (eIF-3) complex. {ECO:0000305|PubMed:27462815}.	Homo sapiens
+EIF3G	RRM	Homo sapiens
+EIF3H	MPN	Homo sapiens
+EIF4A3	Helicase ATP-binding	Helicase C-terminal	Homo sapiens
+EIF4G2	Homo sapiens
+ELAVL1A	RRMx1	RRMx2	RRMx3 Homo sapiens
+ELAVL1	RRMx3	Homo sapiens
+ELAVL	RRMx1	RRMx2	RRMx3 Homo sapiens
+EWSR1	RRMx1	Znf_RanBP2	Homo sapiens
+EXOSC5	Homo sapiens
+EZH2	CXC	SET	Homo sapiens
+FAM120A	Homo sapiens
+FASTKD2	Homo sapiens
+FKBP4	DOMAIN: The PPIase activity is mainly due to the first PPIase FKBP-type domain (1-138 AA). {ECO:0000250}. DOMAIN: The C-terminal region (AA 375-458) is required to prevent tubulin polymerization. {ECO:0000250}. DOMAIN: The chaperone activity resides in the C-terminal region, mainly between amino acids 264 and 400. {ECO:0000250}. DOMAIN: The TPR repeats mediate mitochondrial localization.	Homo sapiens
+FMR1	DOMAIN: The N-terminal 134 amino acids are necessary for homodimerization and RNA-binding (PubMed:12950170). The N-terminal 298 amino acids are sufficient to interact with KCNMB4 and to regulate presynaptic action potential (AP) duration in neurons (PubMed:25561520). The two agenet-like domains are necessary for binding to histone H3 in a methylation-dependent manner (PubMed:24813610). The KH domains are necessary for mediating miRNA annealing to specific RNA targets (PubMed:17057366). The KH 2 domain is necessary for binding to kissing complex (kc) RNA ligands (PubMed:15805463). The RGG box domain is necessary for binding to mRNA targets that contain G-quadruplex structures (PubMed:11719189, PubMed:18579868, PubMed:25692235). The RGG-box domain is necessary for binding to a triple stem-loop RNA structure, called Sod1 stem loop interacting with FMRP (SoSLIP), in the superoxide dismutase SOD1 mRNA (PubMed:19166269). The RGG box domain is necessary for binding to its own mRNA (PubMed:11532944). The RGG-box domain is necessary for binding to homopolymer poly(G) (PubMed:14532325). {ECO:0000269|PubMed:11532944, ECO:0000269|PubMed:11719189, ECO:0000269|PubMed:12950170, ECO:0000269|PubMed:14532325, ECO:0000269|PubMed:15805463, ECO:0000269|PubMed:17057366, ECO:0000269|PubMed:18579868, ECO:0000269|PubMed:19166269, ECO:0000269|PubMed:24813610, ECO:0000269|PubMed:25561520, ECO:0000269|PubMed:25692235}. DOMAIN: Isoform 10: The C-terminal region contains a Cajal body localization signal at positions 490 through 506 (PubMed:24204304). {ECO:0000269|PubMed:24204304}.	Homo sapiens
+FOX2	RRM	Mus musculus
+FTO	DOMAIN: The 3D-structure of the Fe2OG dioxygenase domain is similar to that of the Fe2OG dioxygenase domain found in the bacterial DNA repair dioxygenase alkB and its mammalian orthologs, but sequence similarity is very low. As a consequence, the domain is not detected by protein signature databases. {ECO:0000269|PubMed:20376003}.	Homo sapiens
+FUBP3	KHx1	KHx2	KHx3	KHx4	Homo sapiens
+FUS	RRM	Homo sapiens
+FXR1	DOMAIN: The tandem Agenet-like domains preferentially recognize trimethylated histone peptides. {ECO:0000269|PubMed:21072162}.	Homo sapiens
+FXR2	DOMAIN: The tandem Agenet-like domains preferentially recognize trimethylated histone peptides. {ECO:0000269|PubMed:21072162}.	Homo sapiens
+G3BP1	DOMAIN: The NTF2 domain mediates multimerization.	Homo sapiens
+GEMIN5	Homo sapiens
+GNL3	DOMAIN: The basic domain (B) allows nucleolar localization in the absence of GTP. The intermediate domain (I) inhibits nucleolar localization by the B domain and is required for exit from the nucleolus. Exit from the nucleolus to the nucleoplasm requires both the I and the acidic (A) domains, and may be triggered by GTP hydrolysis (By similarity). {ECO:0000250}. DOMAIN: In contrast to other GTP-binding proteins, this family is characterized by a circular permutation of the GTPase motifs described by a G4-G1-G3 pattern.	Homo sapiens
+GPKOW	G-patch	KOWx1	KOWx2	Homo sapiens
+GRSF1	RRMx1	RRMx2	RRMx3	Homo sapiens
+GRWD1	Homo sapiens
+GTF2F1	Homo sapiens
+HLTF	Helicase|ATP-binding	Helicase|C-terminal	Homo sapiens
+HNRNPA1	RRMx2	Homo sapiens
+HNRNPC	RRMx1	Homo sapiens
+HNRNPK	KHx3	Homo sapiens
+HNRNPL	RRMx2	Homo sapiens
+HNRNPM	RRMx3	Homo sapiens
+HNRNPU	Homo sapiens
+HNRNPUL1	Homo sapiens
+HUR	RRMx1	RRMx2	RRMx3	Homo sapiens
+IGF2BP1	RRMx2	KHx4	Homo sapiens
+IGF2BP2	RRMx2	KHx4	Homo sapiens
+IGF2BP3	RRMx2	KHx4	Homo sapiens
+IGF2BP	RRMx1	RRMx2	KHx1	KHx2	KHx3	KHx4	Homo sapiens
+ILF3	DZF	DRBMx1	DRBMx2	Homo sapiens
+JARID2	JmjN	ARID	JmjC	Mus musculus
+KHDRBS1	KHx1	Homo sapiens
+KHSRP	KHx4	Homo sapiens
+LARP4	HTH	RRM	Homo sapiens
+LARP7	HTH	RRM	Homo sapiens
+LIN28A	CSD	Homo sapiens
+LIN28B	CSDx1	Znf_CCHCx2	Homo sapiens
+LIN28	CSDx1	Znf_CCHCx2	Homo sapiens
+LSM11	DOMAIN: The C-terminal SM 1 domain is both necessary for the binding to the Sm-binding site of U7 snRNA and U7 snRNP assembly (By similarity). The N-terminal domain is essential for histone pre-mRNA cleavage. Amino acids 63-82 are sufficient to interact with ZNF473. {ECO:0000250}.	Homo sapiens
+MATR3	RRMx1	RRMx2	Homo sapiens
+MBNL1	Znf_CCCHx4	Homo sapiens
+MBNL2	Znf_CCCHx4	Homo sapiens
+METAP2	Homo sapiens
+METTL3	S-adenosyl-L-methionine binding	Gate loop 1	Interaction with METTL14	Interphase loop	Interaction with METTL14	Positively charged region required for RNA-binding	Gate loop 2	S-adenosyl-L-methionine binding	Mus musculus
+MOV10	Homo sapiens
+MTPAP	Homo sapiens
+NCBP2	RRM	Homo sapiens
+NIP7	PUA	Homo sapiens
+NIPBL	DOMAIN: Contains one Pro-Xaa-Val-Xaa-Leu (PxVxL) motif, which is required for interaction with chromoshadow domains. This motif requires additional residues -7, -6, +4 and +5 of the central Val which contact the chromoshadow domain. {ECO:0000269|PubMed:20562864, ECO:0000269|PubMed:28167679}. DOMAIN: The C-terminal region containing HEAT repeats and Pro-Xaa-Val-Xaa-Leu (PxVxL) motif are involved in the recruitment of NIPBL to sites of DNA damage. {ECO:0000269|PubMed:28167679}.	Homo sapiens
+NKRF	G-patch	R3H	Homo sapiens
+NOL12	Homo sapiens
+NOLC1	LisH	Homo sapiens
+NONO	RRMx1	RRMx2	Homo sapiens
+NOVA	KHx1	KHx2	KHx3	Homo sapiens
+NPM1	Homo sapiens
+NSUN2	Homo sapiens
+PABPC4	RRMx4	Homo sapiens
+PABPN1	RRMx1	Homo sapiens
+PCBP1	KHx1	KHx2	KHx3	Homo sapiens
+PCBP2	DOMAIN: The KH domains mediates poly(C) binding.	Homo sapiens
+PHF6	DOMAIN: The PHD-type zinc finger 1 mediates both nucleolar localization and interaction with UBTF. DOMAIN: The ePHD2 domain folds as an integrated structural module comprizing the C2HC pre-PHD-type 2 zinc finger and the PHD-type 2 zinc finger. It mediates non-specific binding to dsDNA, but doesn't bind histones in contrast to many PHD-type zinc fingers.	Homo sapiens
+POLR2G	S1x1	Homo sapiens
+PPIG	DOMAIN: The RS domain is required for the interaction with the phosphorylated C-terminal domain of RNA polymerase II. {ECO:0000269|PubMed:9153302}.	Homo sapiens
+PPIL4	PPIase|cyclophilin-type	RRM	Homo sapiens
+PRPF4	Homo sapiens
+PRPF8	Homo sapiens
+PTBP1	RRMx1	RRMx2	RRMx3	RRMx4	Homo sapiens
+PTBP2	RRMx1	RRMx2	RRMx3	RRMx4	Homo sapiens
+PUM1	DOMAIN: The pumilio repeats mediate the association with RNA by packing together to form a right-handed superhelix that approximates a half donut. RNA-binding occurs on the concave side of the surface (PubMed:21397187). PUM1 is composed of 8 pumilio repeats of 36 residues each repeat binds a single nucleotide in its RNA target. Residues at positions 12 and 16 of the pumilio repeat bind each RNA base via hydrogen bonding or van der Waals contacts with the Watson-Crick edge, while the amino acid at position 13 makes a stacking interaction. The recognition of RNA by pumilio repeats is base specific: cysteine and glutamine at position 12 and 16, respectively, bind adenine asparagine and glutamine bind uracil and serine and glutamate bind guanine (PubMed:21572425. PubMed:18328718, PubMed:21653694). {ECO:0000269|PubMed:18328718, ECO:0000269|PubMed:21397187, ECO:0000269|PubMed:21572425, ECO:0000269|PubMed:21653694}.	Homo sapiens
+PUM2	DOMAIN: The pumilio repeats mediate the association with RNA by packing together to form a right-handed superhelix that approximates a half donut. RNA-binding occurs on the concave side of the surface (PubMed:21397187). PUM2 is composed of 8 pumilio repeats of 36 residues each repeat binds a single nucleotide in its RNA target. Residues at positions 12 and 16 of the pumilio repeat bind each RNA base via hydrogen bonding or van der Waals contacts with the Watson-Crick edge, while the amino acid at position 13 makes a stacking interaction. The recognition of RNA by pumilio repeats is base specific: cysteine and glutamine at position 12 and 16, respectively, bind adenine asparagine and glutamine bind uracil and serine and glutamate bind guanine. {ECO:0000250|UniProtKB:Q14671, ECO:0000269|PubMed:21397187}.	Homo sapiens
+PUS1	Homo sapiens
+QKI	DOMAIN: The KH domain and the Qua2 region are involved in RNA binding. {ECO:0000269|PubMed:23630077}.	Homo sapiens
+RBFOX2	Homo sapiens
+RBFOX	RRM	Homo sapiens
+RBM10	RRMx1	RRMx2	G-patch	Homo sapiens
+RBM15	RRMx1	RRMx2	RRMx3	SPOC	Homo sapiens
+RBM22	DOMAIN: The C-terminus RRM domain and the zinc finger motif are necessary for RNA-binding. {ECO:0000250}.	Homo sapiens
+RBM3	RRM	Homo sapiens
+RBM5	RRMx1	RRMx2	G-patch	Homo sapiens
+RBPMS	DOMAIN: The RRM domain is necessary for interaction with SMAD4. Both the RRM domain and the C-terminus are required for TGFB1/Smad-mediated transactivation activity.	Homo sapiens
+RPS11	Homo sapiens
+RPS3	Ribosomal_S3_C	Homo sapiens
+SAFB2	SAP	RRM	Homo sapiens
+SAFB	RRMx1	Homo sapiens
+SBDS	Homo sapiens
+SDAD1	Homo sapiens
+SERBP1	Homo sapiens
+SF3A3	Homo sapiens
+SF3B1	Homo sapiens
+SF3B4	RRMx1	RRMx2	Homo sapiens
+SFPQ	DOMAIN: The coiled coil domain mediates interaction with NONO, and can also mediate formation of long, linear homooligomers (in vitro). The coiled coil domain is required for optimal DNA binding, and optimal transcription activation. {ECO:0000269|PubMed:25765647}.	Homo sapiens
+SFRS1	RRMx2	Homo sapiens
+SLBP	DOMAIN: Amino acids 31-34, 96-99 and 241-244 are necessary for interaction with the Importin alpha/Importin beta receptor. The first 18 amino acids, amino acids 69-76 and 179-182 are necessary for interaction with TNPO3. Amino acids 31-34, 96-99 and 241-244 are necessary for nuclear localization.	Homo sapiens
+SLTM	SAP	RRM	Homo sapiens
+SMNDC1	Homo sapiens
+SND1	TNase-likex1	TNase-likex2	TNase-likex3	TNase-likex4	Tudor	Homo sapiens
+SRSF1	DOMAIN: The RRM 2 domain plays an important role in governing both the binding mode and the phosphorylation mechanism of the RS domain by SRPK1. RS domain and RRM 2 are uniquely positioned to initiate a highly directional (C-terminus to N-terminus) phosphorylation reaction in which the RS domain slides through an extended electronegative channel separating the docking groove of SRPK1 and the active site. RRM 2 binds toward the periphery of the active site and guides the directional phosphorylation mechanism. Both the RS domain and an RRM domain are required for nucleocytoplasmic shuttling. {ECO:0000269|PubMed:18342604}.	Homo sapiens
+SRSF2	RRM	Homo sapiens
+SRSF7	RRM	Homo sapiens
+SRSF9	RRMx1	RRMx2	Homo sapiens
+SSB	RRMx2	Lax1	Homo sapiens
+STAU2	DOMAIN: The DRBM 3 domain appears to be the major RNA-binding determinant. This domain also mediates interaction with XPO5 and is required for XPO1/CRM1-independent nuclear export (By similarity). {ECO:0000250}.	Homo sapiens
+SUB1	Homo sapiens
+SUGP2	G-patch	Homo sapiens
+SUPV3L1	Homo sapiens
+TAF15	RRMx1	Znf_RanBP2x1	Homo sapiens
+TARDBP	RRMx2	Homo sapiens
+TBRG4	Homo sapiens
+TDP-43	RRMx1	RRMx2	Homo sapiens
+TIA1	RRMx1	RRMx2	RRMx3	Homo sapiens
+TIAL1	RRMx3	Homo sapiens
+TRA2A	RRM	Homo sapiens
+TROVE2	TROVEx1	Homo sapiens
+U2AF1	DOMAIN: The C-terminal SR-rich domain is required for interactions with SR proteins and the splicing regulators TRA and TRA2, and the N-terminal domain is required for formation of the U2AF1/U2AF2 heterodimer.	Homo sapiens
+U2AF2	RRMx1	RRMx2	RRMx3	Homo sapiens
+UCHL5	Homo sapiens
+UPF1	AAA_11	AAA_12	ResIII	UPF1-type	Homo sapiens
+UTP18	Homo sapiens
+UTP3	Homo sapiens
+WDR43	Homo sapiens
+WRN	3-5|exonuclease	Helicase|ATP-binding	Helicase|C-terminal	HRDC	Homo sapiens
+WTAP	Homo sapiens
+XPO5	Homo sapiens
+XRCC6	Ku	SAP	Homo sapiens
+XRN2	Homo sapiens
+YBX3	Homo sapiens
+YWHAG	Homo sapiens
+ZC3H11A	Znf_CCCHx3	Homo sapiens
+ZC3H7B	Znf_CCCHx5	Homo sapiens
+ZC3H8	DOMAIN: The N-terminal region and all three C3H1-type zinc fingers are necessary to induce transcriptional repression. {ECO:0000269|PubMed:23932780}.	Homo sapiens
+ZNF622	Homo sapiens
+ZNF800	Homo sapiens
+ZRANB2	Znf_RanBP2x2	Homo sapiens
