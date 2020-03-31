@@ -98,22 +98,26 @@ def process_input_rna_molecules(input_rna_molecules, dir_output):
     missing_dotbracket_and_bear_rna_molecules = ''
     missing_bear_rna_molecules = ''
 
+    input_rna_to_length_dict = {}
+
     max_rna_seq_len = 3000 if len(input_rna_molecules.split('\n>')) < 1000 else 500
     removed_too_long_rna_molecules = ''
 
     for single_rna in input_rna_molecules.strip('\n>').split('\n>'):
         single_rna_list = [x.strip('\r') for x in single_rna.split('\n')]
+
         single_rna_list[1] = single_rna_list[1].upper().replace('T', 'U')
 
         single_rna_list[0] = '>' + single_rna_list[0] 
         if len(single_rna_list[1]) > max_rna_seq_len:
             removed_too_long_rna_molecules += '\n'.join(single_rna_list) + '\n'
         else:
+            input_rna_to_length_dict[single_rna_list[0]] = len(single_rna_list[1])
+
             if len(single_rna_list) == 2:
                 missing_dotbracket_and_bear_rna_molecules += '\n'.join(single_rna_list) + '\n'
             else:
                 missing_bear_rna_molecules += '\n'.join(single_rna_list) + '\n'
-
 
     path_complete_input = os.path.join(dir_output, 'tmp.complete_input_with_dot_bracket_and_bear.txt')
 
@@ -129,7 +133,6 @@ def process_input_rna_molecules(input_rna_molecules, dir_output):
             # To get strings
             universal_newlines=True
         )
-        print('MIAO2', missing_bear_rna_molecules_added_dot_bracket, 'asdsada', str(missing_bear_rna_molecules_added_dot_bracket).strip('\n>'))
 
         # Remove the energies
         for x in missing_bear_rna_molecules_added_dot_bracket.strip('\n>').split('\n>'):
@@ -148,7 +151,7 @@ def process_input_rna_molecules(input_rna_molecules, dir_output):
             ['java', '-jar', os.path.join(dir_base, 'scripts', 'BearEncoder_new.jar'), path_missing_bear_input, path_complete_input]
         )
 
-    return path_complete_input
+    return path_complete_input, input_rna_to_length_dict
 
 
 dir_base = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
@@ -167,47 +170,51 @@ dir_user = os.path.join(dir_base, 'results',
 )
 
 
-
+# Directory preparation
 if not os.path.exists(dir_user):
     os.makedirs(dir_user)
 
-# Directory preparation
-path_complete_input_rna_molecules = process_input_rna_molecules(sys.argv[1], dir_user)
-dir_user_output_str = os.path.join(dir_user, 'out_search_str')
-dir_user_output_nuc = os.path.join(dir_user, 'out_search_nuc')
+path_complete_input_rna_molecules, input_rna_to_length_dict = process_input_rna_molecules(sys.argv[1], dir_user)
 
 path_complete_input_rna_molecules_background = ''
-dir_user_output_str_background = ''
-dir_user_output_nuc_background = ''
 if is_there_a_background:
     if not os.path.exists(os.path.join(dir_user, 'background')):
         os.makedirs(os.path.join(dir_user, 'background'))
 
-    path_complete_input_rna_molecules_background = process_input_rna_molecules(sys.argv[2], os.path.join(dir_user, 'background'))
-    dir_user_output_str_background = os.path.join(dir_user, 'background', 'out_search_str')
-    dir_user_output_nuc_background = os.path.join(dir_user, 'background', 'out_search_nuc')
+    path_complete_input_rna_molecules_background, _ = process_input_rna_molecules(sys.argv[2], os.path.join(dir_user, 'background'))
 
 
-struct_seq_to_path_dict = {}
-struct_seq_to_path_dict['str'] = [dir_user_output_str, dir_user_output_str_background]
-struct_seq_to_path_dict['nuc'] = [dir_user_output_nuc, dir_user_output_nuc_background]
+# To load this one-time only when the server starts and for all the users(?)
+protein_to_domains_dict = {}
+with open(os.path.join(dir_base, 'resources', 'dict_prot_dom.txt')) as f:
+    for line in f:
+        line_list = line.strip('\n').split('\t')
+        protein_to_domains_dict[line_list[0].upper()] = line_list[1:]
+        
+# To load this one-time only when the server starts and for all the users(?)
+str_or_nuc_motif_to_threshold_dict = {
+    'str': {},
+    'nuc': {}
+}
+for str_or_nuc in str_or_nuc_motif_to_threshold_dict.keys():
+    with open(os.path.join(dir_base, 'resources', 'dict_{}.txt'.format(str_or_nuc))) as f:
+        for line in f:
+            key, value = line.strip('\n').split('\t')
+            str_or_nuc_motif_to_threshold_dict[str_or_nuc][key] = float(value)
+
 
 for str_or_nuc, dir_str_or_nuc_motifs in zip(
     [search_struct_motifs, search_seq_motifs],
     [dir_struct_motifs, dir_nucleotide_motifs]
 ):
-    # To load this one-time only when the server starts and for all the users(?)
-    protein_to_domains_dict = {}
-    with open(os.path.join(dir_base, 'resources', 'dict_prot_dom.txt')) as f:
-        for line in f:
-            line_list = line.strip('\n').split('\t')
-            protein_to_domains_dict[line_list[0].upper()] = line_list[1:]
-
-    if str_or_nuc in struct_seq_to_path_dict.keys():
+    if str_or_nuc:
         # For input and (eventually) the background
         for path_complete_input_rna_molecules_xxx, dir_user_output_xxx in zip(
             [path_complete_input_rna_molecules, path_complete_input_rna_molecules_background],
-            struct_seq_to_path_dict[str_or_nuc]
+            [
+                os.path.join(dir_user, 'out_search_{}'.format(str_or_nuc)),
+                os.path.join(dir_user, 'background', 'out_search_{}'.format(str_or_nuc))
+            ]
         ):
             # The background path can be empty
             if path_complete_input_rna_molecules_xxx:
@@ -216,34 +223,37 @@ for str_or_nuc, dir_str_or_nuc_motifs in zip(
 
                 # os.system('cp -R /home/sangiovanni/public_html/brio/motifs_logo/{}/ '+folder+'/logos/'.format(str_or_nuc))
                 for filename_motif in os.listdir(dir_str_or_nuc_motifs):
-                    path_str_or_nuc_output = os.path.join(dir_user_output_xxx, filename_motif.split('.')[0] + '_out_search.{}.txt'.format(str_or_nuc))
+                    path_motif_output = os.path.join(dir_user_output_xxx, filename_motif.split('.')[0] + '_out_search.txt')
                     run_search(
                         dir_base,
                         os.path.join(dir_str_or_nuc_motifs, filename_motif),
                         path_complete_input_rna_molecules_xxx,
                         str_or_nuc == 'str',
-                        path_str_or_nuc_output
+                        path_motif_output
                     )
 
 
-        # To load this one-time only when the server starts and for all the users(?)
-        str_or_nuc_motif_dict = {}
-        with open(os.path.join(dir_base, 'resources', 'dict_{}.txt'.format(str_or_nuc))) as f:
-            for line in f:
-                key, value = line.strip('\n').split('\t')
-                str_or_nuc_motif_dict[key] = float(value)
-
+        dir_user_output_base = os.path.join(dir_user, 'out_search_{}'.format(str_or_nuc))
 
         result_to_write_list = []
-        dir_user_output_base = struct_seq_to_path_dict[str_or_nuc][0]
         for name_result in os.listdir(dir_user_output_base):
             motif_key = name_result.split('_out_')[0]+'.{}txt'.format('' if str_or_nuc == 'str' else 'nuc.')
             path_result = os.path.join(dir_user_output_base, name_result)
 
-            perc, major, minor = perc_seq_motif(motif_key, path_result, str_or_nuc_motif_dict, str_or_nuc == 'str')
+            perc, major, minor = perc_seq_motif(
+                motif_key,
+                path_result,
+                str_or_nuc_motif_to_threshold_dict[str_or_nuc],
+                str_or_nuc == 'str'
+            )
 
             if is_there_a_background:
-                perc_bg, major_bg, minor_bg = perc_seq_motif(motif_key, path_result, str_or_nuc_motif_dict, str_or_nuc == 'str')
+                perc_bg, major_bg, minor_bg = perc_seq_motif(
+                    motif_key,
+                    path_result,
+                    str_or_nuc_motif_to_threshold_dict[str_or_nuc],
+                    str_or_nuc == 'str'
+                )
             else:
                 #creo dizionario per bg: chiave=nome, lista=[major, minor]
                 f=open(os.path.join(dir_base, 'resources', 'summary_AutoBg.txt'))
@@ -279,7 +289,48 @@ for str_or_nuc, dir_str_or_nuc_motifs in zip(
         with open(path_str_or_nuc_search_out, 'w') as f:
             f.write('\n'.join(result_to_write_list) + '\n')
         
+        # =================================================================
+        # Make summary: TO DO ONLY IF THE USER DOWNLOAD THE RESULTS?
+        # ============
+        dir_summary_str_or_nuc = os.path.join(dir_user, 'summary_{}'.format(str_or_nuc))
+        if not os.path.exists(dir_summary_str_or_nuc):
+            os.makedirs(dir_summary_str_or_nuc)
+        for name_result in os.listdir(dir_user_output_base):
+            motif_key = name_result.split('_out_')[0]+'.{}txt'.format('' if str_or_nuc == 'str' else 'nuc.')
 
+            result_summary_to_write_list = []
+            threshold = str_or_nuc_motif_to_threshold_dict[str_or_nuc][motif_key]
+            with open(os.path.join(dir_user_output_base, name_result)) as f:
+                if str_or_nuc == 'str':
+                    file_list = f.readlines()[5:-5]
+                    for i in range(0, len(file_list) - 1, 2):
+                        tmp_list = ['', '', '', '', '', '', '']
+
+                        splitted_list = file_list[i+1].strip('[INFO]\n').split('\t')
+
+                        tmp_list[0] = file_list[i].strip('[INFO]\n')
+                        tmp_list[1] = splitted_list[0]
+                        tmp_list[2] = splitted_list[3]
+                        tmp_list[3] = str(input_rna_to_length_dict[tmp_list[0]])
+                        tmp_list[4] = splitted_list[1]
+                        tmp_list[5] = splitted_list[2]
+                        tmp_list[6] = str(threshold)
+                        result_summary_to_write_list.append(tmp_list)
+                else:
+                    for line in f:
+                        result_summary_to_write_list.append(
+                            line.strip('\n').split('\t') + [str(threshold)]
+                        )
+
+            with open(os.path.join(
+                    dir_summary_str_or_nuc,
+                    name_result.split('_out_')[0]+'.summary.txt'
+                ), 'w') as f:
+                f.write('name\tmotif\tscore\tlength\tstart\tend\tthreshold\n')
+                f.write('\n'.join(
+                    ['\t'.join(x_list) for x_list in sorted(result_summary_to_write_list, key=lambda x: x[2], reverse=True)]
+                ) + '\n')
+            # =================================================================
 
         '''
         # MAYBE TO DELETE
@@ -294,7 +345,7 @@ for str_or_nuc, dir_str_or_nuc_motifs in zip(
 
         str_or_nuc_motifs_to_search_set = set(os.listdir(dir_str_or_nuc_motifs)).intersection(set(make_search_str_or_nuc_list))
 
-        dir_user_output_base = struct_seq_to_path_dict[str_or_nuc][0]
+        dir_user_output_base = os.path.join(dir_user, 'out_search_{}'.format(str_or_nuc))
         for single_search_str_or_nuc in sorted(str_or_nuc_motifs_to_search_set):
             #file_out=folder+'out_search_str/'+motif.split('.')[0]+'_out_search.str.txt'
             path_str_or_nuc_output = os.path.join(dir_user_output_base, single_search_str_or_nuc.split('.')[0] + '_out_search.{}.txt'.format(str_or_nuc))
@@ -307,6 +358,18 @@ for str_or_nuc, dir_str_or_nuc_motifs in zip(
 
 
 
+
+
+'''
+subprocess.Popen(
+    [
+        os.path.join(dir_base, 'scripts', 'make_summary.py'),
+
+    ]
+    "script2.py 1",
+    shell=True
+)
+'''
 print('END')
 
 # To delete path_missing_dot_bracket_input path_missing_bear_input
