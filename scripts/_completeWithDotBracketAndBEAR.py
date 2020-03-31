@@ -94,7 +94,6 @@ def Search_motif_name(file_bench):
 
     return motif_name
 
-
 def process_input_rna_molecules(input_rna_molecules, dir_output):
     missing_dotbracket_and_bear_rna_molecules = ''
     missing_bear_rna_molecules = ''
@@ -159,14 +158,20 @@ dir_nucleotide_motifs = os.path.join(dir_base, 'some_motifs_nuc/')
 
 is_there_a_background = sys.argv[2]
 
+# To get from user input?
+search_struct_motifs = 'str' #else ''
+search_seq_motifs = 'nuc' #else ''
+
 dir_user = os.path.join(dir_base, 'results',
-    ''.join(choice(ascii_uppercase) for i in range(32))
+    'AAA'#''.join(choice(ascii_uppercase) for i in range(32))
 )
+
+
 
 if not os.path.exists(dir_user):
     os.makedirs(dir_user)
 
-
+# Directory preparation
 path_complete_input_rna_molecules = process_input_rna_molecules(sys.argv[1], dir_user)
 dir_user_output_str = os.path.join(dir_user, 'out_search_str')
 dir_user_output_nuc = os.path.join(dir_user, 'out_search_nuc')
@@ -182,65 +187,81 @@ if is_there_a_background:
     dir_user_output_str_background = os.path.join(dir_user, 'background', 'out_search_str')
     dir_user_output_nuc_background = os.path.join(dir_user, 'background', 'out_search_nuc')
 
-# Structure motifs
-for path_complete_input_rna_molecules_xxx, dir_user_output_str_xxx in zip(
-    [path_complete_input_rna_molecules, path_complete_input_rna_molecules_background],
-    [dir_user_output_str, dir_user_output_str_background]
+
+struct_seq_to_path_dict = {}
+struct_seq_to_path_dict['str'] = [dir_user_output_str, dir_user_output_str_background]
+struct_seq_to_path_dict['nuc'] = [dir_user_output_nuc, dir_user_output_nuc_background]
+
+for str_or_nuc, dir_str_or_nuc_motifs in zip(
+    [search_struct_motifs, search_seq_motifs],
+    [dir_struct_motifs, dir_nucleotide_motifs]
 ):
-    if path_complete_input_rna_molecules_xxx:
-        print('dir_user_output_str', dir_user_output_str_xxx)
+    if str_or_nuc in struct_seq_to_path_dict.keys():
+        # For input and (eventually) the background
+        for path_complete_input_rna_molecules_xxx, dir_user_output_xxx in zip(
+            [path_complete_input_rna_molecules, path_complete_input_rna_molecules_background],
+            struct_seq_to_path_dict[str_or_nuc]
+        ):
+            # The background path can be empty
+            if path_complete_input_rna_molecules_xxx:
+                if not os.path.exists(dir_user_output_xxx):
+                    os.makedirs(dir_user_output_xxx)
 
-        if not os.path.exists(dir_user_output_str_xxx):
-            os.makedirs(dir_user_output_str_xxx)
-
-        for filename_motif in os.listdir(dir_struct_motifs):
-            path_str_output = os.path.join(dir_user_output_str_xxx, filename_motif.split('.')[0] + '_out_search.str.txt')
-            # os.system('cp -R /home/sangiovanni/public_html/brio/motifs_logo/str/ '+folder+'/logos/')
-            run_search(dir_base, os.path.join(dir_struct_motifs, filename_motif), path_complete_input_rna_molecules_xxx, True, path_str_output)
-
-
-# To load this one-time only when the server starts(?)
-struct_motif_dict = {}
-with open(os.path.join(dir_base, 'resources', 'dict_str.txt')) as f:
-    for line in f:
-        key, value = line.strip('\n').split('\t')
-        struct_motif_dict[key]=float(value)
-
-to_write = ''
-for name_result in os.listdir(dir_user_output_str):
-    motif_key = name_result.split('_out_')[0]+'.txt'
-    path_result = os.path.join(dir_user_output_str, name_result)
-
-    perc, major, minor = perc_seq_motif(motif_key, path_result, struct_motif_dict, True)
-
-    if is_there_a_background:
-        perc_bg, major_bg, minor_bg = perc_seq_motif(motif_key, path_result, struct_motif_dict, True)
-    else:
-        #creo dizionario per bg: chiave=nome, lista=[major, minor]
-        f=open(os.path.join(dir_base, 'resources', 'summary_AutoBg.txt'))
-        line=f.readline()
-        dict_bg={}
-        while (line):
-            dict_bg[line.split()[0]]=[int(line.split()[2]),int(line.split()[3])]
-            line=f.readline()
-        f.close()
-        
-        major_bg=dict_bg[motif_key][0]
-        minor_bg=dict_bg[motif_key][1]
-
-    #calcolo fisher test
-    oddsratio, pvalue = stats.fisher_exact([[major, major_bg], [minor, minor_bg]])
-
-    motif_name = Search_motif_name(os.path.join(dir_struct_motifs, motif_key))
-    regione = str(motif_key.split('_')[-3])
-    n_motif = str(motif_key.split('_')[-2])
-    RBP_name = str(motif_key.split('_')[1])
-    #scrivo modello, regione, numero motivo, perc|oddsratio|p-value, nome del file con i risultati (che potra' essere scaricato), nome rbp
-    to_write += motif_name+"\t"+regione+"\t"+n_motif+"\t"+str(round(perc,2))+"|"+str(round(oddsratio,2))+"|"+str(pvalue)+"\t"+motif_key+"\t"+RBP_name+"\n"
+                # os.system('cp -R /home/sangiovanni/public_html/brio/motifs_logo/{}/ '+folder+'/logos/'.format(str_or_nuc))
+                for filename_motif in os.listdir(dir_str_or_nuc_motifs):
+                    path_str_output = os.path.join(dir_user_output_xxx, filename_motif.split('.')[0] + '_out_search.{}.txt'.format(str_or_nuc))
+                    run_search(
+                        dir_base,
+                        os.path.join(dir_str_or_nuc_motifs, filename_motif),
+                        path_complete_input_rna_molecules_xxx,
+                        str_or_nuc == 'str',
+                        path_str_output
+                    )
 
 
-    with open(os.path.join(dir_user, 'tmp.search_out_no_domains.txt'), 'a') as f:
-        f.write(to_write)
+        # To load this one-time only when the server starts(?)
+        str_or_nuc_motif_dict = {}
+        with open(os.path.join(dir_base, 'resources', 'dict_{}.txt'.format(str_or_nuc))) as f:
+            for line in f:
+                key, value = line.strip('\n').split('\t')
+                str_or_nuc_motif_dict[key] = float(value)
+
+        to_write = ''
+        dir_user_output_base = struct_seq_to_path_dict[str_or_nuc][0]
+        for name_result in os.listdir(dir_user_output_base):
+            motif_key = name_result.split('_out_')[0]+'.{}txt'.format('' if str_or_nuc == 'str' else 'nuc.')
+            path_result = os.path.join(dir_user_output_base, name_result)
+
+            perc, major, minor = perc_seq_motif(motif_key, path_result, str_or_nuc_motif_dict, str_or_nuc == 'str')
+
+            if is_there_a_background:
+                perc_bg, major_bg, minor_bg = perc_seq_motif(motif_key, path_result, str_or_nuc_motif_dict, str_or_nuc == 'str')
+            else:
+                #creo dizionario per bg: chiave=nome, lista=[major, minor]
+                f=open(os.path.join(dir_base, 'resources', 'summary_AutoBg.txt'))
+                line=f.readline()
+                dict_bg={}
+                while (line):
+                    dict_bg[line.split()[0]]=[int(line.split()[2]),int(line.split()[3])]
+                    line=f.readline()
+                f.close()
+                
+                major_bg=dict_bg[motif_key][0]
+                minor_bg=dict_bg[motif_key][1]
+
+            #calcolo fisher test
+            oddsratio, pvalue = stats.fisher_exact([[major, major_bg], [minor, minor_bg]])
+
+            motif_name = Search_motif_name(os.path.join(dir_str_or_nuc_motifs, motif_key))
+            regione = str(motif_key.split('_')[-3])
+            n_motif = str(motif_key.split('_')[-2])
+            RBP_name = str(motif_key.split('_')[1])
+            #scrivo modello, regione, numero motivo, perc|oddsratio|p-value, nome del file con i risultati (che potra' essere scaricato), nome rbp
+            to_write += motif_name+"\t"+regione+"\t"+n_motif+"\t"+str(round(perc,2))+"|"+str(round(oddsratio,2))+"|"+str(pvalue)+"\t"+motif_key+"\t"+RBP_name+"\n"
+
+
+            with open(os.path.join(dir_user, 'tmp.{}.search_out_no_domains.txt'.format(str_or_nuc)), 'w') as f:
+                f.write(to_write)
 
 '''
 # Nucleotide motifs
