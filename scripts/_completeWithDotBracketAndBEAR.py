@@ -357,19 +357,6 @@ for str_or_nuc, dir_str_or_nuc_motifs in zip(
         '''
 
 
-
-
-
-'''
-subprocess.Popen(
-    [
-        os.path.join(dir_base, 'scripts', 'make_summary.py'),
-
-    ]
-    "script2.py 1",
-    shell=True
-)
-'''
 print('END')
 
-# To delete path_missing_dot_bracket_input path_missing_bear_input
+# To remove temporary files (path_missing_dot_bracket_input, path_missing_bear_input, ...)
