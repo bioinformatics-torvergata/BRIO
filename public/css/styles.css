@@ -27,8 +27,8 @@ legend.form-fieldset {
     border-bottom:none;
 }
 
-ul.error-tabs{
-
+ul.error-tabs > li {
+	margin: auto;
 }
 
 #WS_description{
