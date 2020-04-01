@@ -2,10 +2,8 @@ import sys
 
 f_bench=sys.argv[1]
 f_seq=sys.argv[2]
-out_f=sys.argv[3]
 
-def Search_nucleotide(file_bench, file_seq, out_file):
-    o=open(out_file, "w")
+def Search_nucleotide(file_bench, file_seq):
     f=open(file_bench)
     line=f.readline()
     pssm=[]
@@ -36,7 +34,7 @@ def Search_nucleotide(file_bench, file_seq, out_file):
     f_in=open(file_seq)
     line=f_in.readline()
     while(line):
-        o.write(line[:-1].strip()+"\t")
+        sys.stdout.write(line[:-1].strip()+"\t")
         line=f_in.readline()
         seq=line
         line=f_in.readline()
@@ -70,12 +68,12 @@ def Search_nucleotide(file_bench, file_seq, out_file):
             c+=1
 
         
-        o.write(seq[start_pos:start_pos+m_l].strip()+"\t")
-        o.write(str(score)+"\t")
-        o.write(str(len(seq))+"\t")
-        o.write(str(start_pos)+"\t")
-        o.write(str(start_pos+m_l)+"\n")
-    o.close()
+        sys.stdout.write(seq[start_pos:start_pos+m_l].strip()+"\t")
+        sys.stdout.write(str(score)+"\t")
+        sys.stdout.write(str(len(seq))+"\t")
+        sys.stdout.write(str(start_pos)+"\t")
+        sys.stdout.write(str(start_pos+m_l)+"\n")
+
     
     
-Search_nucleotide(f_bench, f_seq, out_f)
+Search_nucleotide(f_bench, f_seq)
