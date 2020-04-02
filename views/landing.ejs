@@ -16,9 +16,9 @@
 
 <div class="form-header">
   <% if (Object.keys(errors).length === 0) { %>
-    <h2>Input form (choose one)</h2>
+    <h2 class="text-primary">Input form (choose one)</h2>
   <% } else { %>
-    <h3 class="errors-heading">Oops, please correct the following (see at the bottom of the page for more details):</h3>
+    <h3 class="errors-heading text-danger">Oops, please correct the following (see at the bottom of the page for more details):</h3>
     <ul class="errors-list">
       <% Object.values(errors).forEach(error => { %>
         <li><%= error.msg %></li>
