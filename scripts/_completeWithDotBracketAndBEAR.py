@@ -103,7 +103,6 @@ def process_input_rna_molecules(input_rna_molecules, dir_output):
 
     max_rna_seq_len = 3000 if len(input_rna_molecules.split('\n>')) < 1000 else 500
     removed_too_long_rna_molecules = ''
-
     for single_rna in input_rna_molecules.strip('\n>').split('\n>'):
         single_rna_list = [x.strip('\r') for x in single_rna.split('\n')]
 
@@ -167,7 +166,7 @@ search_struct_motifs = 'str' #else ''
 search_seq_motifs = 'nuc' #else ''
 
 dir_user = os.path.join(dir_base, 'results',
-    ''.join(choice(ascii_uppercase) for i in range(32))
+    'AAA'#''.join(choice(ascii_uppercase) for i in range(32))
 )
 
 

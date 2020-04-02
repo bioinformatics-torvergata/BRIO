@@ -26,6 +26,17 @@ var not_valid_inputs_background_str = ''
 var not_valid_rna_molecules_background_str = ''
 var not_valid_secondary_structures_background_str = ''
 
+
+_are_nums_consecutives = function(num_list){
+	var i;
+	for (i = 0; i < num_list.length - 1; i++) {
+		if (num_list[i + 1] - num_list[i] != 1){
+			return false
+		}
+	}
+	return true
+}
+
 _check_rna_sequences = function(input_rna_sequences_str, input_name_str) {
 	var valid_rnas_xxx_str = ''
 	var not_valid_inputs_xxx_str = ''
@@ -44,36 +55,55 @@ _check_rna_sequences = function(input_rna_sequences_str, input_name_str) {
 		header_seq_struct_list = header_seq_struct.replace(/\n$/, '').split('\n').map(function(val, index){
 			return val.replace(/\r$/, '')
 		})
+		
+		num_row = 1
+		rna_molecule = ''
+		valid_rna_row_list = []
+		dot_bracket = ''
+		putative_sec_str_row_list = []
+		for (let row of header_seq_struct_list.slice(1)){
+			if (input_validation_controller.check_rna_sequence(row)){
+				valid_rna_row_list.push(num_row)
+				rna_molecule += row
+			}else{
+				putative_sec_str_row_list.push(num_row)
+				dot_bracket += row
+			}
+
+			num_row += 1
+		}
 
 		// (header + rna_seq) or (header + rna_seq + rna_sec_struct)
-		if (header_seq_struct_list.length != 2 && header_seq_struct_list.length != 3){
+		if ((valid_rna_row_list.length + putative_sec_str_row_list.length) != header_seq_struct_list.length - 1){
 			not_valid_inputs_xxx_str +=  '>' + header_seq_struct
 			return
 		}
 
-		if (
-			!input_validation_controller.check_rna_sequence(header_seq_struct_list[1]) ||
-			header_seq_struct_list[1].length < MIN_LEN_RNA_SEQ
+		if(
+			(valid_rna_row_list.length == 0) ||
+			!_are_nums_consecutives(valid_rna_row_list) ||
+			rna_molecule.length < MIN_LEN_RNA_SEQ
 		){
 			not_valid_rna_molecules_xxx_str += '>' + header_seq_struct
 			return
 		}
 
-		// if (header + rna_seq + rna_sec_struct)
-		if (header_seq_struct_list.length == 3){
-			// if length(rna_seq) != length(rna_sec_struct)
-			if (header_seq_struct_list[1].length != header_seq_struct_list[2].length){
-				not_valid_secondary_structures_xxx_str += '>' + header_seq_struct
-				return
-			}
-
-			if (!input_validation_controller.check_rna_secondary_structure(header_seq_struct_list[2])){
-				not_valid_secondary_structures_xxx_str += '>' + header_seq_struct
-				return
-			}
+		if(
+			putative_sec_str_row_list.length > 0 && (
+				!_are_nums_consecutives(putative_sec_str_row_list) ||
+				!input_validation_controller.check_rna_secondary_structure(dot_bracket)
+			)
+		){
+			not_valid_secondary_structures_xxx_str += '>' + header_seq_struct
+			return
 		}
 
-		valid_rnas_xxx_str +=  '>' + header_seq_struct
+		processed_entry = '>' + header_seq_struct_list[0] + '\n' + rna_molecule + '\n'
+		if (putative_sec_str_row_list.length > 0){
+			processed_entry += dot_bracket + '\n'
+		}
+
+		valid_rnas_xxx_str += processed_entry
 	});
 	
 	return [valid_rnas_xxx_str, not_valid_inputs_xxx_str, not_valid_rna_molecules_xxx_str, not_valid_secondary_structures_xxx_str]
@@ -85,6 +115,7 @@ check_user_input_handler = function(value, {req}) {
 	)
 
 	const not_valid_rnas_str = not_valid_inputs_str + not_valid_rna_molecules_str + not_valid_secondary_structures_str
+
 	if (not_valid_rnas_str == ''){
 		return true
 	}else{
@@ -115,33 +146,38 @@ router.post('/fileInput',
 	body('fileBackground').custom(check_user_background_handler),
 	input_validation_controller.check_email_handler(),
 	(req, res) => {
-		/*
-		//Decide where to put business logic (cicciaController?
-		const pythonProcess = spawn('python', ["scripts/python.py", 
-			"folderProvaText", 
-			"fileTextProva.txt"
-		]);
-		*/
-
-		// AVOID BLOCKING CALLS
-		const pythonProcess = spawn('python3', ["scripts/_completeWithDotBracketAndBEAR.py", 
-			valid_rnas_str, valid_rnas_background_str
-		]);
-		pythonProcess.stdout.on('data',(data) => {
-			console.log('stdout:\n' + data); //test stream python -> node
-		});
-		pythonProcess.stderr.on('data',(data) => {
-			console.error('stderr: ' + data); //test stream python -> node
-		});
-		/*pythonProcess.on('close', (code, signal) => {
-			console.log('scripts/_completeWithDotBracketAndBEAR.py exited with code: '+code +
-			'\nsignal: ' + signal);
-		})*/
-		
-
 		const errors = validationResult(req);
 
-		res.render(errors.isEmpty() ? 'loading' : 'landing',
+		if(errors.isEmpty()){
+			page_to_go = 'loading'
+
+			/*
+			//Decide where to put business logic (cicciaController?
+			const pythonProcess = spawn('python', ["scripts/python.py", 
+				"folderProvaText", 
+				"fileTextProva.txt"
+			]);
+			*/
+
+			// AVOID BLOCKING CALLS
+			const pythonProcess = spawn('python3', ["scripts/_completeWithDotBracketAndBEAR.py", 
+				valid_rnas_str, valid_rnas_background_str
+			]);
+			pythonProcess.stdout.on('data',(data) => {
+				console.log('stdout:\n' + data); //test stream python -> node
+			});
+			pythonProcess.stderr.on('data',(data) => {
+				console.error('stderr: ' + data); //test stream python -> node
+			});
+			pythonProcess.on('close', (code, signal) => {
+				console.log('scripts/_completeWithDotBracketAndBEAR.py exited with code: '+code +
+				'\nsignal: ' + signal);
+			})
+		}else{
+			page_to_go = 'landing'
+		}
+		
+		res.render(page_to_go,
 		{
 			inputRNA: req.body.inputRNA,
 			email: req.body.email,
