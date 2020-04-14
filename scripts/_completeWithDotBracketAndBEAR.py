@@ -165,9 +165,9 @@ is_there_a_background = sys.argv[2]
 search_struct_motifs = 'str' #else ''
 search_seq_motifs = 'nuc' #else ''
 
-dir_user = os.path.join(dir_base, 'results',
-    'AAA'#''.join(choice(ascii_uppercase) for i in range(32))
-)
+user_id = sys.argv[3]
+
+dir_user = os.path.join(dir_base, 'results', user_id)
 
 
 # Directory preparation
@@ -212,6 +212,11 @@ if not is_there_a_background:
         dict_bg[line.split()[0]]=[int(line.split()[2]),int(line.split()[3])]
         line=f.readline()
     f.close()
+
+#PARCLIP
+#HITSCLIP
+#ENCFF
+#CLIPseq
 
 for str_or_nuc, dir_str_or_nuc_motifs in zip(
     [search_struct_motifs, search_seq_motifs],
