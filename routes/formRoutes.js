@@ -158,10 +158,11 @@ router.post('/fileInput',
 				"fileTextProva.txt"
 			]);
 			*/
-
+			userID = (Math.random()*1e32).toString(36);
+			console.log(userID)
 			// AVOID BLOCKING CALLS
 			const pythonProcess = spawn('python3', ["scripts/_completeWithDotBracketAndBEAR.py", 
-				valid_rnas_str, valid_rnas_background_str
+				valid_rnas_str, valid_rnas_background_str, userID
 			]);
 			pythonProcess.stdout.on('data',(data) => {
 				console.log('stdout:\n' + data); //test stream python -> node
