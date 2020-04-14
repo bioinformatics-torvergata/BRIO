@@ -1,5 +1,6 @@
 // Require modules
 const express = require('express');
+const crypto = require("crypto");
 
 var input_validation_controller = require('../controllers/inputValidationController')
 //var ciccia_controller = require('../controllers/cicciaController')
@@ -158,8 +159,9 @@ router.post('/fileInput',
 				"fileTextProva.txt"
 			]);
 			*/
-			userID = (Math.random()*1e32).toString(36);
-			console.log(userID)
+			userID = crypto.randomBytes(16).toString("hex");
+			console.log('user run ID: ' + userID);
+
 			// AVOID BLOCKING CALLS
 			const pythonProcess = spawn('python3', ["scripts/_completeWithDotBracketAndBEAR.py", 
 				valid_rnas_str, valid_rnas_background_str, userID
@@ -180,6 +182,7 @@ router.post('/fileInput',
 		
 		res.render(page_to_go,
 		{
+			userID : userID,
 			inputRNA: req.body.inputRNA,
 			email: req.body.email,
 			inputRNA_processed: {
