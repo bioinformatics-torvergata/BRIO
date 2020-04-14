@@ -149,6 +149,7 @@ router.post('/fileInput',
 	(req, res) => {
 		const errors = validationResult(req);
 
+		userID = ''
 		if(errors.isEmpty()){
 			page_to_go = 'loading'
 
