@@ -19,4 +19,16 @@ $(function () {
   		$(".chosen-select").chosen({
   			no_results_text: "Oops, nothing found!"
 		});
+
+
+      $("#ex_wo_str").click(() => {
+        $("#inputRNA").val(">chr1:149784741-149784985(-)\
+          CUUCCAGAGCUCGGCCGUGAUGGCGCUGCAGGAGGCCAGCGAGGCCUACCUGGUGGGGCUGUUCGAAGACACGAACCUGUGCGCCAUCCAUGCCAAGCGCGUGACCAUCAUGCCCAAGGACAUCCAGUUGGCCCGCCGCAUCCGCGGGGAGCGGGCCUAAGGCAUAUUUUUAAGUGGUCGAUCUAAAGGCUCUUUUCAGAGCCACUGCCGUUUUCAUCAAGAGCAGCUGUACCGGCUCUCCAUC");
+      });
+
+      $("#ex_w_str").click(() => {
+        $("#inputRNA").val(">chr1:149784741\-149784985(-)\
+          CUUCCAGAGCUCGGCCGUGAUGGCGCUGCAGGAGGCCAGCGAGGCCUACCUGGUGGGGCUGUUCGAAGACACGAACCUGUGCGCCAUCCAUGCCAAGCGCGUGACCAUCAUGCCCAAGGACAUCCAGUUGGCCCGCCGCAUCCGCGGGGAGCGGGCCUAAGGCAUAUUUUUAAGUGGUCGAUCUAAAGGCUCUUUUCAGAGCCACUGCCGUUUUCAUCAAGAGCAGCUGUACCGGCUCUCCAUC\
+          .....(((((.(((..(.((((((((.(((((((.((.((.(((....))).)).)).)).((((......))))))))))))))))))((((.....))))((((((.(((((...((....))....(((((((....(((....))))))))))...)))))........))))))........((((((....))))))((.((.(((((.....))))).)).)).)))))))).....")
+      });
 });
