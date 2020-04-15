@@ -5,13 +5,15 @@ $(function () {
   		
   		$('#format_pop_1').popover({
   			html: true,
-  			content: 'input sequences are accepted in multiFASTA format:\
+  			content: 'input sequences are accepted in multiFASTA format\
+        and are parsed as blocks. For each sequence:\
   			<ul><li>The line containing the name and/or the description of the \
   			sequence starts with a ">";</li><li> \
 			The words following the ">" are interpreted as the RNA id;</li><li>\
-			The following line should be the RNA nucleotide sequence;</li><li>\
-			Any third line is interpreted as secondary structure information (Optional\
-			in dot-bracket)</li></ul>\
+			The subsequent line(s) should be the RNA nucleotide sequence. \
+      Multiline FASTA are accepted;</li><li>\
+			The subsequent block can contain secondary structure information (Optional\
+			in dot-bracket);</li></ul>\
 			<em>(click again to dismiss)</em>',
 			placement: 'right'
   		});
