@@ -20,15 +20,24 @@ $(function () {
   			no_results_text: "Oops, nothing found!"
 		});
 
+      //populate text area with examples
+       $("#ex_w_str").click(function() {
+           $.ajax({
+               url : "examples/example_w_struct.txt",
+               dataType: "text",
+               success : function (data) {
+                   $("#inputRNA").val(data);
+               }
+           });
+       });
+       $("#ex_wo_str").click(function() {
+           $.ajax({
+               url : "examples/example_wo_struct.txt",
+               dataType: "text",
+               success : function (data) {
+                   $("#inputRNA").val(data);
+               }
+           });
+       });
 
-      $("#ex_wo_str").click(() => {
-        $("#inputRNA").val(">chr1:149784741-149784985(-)\
-          CUUCCAGAGCUCGGCCGUGAUGGCGCUGCAGGAGGCCAGCGAGGCCUACCUGGUGGGGCUGUUCGAAGACACGAACCUGUGCGCCAUCCAUGCCAAGCGCGUGACCAUCAUGCCCAAGGACAUCCAGUUGGCCCGCCGCAUCCGCGGGGAGCGGGCCUAAGGCAUAUUUUUAAGUGGUCGAUCUAAAGGCUCUUUUCAGAGCCACUGCCGUUUUCAUCAAGAGCAGCUGUACCGGCUCUCCAUC");
-      });
-
-      $("#ex_w_str").click(() => {
-        $("#inputRNA").val(">chr1:149784741\-149784985(-)\
-          CUUCCAGAGCUCGGCCGUGAUGGCGCUGCAGGAGGCCAGCGAGGCCUACCUGGUGGGGCUGUUCGAAGACACGAACCUGUGCGCCAUCCAUGCCAAGCGCGUGACCAUCAUGCCCAAGGACAUCCAGUUGGCCCGCCGCAUCCGCGGGGAGCGGGCCUAAGGCAUAUUUUUAAGUGGUCGAUCUAAAGGCUCUUUUCAGAGCCACUGCCGUUUUCAUCAAGAGCAGCUGUACCGGCUCUCCAUC\
-          .....(((((.(((..(.((((((((.(((((((.((.((.(((....))).)).)).)).((((......))))))))))))))))))((((.....))))((((((.(((((...((....))....(((((((....(((....))))))))))...)))))........))))))........((((((....))))))((.((.(((((.....))))).)).)).)))))))).....")
-      });
 });
