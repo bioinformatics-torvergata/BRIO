@@ -5,7 +5,7 @@ const reg_exp_rna_secondary_structure = new RegExp('^[\(\)\.]+$');
 
 exports.check_email_handler = function(req, res) {
 	return body('email', 'The email does not look right.')
-		//.optional({ checkFalsy: true })
+		.optional({ checkFalsy: true })
 		.isEmail()
 };
 
