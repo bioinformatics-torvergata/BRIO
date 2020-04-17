@@ -25,6 +25,8 @@ parser.add_argument('--motifs','-m', dest='motifsFile', action='store',
                     help='target motifs file')
 parser.add_argument('--sequence', dest='seqFlag', action='store_true',
                     help='for running the search on sequences instead of structures')
+parser.add_argument('--output','-o', dest='output', action='store', default="stdout",
+                    help='output file. Default: stdout')
 args = parser.parse_args()
 
 #read input
@@ -176,8 +178,12 @@ for name in seqs:
     else:
         focus = 'bear'
     to_align = seqs[name][focus]
-    print(compare(to_align, motifs, read_MBR(mbr_path), bear_string, args.seqFlag))
-
+    out = compare(to_align, motifs, read_MBR(mbr_path), bear_string, args.seqFlag)
+    if args.output == 'stdout':
+        print(out)
+    else:
+        with open(args.output, 'w') as f:
+            print(out, file=f)
 
 
 
