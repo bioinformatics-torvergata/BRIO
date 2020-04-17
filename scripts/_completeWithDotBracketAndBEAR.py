@@ -213,10 +213,13 @@ if not is_there_a_background:
         line=f.readline()
     f.close()
 
-#PARCLIP
-#HITSCLIP
-#ENCFF
-#CLIPseq
+
+
+#CLIPseq  <- hg19 and mm9
+#ENCFF    <- ??? (hg19?)
+#HITSCLIP <- hg19 and mm9
+#PARCLIP  <- hg19 and mm9
+
 
 for str_or_nuc, dir_str_or_nuc_motifs in zip(
     [search_struct_motifs, search_seq_motifs],
