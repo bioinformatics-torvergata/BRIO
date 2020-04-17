@@ -1,4 +1,6 @@
 results/**
+motifs_nuc/*
+motifs_str/*
 
 #to stage an empty folder
 !results/.gitkeep 
