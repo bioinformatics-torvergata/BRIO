@@ -23,7 +23,8 @@ parser.add_argument('--input','-i', dest='inputFile', action='store',
                     help='input multiFasta with BEAR notation')
 parser.add_argument('--motifs','-m', dest='motifsFile', action='store',
                     help='target motifs file')
-
+parser.add_argument('--sequence', dest='seqFlag', action='store_true',
+                    help='for running the search on sequences instead of structures')
 args = parser.parse_args()
 
 #read input
@@ -64,7 +65,11 @@ def parse_name(line):
     """change as needed"""
     return line.strip()
 
-def parse_motif(motifpath):
+def parse_motif(motifpath, seqFlag=False):
+    if seqFlag:
+        token = "#NT"
+    else:
+        token = "#BEAR"
     PSSM = {}
     with open(motifpath) as f:
         
@@ -76,7 +81,7 @@ def parse_motif(motifpath):
                 
                 PSSM[name] = {}
                 
-            if line.startswith("#BEAR"):
+            if line.startswith(token):
                 """get threshold score"""
                 scores = []
                 line=f.readline()
@@ -107,20 +112,20 @@ def read_MBR(mbr_path, size = 83):
     return np.fromfile(mbr_path, sep=",").reshape(size,size)
 
 
-def compare(rna, motifs, mbr, bear_string):
+def compare(rna, motifs, mbr, bear_string, seqFlag=False):
     """scores one rna against all motifs
     rna: string
     motifs: dictionary -- motifs[name][thr/PSSM]"""
     results = {}
     for motif in motifs:
         thr = motifs[motif]['thr']
-        motif_size = len(motifs[motif]['PSSM'])
-        best_score, position = score(rna, motifs[motif]['PSSM'], motif_size, mbr, bear_string)
+        motif_size = len(motifs[motif]['PSSM'])            
+        best_score, position = score(rna, motifs[motif]['PSSM'], motif_size, mbr, bear_string, seqFlag)
         results[motif] = (best_score, thr, position, motif_size)
         
     return results
 
-def score(rna, pssm, motif_size, mbr, bear_string):
+def score(rna, pssm, motif_size, mbr, bear_string, seqFlag = False, match=3, mismatch=-2):
     """tests all possible ungapped alignments"""
     best_score= -9999
     position=-1
@@ -132,8 +137,10 @@ def score(rna, pssm, motif_size, mbr, bear_string):
                 position_score = 0.0
                 for b_char in b_list:
                     #frequency * subs(i,j)
-                    position_score += b_list[b_char] * mbr[ bear_string.index(b_char), bear_string.index(b_rna) ]
-                    
+                    if not seqFlag:
+                        position_score += b_list[b_char] * mbr[ bear_string.index(b_char), bear_string.index(b_rna) ]
+                    else:     
+                        position_score += b_list[b_char] * (match if b_char == b_rna else mismatch)
                 slice_score += position_score
             if slice_score > best_score:
                 best_score = slice_score
@@ -145,7 +152,10 @@ def score(rna, pssm, motif_size, mbr, bear_string):
                 position_score = 0.0
                 for b_char in b_list:
                     #frequency * subs(i,j)
-                    position_score += b_list[b_char] * mbr[ bear_string.index(b_char), bear_string.index(b_rna) ]
+                    if not seqFlag:
+                        position_score += b_list[b_char] * mbr[ bear_string.index(b_char), bear_string.index(b_rna) ]
+                    else:     
+                        position_score += b_list[b_char] * (match if b_char == b_rna else mismatch)
                     
                 slice_score += position_score
             if slice_score > best_score:
@@ -157,12 +167,16 @@ def score(rna, pssm, motif_size, mbr, bear_string):
 
 
 seqs = parse_input(args.inputFile)
-motifs = parse_motif(args.motifsFile)
+motifs = parse_motif(args.motifsFile, args.seqFlag)
 
 
 for name in seqs:
-    to_align = seqs[name]['bear']
-    print(compare(to_align, motifs, read_MBR(mbr_path), bear_string))
+    if args.seqFlag:
+        focus = 'seq'
+    else:
+        focus = 'bear'
+    to_align = seqs[name][focus]
+    print(compare(to_align, motifs, read_MBR(mbr_path), bear_string, args.seqFlag))
 
 
 
