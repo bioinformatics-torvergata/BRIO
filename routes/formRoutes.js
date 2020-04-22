@@ -149,23 +149,22 @@ router.post('/fileInput',
 	(req, res) => {
 		const errors = validationResult(req);
 
+		if (req.body.options_species == null){
+			req.body.options_species = '.'
+		}
+		if (req.body.options_experiments == null){
+			req.body.options_experiments = '.'
+		}
+
 		userID = ''
 		if(errors.isEmpty()){
 			page_to_go = 'loading'
 
-			/*
-			//Decide where to put business logic (cicciaController?
-			const pythonProcess = spawn('python', ["scripts/python.py", 
-				"folderProvaText", 
-				"fileTextProva.txt"
-			]);
-			*/
 			userID = crypto.randomBytes(16).toString("hex");
 			console.log('user run ID: ' + userID);
 
-			// AVOID BLOCKING CALLS
 			const pythonProcess = spawn('python3', ["scripts/_completeWithDotBracketAndBEAR.py", 
-				valid_rnas_str, valid_rnas_background_str, userID
+				valid_rnas_str, valid_rnas_background_str, userID, req.body.options_species, req.body.options_experiments
 			]);
 			pythonProcess.stdout.on('data',(data) => {
 				console.log('stdout:\n' + data); //test stream python -> node
