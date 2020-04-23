@@ -224,11 +224,7 @@ for str_or_nuc, dir_str_or_nuc_motifs in zip(
                 for filename_motif in os.listdir(dir_str_or_nuc_motifs):
                     experiment, specie = filename_motif.split('_')[1:3]
 
-                    if re.findall(r"(?=("+'|'.join(species_list)+r"))", specie) and re.findall(r"(?=("+'|'.join(experiments_list)+r"))", experiment):
-                        print('CIAO', str_or_nuc, filename_motif)
-                        if 'HITS' not in filename_motif:
-                            continue
-                        
+                    if re.findall(r"(?=("+'|'.join(species_list)+r"))", specie) and re.findall(r"(?=("+'|'.join(experiments_list)+r"))", experiment):                        
                         path_str_or_nuc_search_out = os.path.join(dir_user, 'search_out.{}.txt'.format(filename_motif))
                         run_search(
                             dir_base,
