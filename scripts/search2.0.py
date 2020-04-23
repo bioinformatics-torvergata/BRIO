@@ -90,9 +90,12 @@ def parse_motif(motifpath, seqFlag=False):
                 while(line and line != "\n"):
                     scores.append(float(line.split()[5]))
                     line=f.readline()
-                thr = np.min(scores)
-                
+
+                if scores:
+                    thr = np.min(scores)
+                else: thr = 9999    
                 PSSM[name]['thr'] = thr
+
                 
             if line.startswith("#PSSM"):
                 line=f.readline()
@@ -170,7 +173,7 @@ def score(rna, pssm, motif_size, mbr, bear_string, seqFlag = False, match=3, mis
 
 seqs = parse_input(args.inputFile)
 motifs = parse_motif(args.motifsFile, args.seqFlag)
-
+print(motifs)
 
 for name in seqs:
     if args.seqFlag:
