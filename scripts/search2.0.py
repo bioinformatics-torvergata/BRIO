@@ -178,7 +178,7 @@ def score(rna, pssm, motif_size, mbr, bear_string, seqFlag = False, match=3, mis
 
 seqs = parse_input(args.inputFile)
 motifs = parse_motif(args.motifsFile, args.seqFlag)
-print(motifs)
+#print(motifs)
 
 for name in seqs:
     if args.seqFlag:
