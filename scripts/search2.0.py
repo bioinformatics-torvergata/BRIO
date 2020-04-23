@@ -10,6 +10,7 @@ import argparse
 
 import numpy as np
 
+from exceptions import *
 #paths
 mbr_path = "resources/mbr.csv"
 
@@ -70,8 +71,11 @@ def parse_name(line):
 def parse_motif(motifpath, seqFlag=False):
     if seqFlag:
         token = "#NT"
+        antitoken = "#BEAR"
     else:
         token = "#BEAR"
+        antitoken = "#NT"
+
     PSSM = {}
     with open(motifpath) as f:
         
@@ -82,7 +86,8 @@ def parse_motif(motifpath, seqFlag=False):
                 name = parse_name(line)
                 
                 PSSM[name] = {}
-                
+            if line.startswith(antitoken):
+                raise MotifGroupError("The parameters and the motif file specified do not match Guarracì!")
             if line.startswith(token):
                 """get threshold score"""
                 scores = []
