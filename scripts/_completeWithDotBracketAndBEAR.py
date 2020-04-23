@@ -21,23 +21,18 @@ import scipy.stats as stats
 
 outer = re.compile(" (.+)$")
 
-def run_search(dir_base, path_motif, path_input_seq_struct_bear, str_else_nuc):
-    print(' '.join([
-            'python3', os.path.join(dir_base, 'scripts', 'search2.0.py'),
-            '--input', path_input_seq_struct_bear,
-            '--motifs', path_motif,
-        ] + ([] if str_else_nuc else ['--sequence'])
-    ))
-    return subprocess.check_output(
+def run_search(dir_base, path_motif, path_input_seq_struct_bear, str_else_nuc, path_output):
+    subprocess.Popen(
         [
             'python3', os.path.join(dir_base, 'scripts', 'search2.0.py'),
             '--input', path_input_seq_struct_bear,
             '--motifs', path_motif,
+            '--output', path_output
         ] + ([] if str_else_nuc else ['--sequence'])
         ,
         # To get strings
         universal_newlines=True
-    )
+    ).wait()
 
 def perc_seq_motif(motif, inp_search,dic, str_else_nuc):
     #num seq col motivo
@@ -226,8 +221,6 @@ for str_or_nuc, dir_str_or_nuc_motifs in zip(
         ):
             # The background path can be empty
             if path_complete_input_rna_molecules_xxx:
-                input_or_background_to_result_to_output_dict[input_or_background] = {}
-
                 for filename_motif in os.listdir(dir_str_or_nuc_motifs):
                     experiment, specie = filename_motif.split('_')[1:3]
 
@@ -236,20 +229,21 @@ for str_or_nuc, dir_str_or_nuc_motifs in zip(
                         if 'HITS' not in filename_motif:
                             continue
                         
-                        input_or_background_to_result_to_output_dict[input_or_background][filename_motif] = run_search(
+                        path_str_or_nuc_search_out = os.path.join(dir_user, 'search_out.{}.txt'.format(filename_motif))
+                        run_search(
                             dir_base,
                             os.path.join(dir_str_or_nuc_motifs, filename_motif),
                             path_complete_input_rna_molecules_xxx,
                             str_or_nuc == 'str',
+                            path_str_or_nuc_search_out
                         )
 
-                        #print('A', input_or_background_to_result_to_output_dict[input_or_background][filename_motif])
-
-        result_to_write_list = []
-        for motif_key, output_result in input_or_background_to_result_to_output_dict['input'].items():
-            print(motif_key, output_result[:10])
-
-
-print('END')
-
 # To remove temporary files (path_missing_dot_bracket_input, path_missing_bear_input, ...)
+
+for path_tmp_file in [os.path.join(dir_user, x) for x in os.listdir(dir_user) if x.startswith('tmp.')]:
+    print('Remove', path_tmp_file)
+    os.remove(path_tmp_file)
+
+with open(os.path.join(dir_user, 'Out.log'), 'w') as fw:
+    fw.write('done')
+    # This log file could be used to write something during the searches to estimate the remaining time
