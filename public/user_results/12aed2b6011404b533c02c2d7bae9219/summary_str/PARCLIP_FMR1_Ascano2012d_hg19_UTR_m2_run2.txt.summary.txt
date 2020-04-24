@@ -1,3 +1,0 @@
-name	motif	score	length	start	end	threshold
->chr1:149783661-149783992(-)	!!a!!bboooooobb22a22	5.374871070890559	331	252	272	7.026
->chr1:149784741-149784985(-)	bb[eeeeennnnneeeee]b	10.181436563083013	244	206	226	7.026
