@@ -1,0 +1,3 @@
+name	motif	score	length	start	end	threshold
+>chr1:149783661-149783992(-)	UGU	8.91	332	238	241	8.9999
+>chr1:149784741-149784985(-)	UGU	8.91	245	227	230	8.9999

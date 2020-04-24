@@ -1,0 +1,3 @@
+name	motif	score	length	start	end	threshold
+>chr1:149784741-149784985(-)	ggggggg####cccmmmmcccggggggg	2.6305382171062512	244	129	157	20.3539
+>chr1:149783661-149783992(-)	G::ffffffuuuuuuuuuuuuffffff:	19.97583365404998	331	7	35	20.3539
