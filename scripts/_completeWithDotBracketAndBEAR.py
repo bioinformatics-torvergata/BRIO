@@ -178,25 +178,6 @@ if is_there_a_background:
 species_list = sys.argv[4].split(',')
 experiments_list = sys.argv[5].split(',')
 
-# To load this one-time only when the server starts and for all the users(?)
-protein_to_domains_dict = {}
-with open(os.path.join(dir_base, 'resources', 'dict_prot_dom.txt')) as f:
-    for line in f:
-        line_list = line.strip('\n').split('\t')
-        protein_to_domains_dict[line_list[0].upper()] = line_list[1:]
-        
-# To load this one-time only when the server starts and for all the users(?)
-str_or_nuc_motif_to_threshold_dict = {
-    'str': {},
-    'nuc': {}
-}
-for str_or_nuc in str_or_nuc_motif_to_threshold_dict.keys():
-    with open(os.path.join(dir_base, 'resources', 'dict_{}.txt'.format(str_or_nuc))) as f:
-        for line in f:
-            key, value = line.strip('\n').split('\t')
-            str_or_nuc_motif_to_threshold_dict[str_or_nuc][key] = float(value)
-
-
 if not is_there_a_background:
     #creo dizionario per bg: chiave=nome, lista=[major, minor]
     f=open(os.path.join(dir_base, 'resources', 'summary_AutoBg.txt'))
