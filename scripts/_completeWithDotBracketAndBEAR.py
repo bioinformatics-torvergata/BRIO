@@ -188,12 +188,16 @@ if not is_there_a_background:
         line=f.readline()
     f.close()
 
+
+path_str_or_nuc_search_out_dict = {}
+
 for str_or_nuc, dir_str_or_nuc_motifs in zip(
     [search_struct_motifs, search_seq_motifs],
     [dir_struct_motifs, dir_nucleotide_motifs],
 ):
     if str_or_nuc:
-        input_or_background_to_result_to_output_dict = {}
+        path_str_or_nuc_search_out_dict[str_or_nuc] = []
+
         # For input and (eventually) the background
         for path_complete_input_rna_molecules_xxx, input_or_background in zip(
             [path_complete_input_rna_molecules, path_complete_input_rna_molecules_background],
@@ -213,12 +217,24 @@ for str_or_nuc, dir_str_or_nuc_motifs in zip(
                             str_or_nuc == 'str',
                             path_str_or_nuc_search_out
                         )
+                        path_str_or_nuc_search_out_dict[str_or_nuc].append(path_str_or_nuc_search_out)
 
-# To remove temporary files (path_missing_dot_bracket_input, path_missing_bear_input, ...)
 
+# Remove temporary files
 for path_tmp_file in [os.path.join(dir_user, x) for x in os.listdir(dir_user) if x.startswith('tmp.')]:
     print('Remove', path_tmp_file)
     os.remove(path_tmp_file)
+
+# Dirty temporary solution
+with open(os.path.join(dir_user, 'results.html'), 'w') as fw:
+    for str_or_nuc, path_str_or_nuc_search_out_list in path_str_or_nuc_search_out_dict.items():
+        fw.write(str_or_nuc + '<br/>')
+        for path_str_or_nuc_search_out in path_str_or_nuc_search_out_list:
+            fw.write('<h4>{}</h4>'.format(path_str_or_nuc_search_out.split('/')[-1]))
+
+            with open(path_str_or_nuc_search_out) as f:
+                fw.write('{}<br/>'.format(f.read()))
+        fw.write("<hr/>")
 
 with open(os.path.join(dir_user, 'Out.log'), 'w') as fw:
     fw.write('done')
