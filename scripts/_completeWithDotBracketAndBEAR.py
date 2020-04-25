@@ -188,7 +188,6 @@ if not is_there_a_background:
         line=f.readline()
     f.close()
 
-import re
 for str_or_nuc, dir_str_or_nuc_motifs in zip(
     [search_struct_motifs, search_seq_motifs],
     [dir_struct_motifs, dir_nucleotide_motifs],
