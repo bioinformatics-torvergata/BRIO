@@ -221,9 +221,7 @@ for str_or_nuc, dir_str_or_nuc_motifs in zip(
         ):
             # The background path can be empty
             if path_complete_input_rna_molecules_xxx:
-                for filename_motif in os.listdir(dir_str_or_nuc_motifs):
-                    if filename_motif == ".DS_Store":
-                        continue
+                for filename_motif in [x for x in os.listdir(dir_str_or_nuc_motifs) if x.startswith('motifs_')]:
                     experiment, specie = filename_motif.split('_')[1:3]
 
                     if re.findall(r"(?=("+'|'.join(species_list)+r"))", specie) and re.findall(r"(?=("+'|'.join(experiments_list)+r"))", experiment):                        
