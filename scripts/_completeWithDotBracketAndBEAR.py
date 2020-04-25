@@ -235,7 +235,3 @@ with open(os.path.join(dir_user, 'results.html'), 'w') as fw:
             with open(path_str_or_nuc_search_out) as f:
                 fw.write('{}<br/>'.format(f.read()))
         fw.write("<hr/>")
-
-with open(os.path.join(dir_user, 'Out.log'), 'w') as fw:
-    fw.write('done')
-    # This log file could be used to write something during the searches to estimate the remaining time
