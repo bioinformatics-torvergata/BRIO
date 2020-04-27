@@ -198,6 +198,7 @@ router.post('/fileInput',
 				'not_valid_secondary_structures': not_valid_secondary_structures_background_str
 			},
 			errors: errors.mapped(),
+			progress: '0',
 		});
 	}
 )
