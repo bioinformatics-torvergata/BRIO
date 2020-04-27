@@ -189,49 +189,74 @@ if not is_there_a_background:
     f.close()
 
 
-path_str_or_nuc_search_out_dict = {}
+
+path_str_or_nuc_motif_to_search_dict = {}
 
 for str_or_nuc, dir_str_or_nuc_motifs in zip(
     [search_struct_motifs, search_seq_motifs],
     [dir_struct_motifs, dir_nucleotide_motifs],
 ):
     if str_or_nuc:
-        path_str_or_nuc_search_out_dict[str_or_nuc] = []
+        path_str_or_nuc_motif_to_search_dict[str_or_nuc] = []
+    
+        for filename_motif in [x for x in os.listdir(dir_str_or_nuc_motifs) if x.startswith('motifs_')]:
+            experiment, specie = filename_motif.split('_')[1:3]
 
-        # For input and (eventually) the background
-        for path_complete_input_rna_molecules_xxx, input_or_background in zip(
-            [path_complete_input_rna_molecules, path_complete_input_rna_molecules_background],
-            ['input', 'background']
-        ):
-            # The background path can be empty
-            if path_complete_input_rna_molecules_xxx:
-                for filename_motif in [x for x in os.listdir(dir_str_or_nuc_motifs) if x.startswith('motifs_')]:
-                    experiment, specie = filename_motif.split('_')[1:3]
+            if re.findall(r"(?=("+'|'.join(species_list)+r"))", specie) and re.findall(r"(?=("+'|'.join(experiments_list)+r"))", experiment):                        
+                path_str_or_nuc_motif_to_search_dict[str_or_nuc].append(os.path.join(dir_str_or_nuc_motifs, filename_motif))
 
-                    if re.findall(r"(?=("+'|'.join(species_list)+r"))", specie) and re.findall(r"(?=("+'|'.join(experiments_list)+r"))", experiment):                        
-                        path_str_or_nuc_search_out = os.path.join(dir_user, 'search_out.{}.txt'.format(filename_motif.split(".")[0]))
+
+path_str_or_nuc_search_out_dict = {}
+
+with open(os.path.join(dir_user, 'Out.log'), 'w') as fw:
+    for str_or_nuc, dir_str_or_nuc_motifs in zip(
+        [search_struct_motifs, search_seq_motifs],
+        [dir_struct_motifs, dir_nucleotide_motifs],
+    ):
+        if str_or_nuc:
+            fw.write('{} search\n'.format(str_or_nuc))
+
+            path_str_or_nuc_search_out_dict[str_or_nuc] = []
+
+            c = 0
+            # For input and (eventually) the background
+            for path_complete_input_rna_molecules_xxx, input_or_background in zip(
+                [path_complete_input_rna_molecules, path_complete_input_rna_molecules_background],
+                ['input', 'background']
+            ):
+                # The background path can be empty
+                if path_complete_input_rna_molecules_xxx:
+                    for path_motif in path_str_or_nuc_motif_to_search_dict[str_or_nuc]:
+                        path_str_or_nuc_search_out = os.path.join(dir_user, 'search_out.{}.txt'.format(
+                            os.path.basename(path_motif).split(".")[0])
+                        )
                         run_search(
                             dir_base,
-                            os.path.join(dir_str_or_nuc_motifs, filename_motif),
+                            path_motif,
                             path_complete_input_rna_molecules_xxx,
                             str_or_nuc == 'str',
                             path_str_or_nuc_search_out
                         )
                         path_str_or_nuc_search_out_dict[str_or_nuc].append(path_str_or_nuc_search_out)
 
+                        c += 1
+                        fw.write('search on {} database completed ({} / {})'.format(filename_motif, c, len(path_str_or_nuc_motif_to_search_dict[str_or_nuc])))
+
+# Dirty temporary solution
+with open(os.path.join(dir_user, 'results.html'), 'w') as fw:
+    for str_or_nuc, path_str_or_nuc_search_out_list in path_str_or_nuc_search_out_dict.items():
+        fw.write('<h3>{}</h3>'.format(str_or_nuc))
+        for path_str_or_nuc_search_out in path_str_or_nuc_search_out_list:
+            fw.write('<h5>{}</h5>'.format(path_str_or_nuc_search_out.split('/')[-1]))
+
+            with open(path_str_or_nuc_search_out) as f:
+                fw.write('{}<br/>'.format(f.read()))
+        fw.write("<hr/>")
+
+with open(os.path.join(dir_user, 'Out.log'), 'w') as fw:
+    fw.write('100')
 
 # Remove temporary files
 for path_tmp_file in [os.path.join(dir_user, x) for x in os.listdir(dir_user) if x.startswith('tmp.')]:
     print('Remove', path_tmp_file)
     os.remove(path_tmp_file)
-
-# Dirty temporary solution
-with open(os.path.join(dir_user, 'results.html'), 'w') as fw:
-    for str_or_nuc, path_str_or_nuc_search_out_list in path_str_or_nuc_search_out_dict.items():
-        fw.write(str_or_nuc + '<br/>')
-        for path_str_or_nuc_search_out in path_str_or_nuc_search_out_list:
-            fw.write('<h4>{}</h4>'.format(path_str_or_nuc_search_out.split('/')[-1]))
-
-            with open(path_str_or_nuc_search_out) as f:
-                fw.write('{}<br/>'.format(f.read()))
-        fw.write("<hr/>")
