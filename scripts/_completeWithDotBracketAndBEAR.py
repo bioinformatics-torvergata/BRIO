@@ -215,10 +215,10 @@ with open(os.path.join(dir_user, 'Out.log'), 'w') as fw:
     ):
         if str_or_nuc:
             fw.write('{} search\n'.format(str_or_nuc))
+            fw.flush()
 
             path_str_or_nuc_search_out_dict[str_or_nuc] = []
 
-            c = 0
             # For input and (eventually) the background
             for path_complete_input_rna_molecules_xxx, input_or_background in zip(
                 [path_complete_input_rna_molecules, path_complete_input_rna_molecules_background],
@@ -226,7 +226,12 @@ with open(os.path.join(dir_user, 'Out.log'), 'w') as fw:
             ):
                 # The background path can be empty
                 if path_complete_input_rna_molecules_xxx:
-                    for path_motif in path_str_or_nuc_motif_to_search_dict[str_or_nuc]:
+                    for i, path_motif in enumerate(path_str_or_nuc_motif_to_search_dict[str_or_nuc]):
+                        fw.write('search on {} database completed ({} / {}) ---> '.format(
+                            os.path.basename(path_motif), i + 1, len(path_str_or_nuc_motif_to_search_dict[str_or_nuc]))
+                        )
+                        fw.flush()
+
                         path_str_or_nuc_search_out = os.path.join(dir_user, 'search_out.{}.txt'.format(
                             os.path.basename(path_motif).split(".")[0])
                         )
@@ -238,9 +243,8 @@ with open(os.path.join(dir_user, 'Out.log'), 'w') as fw:
                             path_str_or_nuc_search_out
                         )
                         path_str_or_nuc_search_out_dict[str_or_nuc].append(path_str_or_nuc_search_out)
+                        fw.write('done\n')
 
-                        c += 1
-                        fw.write('search on {} database completed ({} / {})'.format(filename_motif, c, len(path_str_or_nuc_motif_to_search_dict[str_or_nuc])))
 
 # Dirty temporary solution
 with open(os.path.join(dir_user, 'results.html'), 'w') as fw:
