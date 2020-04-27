@@ -44,9 +44,10 @@
         <a class="nav-link" href="/about">About</a>
       </li>
     </ul>
-    <form class="navbar-form navbar-left" action="" id="search-uid">
+    <form class="navbar-form navbar-left" action="/waiting" 
+    method = "post" enctype="multipart/form-data" id="search-uid">
         <div class="d-inline-block">
-          <input type="text" id ="uid" class="form-control" placeholder="Insert your run ID">
+          <input type="text" id ="uid" name="uid" class="form-control" placeholder="Insert your run ID">
         </div>
         <button type="submit" class="btn btn-default"><span class="fa fa-search"></span></button>
 
