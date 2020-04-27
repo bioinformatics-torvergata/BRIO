@@ -7,8 +7,12 @@ var fs = require('fs');
 
 _check_completeness = function(uid){
 	//check Out.log, Sync, because otherwise there is a race for the output
-	var contents = fs.readFileSync("results/"+uid+"/Out.log", 'utf8');
-	return contents;
+	if (fs.existsSync("results/"+uid+"/Out.log")) {
+		var contents = fs.readFileSync("results/"+uid+"/Out.log", 'utf8');
+		return contents;
+	}else{
+		return '0';
+	}
 }
 
 router.post('/waiting',
