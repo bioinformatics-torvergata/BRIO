@@ -28,7 +28,7 @@
     "bootstrap": "^4.4.1",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
-    "express-fileupload": "^1.1.6",
+    "express-fileupload": "^1.1.9",
     "express-static": "^1.2.6",
     "express-validator": "^6.4.0",
     "jquery": "^3.5.0",
