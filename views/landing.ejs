@@ -10,180 +10,186 @@
 <%- include ("partials/header.ejs") %>
 
 
-
-
 <!-- INPUT FORM -->
 
 <div class="form-header">
-  <% if (Object.keys(errors).length === 0) { %>
-    <h2 class="text-primary">Input form (choose one)</h2>
-  <% } else { %>
-    <h3 class="errors-heading text-danger">Oops, please correct the following (see at the bottom of the page for more details):</h3>
-    <ul class="errors-list">
-      <% Object.values(errors).forEach(error => { %>
-        <li><%= error.msg %></li>
-      <% }) %>
-    </ul>
-  <% } %>
-  <button title="Format" id="format_pop_1" type="button" class="btn btn-secondary" data-container="body" data-toggle="popover">
-          Format help
-        </button>
+    <% if (Object.keys(errors).length === 0) { %>
+        <h2 class="text-primary">Input form (choose one)</h2>
+    <% } else { %>
+        <h3 class="errors-heading text-danger">Oops, please correct the following (see at the bottom of the page for
+            more details):</h3>
+        <ul class="errors-list">
+            <% Object.values(errors).forEach(error => { %>
+                <li><%= error.msg %></li>
+            <% }) %>
+        </ul>
+    <% } %>
+    <button title="Format" id="format_pop_1" type="button" class="btn btn-secondary" data-container="body"
+            data-toggle="popover">
+        Format help
+    </button>
 </div>
-
-
 
 
 <!--INPUT-->
 <div class='form container'>
-  <form method="post" action="/go/fileInput" novalidate enctype="multipart/form-data">
+    <form method="post" action="/go/fileInput" novalidate enctype="multipart/form-data">
 
-    <table class='container-fluid'><tr><td>
+        <table class='container-fluid'>
+            <tr>
+                <td>
 
-    <fieldset class='form-fieldset container rounded'>
-      <!--TEXT-->
-      <h3 class='form-fieldset'>Text Input</h3>
-      <div class="form-field form-group <%= errors.message ? 'form-field-invalid' : '' %>" >
-        <label for="inputRNA">Input RNA</label> 
-        <input type="button" value="Example without structures" id="ex_wo_str" 
-        class ="btn btn-light">
-        <input type="button" value="Example with structures" id="ex_w_str"
-        class ="btn btn-light">
+                    <fieldset class='form-fieldset container rounded'>
+                        <!--TEXT-->
+                        <h3 class='form-fieldset'>Text Input</h3>
+                        <div class="form-field form-group <%= errors.message ? 'form-field-invalid' : '' %>">
+                            <label for="inputRNA">Input RNA</label>
+                            <input type="button" value="Example without structures" id="ex_wo_str"
+                                   class="btn btn-light">
+                            <input type="button" value="Example with structures" id="ex_w_str"
+                                   class="btn btn-light">
 
-        
 
-        <textarea class="input form-control" id="inputRNA" name="inputRNA" autofocus><%= inputRNA %></textarea>
-        <% if (errors.message) { %>
-          <div class="error"><%= errors.message.msg %></div>
-        <% } %>
-      </div>
-    </fieldset>
+                            <textarea class="input form-control" id="inputRNA" name="inputRNA"
+                                      autofocus><%= inputRNA %></textarea>
+                            <% if (errors.message) { %>
+                                <div class="error"><%= errors.message.msg %></div>
+                            <% } %>
+                        </div>
+                    </fieldset>
 
-    </td><td>
+                </td>
+                <td>
 
-    <fieldset class='form-fieldset container rounded'>
-      <!--UPLOAD-->
-      <h3 class='form-fieldset'> or upload your RNA(s)</h3>
-      <div class="form-field <%= errors.message ? 'form-field-invalid' : '' %>" >
-        
-        <!--input file-->
-        <label for="fileRNA">Input File</label>
-        <input type="file" id="fileRNA" name="fileRNA" />
-        <% if (errors.message) { %>
-          <div class="error"><%= errors.message.msg %></div>
-        <% } %>
-        <br/>
-        <!--background file? -->
-        <label for="fileBackground">Background File (optional)</label>
-        <input type="file" class="input" id="fileBackground" name="fileBackground">
-        <% if (errors.message) { %>
-          <div class="error"><%= errors.message.msg %></div>
-        <% } %>
-      
-      </div>
-    </fieldset>
+                    <fieldset class='form-fieldset container rounded'>
+                        <!--UPLOAD-->
+                        <h3 class='form-fieldset'> or upload your RNA(s)</h3>
+                        <div class="form-field <%= errors.message ? 'form-field-invalid' : '' %>">
 
-    </td></tr></table>
+                            <!--input file-->
+                            <label for="fileRNA">Input File</label>
+                            <input type="file" id="fileRNA" name="fileRNA"/>
+                            <% if (errors.message) { %>
+                                <div class="error"><%= errors.message.msg %></div>
+                            <% } %>
+                            <br/>
+                            <!--background file? -->
+                            <label for="fileBackground">Background File (optional)</label>
+                            <input type="file" class="input" id="fileBackground" name="fileBackground">
+                            <% if (errors.message) { %>
+                                <div class="error"><%= errors.message.msg %></div>
+                            <% } %>
 
-    <!-- FORM OPTIONS + MAIL-->
+                        </div>
+                    </fieldset>
 
-    <fieldset class='form-fieldset form-options container-fluid rounded'>
-      <div class="form-field form-group <%= errors.email ? 'form-field-invalid' : '' %>">
-        <label for="email">Email</label>
-        <input class="input form-control" id="email" name="email" type="email" value="<%= email %>" />
-        <% if (errors.email) { %>
-          <div class="error"><%= errors.email.msg %></div>
-        <% } %>
-      </div>
+                </td>
+            </tr>
+        </table>
 
-      <div class="form-options form-group container">
+        <!-- FORM OPTIONS + MAIL-->
 
-          <select data-placeholder="Select species..." multiple class="chosen-select form-control " name="options_species">
-             <option value= 'hg19' selected>Human (hg19)</option>
-             <option value='mm9'>Mouse (mm9)</option>
-          </select>
+        <fieldset class='form-fieldset form-options container-fluid rounded'>
+            <div class="form-field form-group <%= errors.email ? 'form-field-invalid' : '' %>">
+                <label for="email">Email</label>
+                <input class="input form-control" id="email" name="email" type="email" value="<%= email %>"/>
+                <% if (errors.email) { %>
+                    <div class="error"><%= errors.email.msg %></div>
+                <% } %>
+            </div>
 
-          <select data-placeholder="Select experiments..." multiple class="chosen-select form-control " name="options_experiments">
-            <option value='PAR' selected>PAR-CLIP</option>
-            <option value='eCLIP' selected>eCLIP</option>
-            <option value='HITS' selected>HITS</option>
-         </select>
+            <div class="form-options form-group container">
 
-      </div>
+                <select data-placeholder="Select species..." multiple class="chosen-select form-control "
+                        name="options_species">
+                    <option value='hg19' selected>Human (hg19)</option>
+                    <option value='mm9'>Mouse (mm9)</option>
+                </select>
 
-      <!-- ACTION -->
-      <div class="form-actions">
-        <button class="btn btn-primary" type="submit">Go!</button>
-      </div>
+                <select data-placeholder="Select experiments..." multiple class="chosen-select form-control "
+                        name="options_experiments">
+                    <option value='PAR' selected>PAR-CLIP</option>
+                    <option value='eCLIP' selected>eCLIP</option>
+                    <option value='HITS' selected>HITS</option>
+                </select>
 
-    </fieldset>
-  </form>
+            </div>
+
+            <!-- ACTION -->
+            <div class="form-actions">
+                <button class="btn btn-primary" type="submit">Go!</button>
+            </div>
+
+        </fieldset>
+    </form>
 </div>
 <!-- ERROR TABS -->
 <% if (Object.keys(errors).length != 0 && (!errors.email || Object.keys(errors).length > 1)) { %>
 
-<div class='container'>
-  <ul class="nav nav-pills error-tabs bg-warning border border-danger">
-    <li class="active"><a data-toggle="pill" href="#menu1">
-      <span class="text-secondary">Input errors</span>
-    </a></li>
-    <li><a data-toggle="pill" href="#menu2">
-      <span class="text-secondary">Background errors</span>
-    </a></li>
-  </ul>
+    <div class='container'>
+        <ul class="nav nav-pills error-tabs bg-warning border border-danger">
+            <li class="active"><a data-toggle="pill" href="#menu1">
+                    <span class="text-secondary">Input errors</span>
+                </a></li>
+            <li><a data-toggle="pill" href="#menu2">
+                    <span class="text-secondary">Background errors</span>
+                </a></li>
+        </ul>
 
-  <div class="tab-content">
-    <div id="menu1" class="tab-pane fade in active">
-        
-      ********(to do more specific and with fashion tabs)********
-    <h3> There are problems with your input:</h3>
-      <div>
-          Not valid input(s):<br/>
-          <%= inputRNA_processed.not_valid_inputs %>
-      </div>
-      <br/>
-      <div>
-          Not valid RNA molecule(s):<br/>
-          <%= inputRNA_processed.not_valid_rna_molecules %>
-      </div>
-      <br/>
-      <div>
-          Not valid secondary structure(s):<br/>
-          <%= inputRNA_processed.not_valid_secondary_structures %>
-      </div>
-      <div>
-          Valid input RNA(s):<br/>
-          <%= inputRNA_processed.valid_rnas %>
-      </div>
-      <br/>
+        <div class="tab-content">
+            <div id="menu1" class="tab-pane fade in active">
+
+                ********(to do more specific and with fashion tabs)********
+                <h3> There are problems with your input:</h3>
+                <div>
+                    Not valid input(s):<br/>
+                    <%= inputRNA_processed.not_valid_inputs %>
+                </div>
+                <br/>
+                <div>
+                    Not valid RNA molecule(s):<br/>
+                    <%= inputRNA_processed.not_valid_rna_molecules %>
+                </div>
+                <br/>
+                <div>
+                    Not valid secondary structure(s):<br/>
+                    <%= inputRNA_processed.not_valid_secondary_structures %>
+                </div>
+                <br/>
+                <div>
+                    Valid input RNA(s):<br/>
+                    <%= inputRNA_processed.valid_rnas %>
+                </div>
+                <br/>
+            </div>
+            <div id="menu2" class="tab-pane fade">
+                <h3> There are problems with your background:</h3>
+                ********(to do with fashion tabs)********
+
+
+                <div>
+                    Not valid input(s):<br/>
+                    <%= inputBackground_processed.not_valid_inputs %>
+                </div>
+                <br/>
+                <div>
+                    Not valid RNA molecule(s):<br/>
+                    <%= inputBackground_processed.not_valid_rna_molecules %>
+                </div>
+                <br/>
+                <div>
+                    Not valid secondary structure(s):<br/>
+                    <%= inputBackground_processed.not_valid_secondary_structures %>
+                </div>
+                <div>
+                    Valid input RNA(s):<br/>
+                    <%= inputBackground_processed.valid_rnas %>
+                </div>
+                <br/>
+
+            </div>
+        </div>
     </div>
-    <div id="menu2" class="tab-pane fade">
-      <h3> There are problems with your background:</h3>
-      ********(to do with fashion tabs)********
-
-
-      <div>
-          Not valid input(s):<br/>
-          <%= inputBackground_processed.not_valid_inputs %>
-      </div>
-      <br/>
-      <div>
-          Not valid RNA molecule(s):<br/>
-          <%= inputBackground_processed.not_valid_rna_molecules %>
-      </div>
-      <br/>
-      <div>
-          Not valid secondary structure(s):<br/>
-          <%= inputBackground_processed.not_valid_secondary_structures %>
-      </div>  
-      <div>
-          Valid input RNA(s):<br/>
-          <%= inputBackground_processed.valid_rnas %>
-      </div>
-      <br/>
-    
-    </div>
-  </div>
-</div>
 
 <% } %>
 <%- include ("partials/footer.ejs") %>

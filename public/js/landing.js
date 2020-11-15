@@ -1,11 +1,11 @@
 $(function () {
 
-		//format popovers
-  		//$('[data-toggle="popover"]').popover();
-  		
-  		$('#format_pop_1').popover({
-  			html: true,
-  			content: 'input sequences are accepted in multiFASTA format\
+    //format popovers
+    //$('[data-toggle="popover"]').popover();
+
+    $('#format_pop_1').popover({
+        html: true,
+        content: 'input sequences are accepted in multiFASTA format\
         and are parsed as blocks. For each sequence:\
   			<ul><li>The line containing the name and/or the description of the \
   			sequence starts with a ">";</li><li> \
@@ -15,31 +15,31 @@ $(function () {
 			The subsequent block can contain secondary structure information (Optional\
 			in dot-bracket);</li></ul>\
 			<em>(click again to dismiss)</em>',
-			placement: 'right'
-  		});
+        placement: 'right'
+    });
 
-  		$(".chosen-select").chosen({
-  			no_results_text: "Oops, nothing found!"
-		});
+    $(".chosen-select").chosen({
+        no_results_text: "Oops, nothing found!"
+    });
 
-      //populate text area with examples
-       $("#ex_w_str").click(function() {
-           $.ajax({
-               url : "examples/example_w_struct.txt",
-               dataType: "text",
-               success : function (data) {
-                   $("#inputRNA").val(data);
-               }
-           });
-       });
-       $("#ex_wo_str").click(function() {
-           $.ajax({
-               url : "examples/example_wo_struct.txt",
-               dataType: "text",
-               success : function (data) {
-                   $("#inputRNA").val(data);
-               }
-           });
-       });
+    //populate text area with examples
+    $("#ex_w_str").click(function () {
+        $.ajax({
+            url: "examples/example_w_struct.txt",
+            dataType: "text",
+            success: function (data) {
+                $("#inputRNA").val(data);
+            }
+        });
+    });
+    $("#ex_wo_str").click(function () {
+        $.ajax({
+            url: "examples/example_wo_struct.txt",
+            dataType: "text",
+            success: function (data) {
+                $("#inputRNA").val(data);
+            }
+        });
+    });
 
 });

@@ -77,7 +77,7 @@ _check_rna_sequences = function (input_rna_sequences_str, input_name_str) {
 
         // (header + rna_seq) or (header + rna_seq + rna_sec_struct)
         if ((valid_rna_row_list.length + putative_sec_str_row_list.length) !== header_seq_struct_list.length - 1) {
-            not_valid_inputs_xxx_str += '>' + header_seq_struct
+            not_valid_inputs_xxx_str += '>' + header_seq_struct.split('\n')[0]
             return
         }
 
@@ -86,7 +86,7 @@ _check_rna_sequences = function (input_rna_sequences_str, input_name_str) {
             !_are_nums_consecutives(valid_rna_row_list) ||
             rna_molecule.length < MIN_LEN_RNA_SEQ || rna_molecule.length > MAX_LEN_RNA_SEQ
         ) {
-            not_valid_rna_molecules_xxx_str += '>' + header_seq_struct
+            not_valid_inputs_xxx_str += '>' + header_seq_struct.split('\n')[0]
             return
         }
 
@@ -96,7 +96,7 @@ _check_rna_sequences = function (input_rna_sequences_str, input_name_str) {
                 !input_validation_controller.check_rna_secondary_structure(dot_bracket)
             )
         ) {
-            not_valid_secondary_structures_xxx_str += '>' + header_seq_struct
+            not_valid_inputs_xxx_str += '>' + header_seq_struct.split('\n')[0]
             return
         }
 
