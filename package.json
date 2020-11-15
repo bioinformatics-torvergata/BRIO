@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/noise42/BRIO.git"
+    "url": "git+https://github.com/helmercitterich-lab/BRIO.git"
   },
   "keywords": [
     "brio",
@@ -20,9 +20,9 @@
   "author": "BioinfoX",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/noise42/BRIO/issues"
+    "url": "https://github.com/helmercitterich-lab/BRIO/issues"
   },
-  "homepage": "https://github.com/noise42/BRIO#readme",
+  "homepage": "https://github.com/helmercitterich-lab/BRIO#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
     "bootstrap": "^4.4.1",
