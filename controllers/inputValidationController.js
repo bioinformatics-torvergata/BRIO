@@ -18,9 +18,9 @@ exports.check_rna_secondary_structure = function(rna_struct) {
 	if(reg_exp_rna_secondary_structure.test(rna_struct)){
 		var count = 0
 		for (var i = 0; i < header_seq_struct_list[2].length; i++) {
-			if (header_seq_struct_list[2][i] == '('){
+			if (header_seq_struct_list[2][i] === '('){
 				count += 1
-			}else if(header_seq_struct_list[2][i] == ')'){
+			}else if(header_seq_struct_list[2][i] === ')'){
 				count -= 1
 			}
 			if (count < 0){
@@ -28,7 +28,7 @@ exports.check_rna_secondary_structure = function(rna_struct) {
 			}
 		}
 		
-		return count == 0
+		return count === 0
 	}
 
 	return false
