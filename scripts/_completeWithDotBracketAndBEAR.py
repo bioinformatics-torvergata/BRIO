@@ -14,6 +14,8 @@ import os
 import subprocess
 import re
 
+import output_generation
+
 from random import choice
 from string import ascii_uppercase
 
@@ -245,18 +247,8 @@ with open(os.path.join(dir_user, 'Out.log'), 'w') as fw:
                         fw.write('---> done\n')
 
 
-# Dirty temporary solution
-#"best_score\tmotif_threshold\tposition\tmotif_size"
-with open(os.path.join(dir_user, 'results.html'), 'w') as fw:
-    for str_or_nuc, path_str_or_nuc_search_out_list in path_str_or_nuc_search_out_dict.items():
-        fw.write('<h3>{}</h3>'.format(str_or_nuc))
-        for path_str_or_nuc_search_out in path_str_or_nuc_search_out_list:
-            fw.write('<h5>{}</h5>'.format(path_str_or_nuc_search_out.split('/')[-1]))
+output_generation.generate_output(os.path.join(dir_user, 'results.html'), path_str_or_nuc_search_out_dict, None)
 
-            with open(path_str_or_nuc_search_out) as f:
-                fw.write('{}<br/>'.format(f.read()))
-
-        fw.write("<hr/>")
 
 with open(os.path.join(dir_user, 'Out.log'), 'w') as fw:
     fw.write('100')
