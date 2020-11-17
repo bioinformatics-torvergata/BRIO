@@ -192,24 +192,25 @@ def score(rna, pssm, motif_size, mbr, bear_dict, seq_flag=False, match=3, mismat
 
     return best_score, position
 
-
-def write_output(info, output):
-    if output == 'stdout':
-        print(info)
-    else:
-        with open(output, 'w') as f:
-            print(info, file=f)
-
+import json
 
 seqs = parse_input(args.inputFile)
 motifs = parse_motif(args.motifsFile, args.seqFlag)
-#print(seqs)
-#print(motifs)
+
+# print(seqs)
+# print(motifs)
 
 string_to_align = 'seq' if args.seqFlag else 'bear'
 
 mbr_np = read_MBR(mbr_path)
 
+seq_to_result = {}
+
 for seq_name, info in seqs.items():
-    out = compare(info[string_to_align], motifs, mbr_np, bear_dict, args.seqFlag)
-    write_output({seq_name: out}, args.output)
+    seq_to_result[seq_name] = compare(info[string_to_align], motifs, mbr_np, bear_dict, args.seqFlag)
+
+if args.output == 'stdout':
+    json.dump(seq_to_result, sys.stdout)
+else:
+    with open(args.output, 'w') as f:
+        json.dump(seq_to_result, f)
