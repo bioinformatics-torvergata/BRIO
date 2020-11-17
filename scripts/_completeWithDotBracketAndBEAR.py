@@ -176,13 +176,10 @@ if is_there_a_background:
     )
 else:
     # Create the dictionary for the background: key=name, value= list [major, minor]
-    f = open(os.path.join(dir_base, 'resources', 'summary_AutoBg.txt'))
-    line = f.readline()
-    dict_bg = {}
-    while line:
-        dict_bg[line.split()[0]] = [int(line.split()[2]), int(line.split()[3])]
-        line = f.readline()
-    f.close()
+    with open(os.path.join(dir_base, 'resources', 'summary_AutoBg.txt')) as f:
+        dict_bg = {}
+        for line in f:
+            dict_bg[line.split()[0]] = [int(line.split()[2]), int(line.split()[3])]
 
 
 species_list = sys.argv[4].split(',')
@@ -248,6 +245,7 @@ with open(os.path.join(dir_user, 'Out.log'), 'w') as fw:
 
 
 # Dirty temporary solution
+#"best_score\tmotif_threshold\tposition\tmotif_size"
 with open(os.path.join(dir_user, 'results.html'), 'w') as fw:
     for str_or_nuc, path_str_or_nuc_search_out_list in path_str_or_nuc_search_out_dict.items():
         fw.write('<h3>{}</h3>'.format(str_or_nuc))
