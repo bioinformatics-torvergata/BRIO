@@ -165,25 +165,25 @@ def score(rna, pssm, motif_size, mbr, bear_dict, seq_flag=False, match=3, mismat
             if slice_score > best_score:
                 best_score = slice_score
                 position = start
-    else:
-        for start in range(0, motif_size - rna_len + 1):
-            slice_score = 0.0
-            for b_rna, b_list in zip(rna, pssm[start:(start + rna_len)]):
-                index_b_rna = bear_dict[b_rna]
-
-                position_score = 0.0
-                for b_char in b_list:
-                    # frequency * subs(i,j)
-                    if not seq_flag:
-                        position_score += b_list[b_char] * mbr[bear_dict[b_char], index_b_rna]
-                    else:
-                        position_score += b_list[b_char] * (match if b_char == b_rna else mismatch)
-
-                slice_score += position_score
-
-            if slice_score > best_score:
-                best_score = slice_score
-                position = start
+    #else:
+    #    for start in range(0, motif_size - rna_len + 1):
+    #        slice_score = 0.0
+    #        for b_rna, b_list in zip(rna, pssm[start:(start + rna_len)]):
+    #            index_b_rna = bear_dict[b_rna]
+    #
+    #            position_score = 0.0
+    #            for b_char in b_list:
+    #                # frequency * subs(i,j)
+    #                if not seq_flag:
+    #                    position_score += b_list[b_char] * mbr[bear_dict[b_char], index_b_rna]
+    #                else:
+    #                    position_score += b_list[b_char] * (match if b_char == b_rna else mismatch)
+    #
+    #            slice_score += position_score
+    #
+    #        if slice_score > best_score:
+    #            best_score = slice_score
+    #            position = start
 
     return best_score, position
 
@@ -205,6 +205,6 @@ string_to_align = 'seq' if args.seqFlag else 'bear'
 
 mbr_np = read_MBR(mbr_path)
 
-for name, info in seqs.items():
+for seq_name, info in seqs.items():
     out = compare(info[string_to_align], motifs, mbr_np, bear_dict, args.seqFlag)
-    write_output(out, args.output)
+    write_output({seq_name: out}, args.output)
