@@ -29,8 +29,7 @@ def run_search(dir_base, path_motif, path_input_seq_struct_bear, str_else_nuc, p
             '--input', path_input_seq_struct_bear,
             '--motifs', path_motif,
             '--output', path_output
-        ] + ([] if str_else_nuc else ['--sequence'])
-        ,
+        ] + ([] if str_else_nuc else ['--sequence']),
         # To get strings
         universal_newlines=True
     ).wait()

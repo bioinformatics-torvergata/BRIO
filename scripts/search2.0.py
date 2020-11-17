@@ -32,25 +32,27 @@ parser.add_argument('--output', '-o', dest='output', action='store', default="st
 args = parser.parse_args()
 
 
-# read input
 def parse_input(inputpath):
     seqs = {}
     seq_regex = re.compile("^[ACGTUacgtu]+$")
     db_regex = re.compile("^[\(\)\.]+$")
     counter = 0
     with open(inputpath) as f:
-        line = f.readline().strip()
-        while line:
+        for line in f:
+            line = line.strip()
             if line.startswith(">"):
                 # new sequence
-                if counter == 0:
+
+                if counter > 0:
+                    # Save the previous sequence
                     seqs[name] = {'seq': seq, 'db': db, 'bear': bear, 'counter': counter}
-                counter += 1
 
                 name = line
                 seq = ""
                 db = ""
                 bear = ""
+
+                counter += 1
             elif seq_regex.match(line):
                 seq += line
             elif db_regex.match(line):
@@ -59,8 +61,9 @@ def parse_input(inputpath):
                 # let's avoid a bear string regex
                 bear += line
 
-            line = f.readline().strip()
+        # Last sequence
         seqs[name] = {'seq': seq, 'db': db, 'bear': bear, 'counter': counter}
+
     return seqs
 
 
@@ -108,13 +111,15 @@ def parse_motif(motifpath, seq_flag=False):
                 vals = []
                 while line and line != "\n":
                     row = line.strip().split("\t")
-                    vals.append({pair[0]: float(pair[1:].split(":")[1].strip())
-                                 for pair in row})
+                    vals.append({
+                        pair[0]: float(pair[1:].split(":")[1].strip()) for pair in row
+                    })
                     line = f.readline()
 
                 PSSM[name]['PSSM'] = vals
 
             line = f.readline()
+
     return PSSM
 
 
@@ -179,7 +184,8 @@ def score(rna, pssm, motif_size, mbr, bear_string, seqFlag=False, match=3, misma
 
 seqs = parse_input(args.inputFile)
 motifs = parse_motif(args.motifsFile, args.seqFlag)
-# print(motifs)
+#print(seqs)
+print(motifs)
 
 for name in seqs:
     if args.seqFlag:
