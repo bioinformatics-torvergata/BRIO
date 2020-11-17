@@ -175,11 +175,12 @@ if is_there_a_background:
         sys.argv[2], os.path.join(dir_user, 'background')
     )
 else:
-    # Create the dictionary for the background: key=name, value= list [major, minor]
+    # Create the dictionary for the background: {name: [major, minor]}
     with open(os.path.join(dir_base, 'resources', 'summary_AutoBg.txt')) as f:
-        dict_bg = {}
+        background_dict = {}
         for line in f:
-            dict_bg[line.split()[0]] = [int(line.split()[2]), int(line.split()[3])]
+            line_list = line.strip().split()
+            background_dict[line_list[0]] = [int(line_list[2]), int(line_list[3])]
 
 
 species_list = sys.argv[4].split(',')
@@ -232,7 +233,7 @@ with open(os.path.join(dir_user, 'Out.log'), 'w') as fw:
 
                         path_str_or_nuc_search_out = os.path.join(dir_user, 'search_out.{}.txt'.format(
                             os.path.basename(path_motif).split(".")[0])
-                                                                  )
+                        )
                         run_search(
                             dir_base,
                             path_motif,

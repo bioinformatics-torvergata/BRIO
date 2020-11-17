@@ -1,10 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-###TO TEST - real files
-
 # libraries
-
 import re
 import argparse
 
@@ -16,8 +13,14 @@ from exceptions import *
 mbr_path = "resources/mbr.csv"
 
 # data
-bear_string = "abcdefghi=lmnopqrstuvwxyz^!\"#$%&\'()+234567890>[]:ABCDEFGHIJKLMNOPQRSTUVW{YZ~?_|/\\}@"
-bear_dict = {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4, 'f': 5, 'g': 6, 'h': 7, 'i': 8, '=': 9, 'l': 10, 'm': 11, 'n': 12, 'o': 13, 'p': 14, 'q': 15, 'r': 16, 's': 17, 't': 18, 'u': 19, 'v': 20, 'w': 21, 'x': 22, 'y': 23, 'z': 24, '^': 25, '!': 26, '"': 27, '#': 28, '$': 29, '%': 30, '&': 31, "'": 32, '(': 33, ')': 34, '+': 35, '2': 36, '3': 37, '4': 38, '5': 39, '6': 40, '7': 41, '8': 42, '9': 43, '0': 44, '>': 45, '[': 46, ']': 47, ':': 48, 'A': 49, 'B': 50, 'C': 51, 'D': 52, 'E': 53, 'F': 54, 'G': 55, 'H': 56, 'I': 57, 'J': 58, 'K': 59, 'L': 60, 'M': 61, 'N': 62, 'O': 63, 'P': 64, 'Q': 65, 'R': 66, 'S': 67, 'T': 68, 'U': 69, 'V': 70, 'W': 71, '{': 72, 'Y': 73, 'Z': 74, '~': 75, '?': 76, '_': 77, '|': 78, '/': 79, '\\': 80, '}': 81, '@': 82}
+#bear_string = "abcdefghi=lmnopqrstuvwxyz^!\"#$%&\'()+234567890>[]:ABCDEFGHIJKLMNOPQRSTUVW{YZ~?_|/\\}@"
+bear_dict = {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4, 'f': 5, 'g': 6, 'h': 7, 'i': 8, '=': 9, 'l': 10, 'm': 11, 'n': 12,
+             'o': 13, 'p': 14, 'q': 15, 'r': 16, 's': 17, 't': 18, 'u': 19, 'v': 20, 'w': 21, 'x': 22, 'y': 23, 'z': 24,
+             '^': 25, '!': 26, '"': 27, '#': 28, '$': 29, '%': 30, '&': 31, "'": 32, '(': 33, ')': 34, '+': 35, '2': 36,
+             '3': 37, '4': 38, '5': 39, '6': 40, '7': 41, '8': 42, '9': 43, '0': 44, '>': 45, '[': 46, ']': 47, ':': 48,
+             'A': 49, 'B': 50, 'C': 51, 'D': 52, 'E': 53, 'F': 54, 'G': 55, 'H': 56, 'I': 57, 'J': 58, 'K': 59, 'L': 60,
+             'M': 61, 'N': 62, 'O': 63, 'P': 64, 'Q': 65, 'R': 66, 'S': 67, 'T': 68, 'U': 69, 'V': 70, 'W': 71, '{': 72,
+             'Y': 73, 'Z': 74, '~': 75, '?': 76, '_': 77, '|': 78, '/': 79, '\\': 80, '}': 81, '@': 82}
 
 # argparse
 parser = argparse.ArgumentParser(description='Look for motifs in database of motif PFMs')
@@ -149,23 +152,25 @@ def score(rna, pssm, motif_size, mbr, bear_dict, seq_flag=False, match=3, mismat
     if rna_len >= motif_size:
         for start in range(0, rna_len - motif_size + 1):
             slice_score = 0.0
-            for b_rna, b_list in zip(rna[start:(start + motif_size)], pssm):
-                index_b_rna = bear_dict[b_rna]
-
+            for b_rna, b_dict in zip(rna[start:(start + motif_size)], pssm):
                 position_score = 0.0
-                for b_char in b_list:
-                    # frequency * subs(i,j)
-                    if not seq_flag:
-                        position_score += b_list[b_char] * mbr[bear_dict[b_char], index_b_rna]
-                    else:
-                        position_score += b_list[b_char] * (match if b_char == b_rna else mismatch)
+
+                # frequency * subs(i,j)
+                if not seq_flag:
+                    mbr_row = mbr[bear_dict[b_rna]].tolist()
+
+                    for b_char, sos_score in b_dict.items():
+                        position_score += sos_score * mbr_row[bear_dict[b_char]]
+                else:
+                    for b_char, sos_score in b_dict.items():
+                        position_score += sos_score * (match if b_char == b_rna else mismatch)
 
                 slice_score += position_score
 
             if slice_score > best_score:
                 best_score = slice_score
                 position = start
-    #else:
+    # else:
     #    for start in range(0, motif_size - rna_len + 1):
     #        slice_score = 0.0
     #        for b_rna, b_list in zip(rna, pssm[start:(start + rna_len)]):
