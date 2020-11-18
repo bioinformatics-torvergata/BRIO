@@ -136,7 +136,8 @@ def compare(rna, motifs, mbr, bear_dict, seq_flag=False):
         motif_size = len(info_motif['PSSM'])
         best_score, position = score(rna, info_motif['PSSM'], motif_size, mbr, bear_dict, seq_flag)
 
-        results[motif_name] = (best_score, info_motif['thr'], position, motif_size)
+        if position >= 0:
+            results[motif_name] = (best_score, info_motif['thr'], position, motif_size)
 
     return results
 
