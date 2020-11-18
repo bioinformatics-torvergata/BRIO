@@ -111,7 +111,7 @@ def process_input_rna_molecules(input_rna_molecules, dir_output):
         else:
             missing_bear_rna_molecules += '\n'.join(single_rna_list) + '\n'
 
-    path_complete_input = os.path.join(dir_output, 'tmp.complete_input_with_dot_bracket_and_bear.txt')
+    path_complete_input = os.path.join(dir_output, 'complete_input_with_dot_bracket_and_bear.txt')
 
     missing_bear_rna_molecules_all = ''
     if missing_dotbracket_and_bear_rna_molecules:
@@ -247,7 +247,12 @@ with open(os.path.join(dir_user, 'Out.log'), 'w') as fw:
                         fw.write('---> done\n')
 
 
-output_generation.generate_output(os.path.join(dir_user, 'results.html'), path_str_or_nuc_search_out_dict, None)
+output_generation.generate_output(
+    os.path.join(dir_user, 'results.html'),
+    path_complete_input_rna_molecules,
+    path_str_or_nuc_search_out_dict,
+    None
+)
 
 
 with open(os.path.join(dir_user, 'Out.log'), 'w') as fw:
