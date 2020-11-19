@@ -4,23 +4,12 @@
 # libraries
 import re
 import argparse
-
-import numpy as np
+import json
 
 from exceptions import *
 
 # paths
-mbr_path = "resources/mbr.csv"
-
-# data
-#bear_string = "abcdefghi=lmnopqrstuvwxyz^!\"#$%&\'()+234567890>[]:ABCDEFGHIJKLMNOPQRSTUVW{YZ~?_|/\\}@"
-bear_dict = {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4, 'f': 5, 'g': 6, 'h': 7, 'i': 8, '=': 9, 'l': 10, 'm': 11, 'n': 12,
-             'o': 13, 'p': 14, 'q': 15, 'r': 16, 's': 17, 't': 18, 'u': 19, 'v': 20, 'w': 21, 'x': 22, 'y': 23, 'z': 24,
-             '^': 25, '!': 26, '"': 27, '#': 28, '$': 29, '%': 30, '&': 31, "'": 32, '(': 33, ')': 34, '+': 35, '2': 36,
-             '3': 37, '4': 38, '5': 39, '6': 40, '7': 41, '8': 42, '9': 43, '0': 44, '>': 45, '[': 46, ']': 47, ':': 48,
-             'A': 49, 'B': 50, 'C': 51, 'D': 52, 'E': 53, 'F': 54, 'G': 55, 'H': 56, 'I': 57, 'J': 58, 'K': 59, 'L': 60,
-             'M': 61, 'N': 62, 'O': 63, 'P': 64, 'Q': 65, 'R': 66, 'S': 67, 'T': 68, 'U': 69, 'V': 70, 'W': 71, '{': 72,
-             'Y': 73, 'Z': 74, '~': 75, '?': 76, '_': 77, '|': 78, '/': 79, '\\': 80, '}': 81, '@': 82}
+mbr_path = "resources/MBR.tsv"
 
 # argparse
 parser = argparse.ArgumentParser(description='Look for motifs in database of motif PFMs')
@@ -91,16 +80,14 @@ def parse_motif(motifpath, seq_flag=False):
                 raise MotifGroupError("The parameters and the motif file specified do not match!")
             if line.startswith(token):
                 """get threshold score"""
-                scores = []
                 line = f.readline()
+                thr = 9999
                 while line and line != "\n":
-                    scores.append(float(line.split()[5]))
+                    current_score = float(line.split()[5])
+                    if current_score < thr:
+                        thr = current_score
                     line = f.readline()
 
-                if scores:
-                    thr = np.min(scores)
-                else:
-                    thr = 9999
                 motif_info[name]['thr'] = thr
 
             if line.startswith("#PSSM"):
@@ -120,11 +107,20 @@ def parse_motif(motifpath, seq_flag=False):
     return motif_info
 
 
-def read_MBR(mbr_path, size=83):
-    return np.fromfile(mbr_path, sep=",").reshape(size, size)
+def read_MBR(mbr_path):
+    mbr_dict = {}
+    with open(mbr_path) as f:
+        header_list = f.readline().rstrip().split('\t')[1:]
+
+        for line in f:
+            splitted = line.strip().split('\t')
+
+            mbr_dict[splitted[0]] = {char: float(score) for char, score in zip(header_list, splitted[1:])}
+
+    return mbr_dict
 
 
-def compare(rna, motifs, mbr, bear_dict, seq_flag=False):
+def compare(rna, motifs, mbr_dict, seq_flag=False):
     """
     Scores one RNA against all motifs
     rna: string (primary sequence or bear string)
@@ -134,7 +130,7 @@ def compare(rna, motifs, mbr, bear_dict, seq_flag=False):
     results = {}
     for motif_name, info_motif in motifs.items():
         motif_size = len(info_motif['PSSM'])
-        best_score, position = score(rna, info_motif['PSSM'], motif_size, mbr, bear_dict, seq_flag)
+        best_score, position = score(rna, info_motif['PSSM'], motif_size, mbr_dict, seq_flag)
 
         if position >= 0:
             results[motif_name] = (best_score, info_motif['thr'], position, motif_size)
@@ -142,7 +138,7 @@ def compare(rna, motifs, mbr, bear_dict, seq_flag=False):
     return results
 
 
-def score(rna, pssm, motif_size, mbr, bear_dict, seq_flag=False, match=3, mismatch=-2):
+def score(rna, pssm, motif_size, mbr_dict, seq_flag=False, match=3, mismatch=-2):
     """
     tests all possible ungapped alignments
     """
@@ -158,10 +154,10 @@ def score(rna, pssm, motif_size, mbr, bear_dict, seq_flag=False, match=3, mismat
 
                 # frequency * subs(i,j)
                 if not seq_flag:
-                    mbr_row = mbr[bear_dict[b_rna]].tolist()
+                    mbr_row_dict = mbr_dict[b_rna]
 
                     for b_char, sos_score in b_dict.items():
-                        position_score += sos_score * mbr_row[bear_dict[b_char]]
+                        position_score += sos_score * mbr_row_dict[b_char]
                 else:
                     for b_char, sos_score in b_dict.items():
                         position_score += sos_score * (match if b_char == b_rna else mismatch)
@@ -193,11 +189,9 @@ def score(rna, pssm, motif_size, mbr, bear_dict, seq_flag=False, match=3, mismat
 
     return best_score, position
 
-import json
 
 seqs = parse_input(args.inputFile)
 motifs = parse_motif(args.motifsFile, args.seqFlag)
-
 # print(seqs)
 # print(motifs)
 
@@ -208,7 +202,7 @@ mbr_np = read_MBR(mbr_path)
 seq_to_result = {}
 
 for seq_name, info in seqs.items():
-    seq_to_result[seq_name] = compare(info[string_to_align], motifs, mbr_np, bear_dict, args.seqFlag)
+    seq_to_result[seq_name] = compare(info[string_to_align], motifs, mbr_np, args.seqFlag)
 
 if args.output == 'stdout':
     json.dump(seq_to_result, sys.stdout)
