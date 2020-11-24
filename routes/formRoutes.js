@@ -219,7 +219,7 @@ body('inputRNA')
 .escape()
 .isLength({ min: MIN_LEN_RNA_SEQ })
 .withMessage('The RNA has to be at least ' + MIN_LEN_RNA_SEQ + ' ribonucleotides.')
-//.matches([ACGUTacgut]+) 	// ToDo: we need a regular expression+
+//.matches([ACGUTacgut]+) 	// we need a regular expression+
 .isAlpha()
 .withMessage('The RNA has to contain only valid ribonucleotides.')
 

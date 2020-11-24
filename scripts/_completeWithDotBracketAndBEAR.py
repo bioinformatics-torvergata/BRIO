@@ -178,13 +178,6 @@ if is_there_a_background:
     path_complete_input_rna_molecules_background, _ = process_input_rna_molecules(
         sys.argv[2], os.path.join(dir_user, 'background')
     )
-else:
-    # Create the dictionary for the background: {name: [major, minor]}
-    with open(os.path.join(dir_base, 'resources', 'summary_AutoBg.txt')) as f:
-        background_dict = {}
-        for line in f:
-            line_list = line.strip().split()
-            background_dict[line_list[0]] = [int(line_list[3]), int(line_list[2])] # minor (s<t) and major (s>+t)
 
 species_list = sys.argv[4].split(',')
 experiments_list = sys.argv[5].split(',')
@@ -207,7 +200,7 @@ for str_or_nuc, dir_str_or_nuc_motifs in zip(
                     os.path.join(dir_str_or_nuc_motifs, filename_motif)
                 )
 
-path_str_or_nuc_search_out_dict = {}
+str_or_nuc_to_input_or_background_to_output_paths_dict = {}
 
 with open(os.path.join(dir_user, 'Out.log'), 'w') as fw:
     for str_or_nuc, dir_str_or_nuc_motifs in zip(
@@ -218,7 +211,7 @@ with open(os.path.join(dir_user, 'Out.log'), 'w') as fw:
             fw.write('{} search\n'.format(str_or_nuc))
             fw.flush()
 
-            path_str_or_nuc_search_out_dict[str_or_nuc] = []
+            str_or_nuc_to_input_or_background_to_output_paths_dict[str_or_nuc] = {}
 
             # For input and (eventually) the background
             for path_complete_input_rna_molecules_xxx, input_or_background in zip(
@@ -227,6 +220,8 @@ with open(os.path.join(dir_user, 'Out.log'), 'w') as fw:
             ):
                 # The background path can be empty
                 if path_complete_input_rna_molecules_xxx:
+                    str_or_nuc_to_input_or_background_to_output_paths_dict[str_or_nuc][input_or_background] = []
+
                     for i, path_motif in enumerate(path_str_or_nuc_motif_to_search_dict[str_or_nuc]):
                         fw.write('search on {} database completed ({} / {}) '.format(
                             os.path.basename(path_motif), i + 1, len(path_str_or_nuc_motif_to_search_dict[str_or_nuc]))
@@ -234,8 +229,8 @@ with open(os.path.join(dir_user, 'Out.log'), 'w') as fw:
                         fw.flush()
 
                         path_str_or_nuc_search_out = os.path.join(dir_user, 'search_out.{}.txt'.format(
-                            os.path.basename(path_motif).split(".")[0])
-                        )
+                            os.path.basename(path_motif).split(".")[0]
+                        ))
                         run_search(
                             dir_base,
                             path_motif,
@@ -243,62 +238,73 @@ with open(os.path.join(dir_user, 'Out.log'), 'w') as fw:
                             str_or_nuc == 'str',
                             path_str_or_nuc_search_out
                         )
-                        path_str_or_nuc_search_out_dict[str_or_nuc].append(path_str_or_nuc_search_out)
+                        str_or_nuc_to_input_or_background_to_output_paths_dict[str_or_nuc][
+                            input_or_background
+                        ].append(path_str_or_nuc_search_out)
                         fw.write('---> done\n')
 
 
-#todo put stuff in background_dict if the background is given as input
+motif_to_input_or_background_to_count_dict = {}
+
+for str_or_nuc, input_or_background_to_output_paths in str_or_nuc_to_input_or_background_to_output_paths_dict.items():
+    for input_or_background, output_path_list in input_or_background_to_output_paths.items():
+        for output_path in output_path_list:
+
+            with open(output_path) as f:
+                # {">chr1:149783661-149783992(-)": {"ENCFF261SMW_DDX6_UTR_m2_run1.nuc.txt": [2.7200000000000006, 11.4, 31, 12],
+                seq_to_motif_to_info_dict = json.load(f)
+
+            #       s<t s>t
+            # input  0   0
+            for seq, motif_to_info_dict in seq_to_motif_to_info_dict.items():
+                for motif, info in motif_to_info_dict.items():
+
+                    if motif not in motif_to_input_or_background_to_count_dict:
+                        motif_to_input_or_background_to_count_dict[motif] = {
+                            'input': [0, 0],
+                            'background': [0, 0]
+                        }
+
+                    if info[0] < info[1]:
+                        motif_to_input_or_background_to_count_dict[motif][input_or_background][0] += 1
+                    else:
+                        motif_to_input_or_background_to_count_dict[motif][input_or_background][1] += 1
+
+if not is_there_a_background:
+    # Create the dictionary for the background: {name: [major, minor]}
+    with open(os.path.join(dir_base, 'resources', 'summary_AutoBg.txt')) as f:
+        for line in f:
+            motif, _, minor, major = line.strip().split()  # minor (s<t) and major (s>+t)
+
+            if motif in motif_to_input_or_background_to_count_dict:
+                motif_to_input_or_background_to_count_dict[motif]['background'] = [
+                    int(minor), int(major)
+                ]
 
 motif_results_dict = {}
-for str_or_nuc, path_str_or_nuc_search_out_list in path_str_or_nuc_search_out_dict.items():
-    for path_str_or_nuc_search_out in path_str_or_nuc_search_out_list:
-        with open(path_str_or_nuc_search_out) as f:
-            # {">chr1:149783661-149783992(-)": {"ENCFF261SMW_DDX6_UTR_m2_run1.nuc.txt": [2.7200000000000006, 11.4, 31, 12],
-            seq_to_motif_to_info_dict = json.load(f)
 
-        #       s<t s>t
-        # input  0   0
-        motif_to_count = {}
-        for seq, motif_to_info_dict in seq_to_motif_to_info_dict.items():
-            for motif, info in motif_to_info_dict.items():
-                if motif not in motif_to_count:
-                    motif_to_count[motif] = [0, 0]
-
-                if info[0] < info[1]:
-                    motif_to_count[motif][0] += 1
-                else:
-                    motif_to_count[motif][1] += 1
+for motif, input_or_background_to_count_dict in motif_to_input_or_background_to_count_dict.items():
+    oddsratio, pvalue = stats.fisher_exact(
+        [input_or_background_to_count_dict['input'], input_or_background_to_count_dict['background']])
+    # oddsratio, pvalue = stats.fisher_exact([
+    #    [motif_to_count[motif][1], background_dict[motif][1]],
+    #    [motif_to_count[motif][0], background_dict[motif][0]],
+    # ])
+    # oddsratio, pvalue = stats.fisher_exact([[major, major_bg], [minor, minor_bg]])
+    motif_results_dict[motif] = [
+        input_or_background_to_count_dict['input'][1] / sum(input_or_background_to_count_dict['input']),
+        oddsratio, pvalue
+    ]
 
 
-        motif_results_dict[str_or_nuc] = {}
-        for motif, count in motif_to_count.items():
-            oddsratio, pvalue = stats.fisher_exact([motif_to_count[motif], background_dict[motif]])
-            #oddsratio, pvalue = stats.fisher_exact([
-            #    [motif_to_count[motif][1], background_dict[motif][1]],
-            #    [motif_to_count[motif][0], background_dict[motif][0]],
-            #])
-            #oddsratio, pvalue = stats.fisher_exact([[major, major_bg], [minor, minor_bg]])
-            #todo how to calculate coverage? using only score >= threshold or everything? dividedy by #match or #seq input (len(input_rna_to_length_dict))?
-            motif_results_dict[str_or_nuc][motif] = [motif_to_count[motif][1] / sum(motif_to_count[motif]), oddsratio, pvalue]
-
-
-for str_or_nuc, motif_to_info_dict in motif_results_dict.items():
-    cmin = 0
-    cmaj = 0
-    for motif, (coverage, oddsratio, pvalue) in motif_to_info_dict.items():
-        if pvalue <= 0.05:
-            #print(str_or_nuc, motif, (coverage, oddsratio, pvalue))
-            cmaj +=1
-        else:
-            cmin +=1
-
-
-    print(str_or_nuc, cmin, cmaj)
+input_str_or_nuc_to_to_output_paths_dict = {}
+for str_or_nuc, input_or_background_to_output_paths_dict in str_or_nuc_to_input_or_background_to_output_paths_dict.items():
+    input_str_or_nuc_to_to_output_paths_dict[str_or_nuc] = input_or_background_to_output_paths_dict['input']
 
 output_generation.generate_output(
     os.path.join(dir_user, 'results.html'),
     path_complete_input_rna_molecules,
-    path_str_or_nuc_search_out_dict,
+    input_str_or_nuc_to_to_output_paths_dict,
     motif_results_dict
 )
 
