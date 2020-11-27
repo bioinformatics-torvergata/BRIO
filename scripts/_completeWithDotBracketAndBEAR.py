@@ -154,11 +154,61 @@ dir_base = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 dir_struct_motifs = os.path.join(dir_base, 'motifs_str_groups/')
 dir_nucleotide_motifs = os.path.join(dir_base, 'motifs_nuc_groups/')
 
-is_there_a_background = sys.argv[2]
+
 
 # To get from user input?
 search_struct_motifs = 'str'  # else ''
 search_seq_motifs = 'nuc'  # else ''
+
+species_list = sys.argv[4].split(',')
+experiments_list = sys.argv[5].split(',')
+
+is_there_a_background = sys.argv[2]
+
+# Check if the input is the default one
+DEFAULT_SEARCH_ID = 'dc4464c5cfef2f5c2fc4b08c516bfa4e'
+DEFAULT_SEARCH_NUM_SEQ = 2
+DEFAULT_SEARCH_SPECIES = ['hg19']
+DEFAULT_SEARCH_EXPERIMENTS = ['PAR', 'eCLIP', 'HITS']
+
+header_to_seq = {}
+current_header = ''
+for row in sys.argv[1].split('\n'):
+    if row.startswith('>'):
+        header_to_seq[row] = ''
+
+        if len(header_to_seq) > DEFAULT_SEARCH_NUM_SEQ:
+            break  # We already know this in not the default search
+
+        current_header = row
+    else:
+        header_to_seq[current_header] += row
+
+default_search = False
+
+if not is_there_a_background and len(header_to_seq) == DEFAULT_SEARCH_NUM_SEQ and \
+        set(species_list) == set(DEFAULT_SEARCH_SPECIES) and \
+        set(experiments_list) == set(DEFAULT_SEARCH_EXPERIMENTS):
+
+    path_complete_default_input = os.path.join(
+        dir_base, 'results', DEFAULT_SEARCH_ID, 'complete_input_with_dot_bracket_and_bear.txt'
+    )
+
+    default_search = True
+    with open(path_complete_default_input) as f:
+        for line in f:
+            line = line.strip()
+            if line.startswith('>'):
+                header = line
+                seq = f.readline().strip()
+
+                if line not in header_to_seq or header_to_seq[header] != seq:
+                    default_search = False
+                    break
+
+                f.readline() # Skip dot-bracket
+                f.readline() # Skit bear
+
 
 user_id = sys.argv[3]
 
@@ -168,7 +218,13 @@ dir_user = os.path.join(dir_base, 'results', user_id)
 if not os.path.exists(dir_user):
     os.makedirs(dir_user)
 
+if default_search:
+    with open(os.path.join(dir_user, 'Out.log'), 'w') as fw:
+        fw.write('dc4464c5cfef2f5c2fc4b08c516bfa4e')
+        sys.exit()
+
 path_complete_input_rna_molecules, input_rna_to_length_dict = process_input_rna_molecules(sys.argv[1], dir_user)
+
 
 path_complete_input_rna_molecules_background = ''
 if is_there_a_background:
@@ -178,9 +234,6 @@ if is_there_a_background:
     path_complete_input_rna_molecules_background, _ = process_input_rna_molecules(
         sys.argv[2], os.path.join(dir_user, 'background')
     )
-
-species_list = sys.argv[4].split(',')
-experiments_list = sys.argv[5].split(',')
 
 path_str_or_nuc_motif_to_search_dict = {}
 

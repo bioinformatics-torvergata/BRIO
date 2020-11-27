@@ -1,3 +1,5 @@
+import json
+
 def generate_output(path_results_html, path_processed_input, sequence_results_dict, motif_results_dict):
     """
     path_results_html is the path of the output page to create
@@ -34,6 +36,24 @@ def generate_output(path_results_html, path_processed_input, sequence_results_di
                 fw.write('<h5>{}</h5>'.format(path_str_or_nuc_search_out.split('/')[-1]))
 
                 with open(path_str_or_nuc_search_out) as f:
-                    fw.write('{}<br/>'.format(f.read()))
+                    # {">chr1:149783661-149783992(-)": {"ENCFF261SMW_DDX6_UTR_m2_run1.nuc.txt": [2.7200000000000006, 11.4, 31, 12],
+                    seq_to_motif_to_info_dict = json.load(f)
 
+
+                for k, v in seq_to_motif_to_info_dict.items():
+                    fw.write("{}".format(k))
+                    fw.write('''<table>
+                      <tr>
+                        <th>Motif</th>
+                        <th>InfoMatch</th>
+                        <th>Statistics</th>
+                      </tr>
+                      '''
+                    )
+                    for motif, vv in v.items():
+                        if vv[0] >= vv[1] and motif_results_dict[motif][2] <= 0.05:
+                            fw.write("<tr>")
+                            fw.write('<td>{}</td><td>{}</td><td>{}</td>'.format(motif, vv, motif_results_dict[motif]))
+                            fw.write("</tr>")
+                    fw.write('</table>')
             fw.write("<hr/>")

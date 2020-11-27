@@ -23,6 +23,11 @@ router.post('/waiting',
                 {
                     uid: req.body.uid
                 });
+        } else if (progress.length === 32) {
+            res.render('results',
+                {
+                    uid: progress
+                });
         } else {
             res.render('loading',
                 {
