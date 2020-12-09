@@ -20,7 +20,7 @@ def generate_output(path_results_html, path_processed_input, sequence_results_di
 
     motif_results_dict contains the enrichment information for each motif (motif_name: [coverage, odds ratio, p-value)
     {
-        'HITSCLIP_Nova_Zhang2011b_mm9_CDS_m1_run2.txt': [52.63, 9.78, 8.38e-05],
+        'HITSCLIP_Nova_Zhang2011b_mm9_CDS_m1_run2.txt': [52.63, 9.78, 8.38e-05, [domain1, domain2, ...],
          ...
     }
 

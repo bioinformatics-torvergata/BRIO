@@ -154,9 +154,9 @@ dir_base = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 dir_struct_motifs = os.path.join(dir_base, 'motifs_str_groups/')
 dir_nucleotide_motifs = os.path.join(dir_base, 'motifs_nuc_groups/')
 
+dir_struct_motifs_domains = os.path.join(dir_base, 'resources/dict_dom_searchMotifs_nuc.txt')
+dir_nucleotide_motifs_domains = os.path.join(dir_base, 'resources/dict_dom_searchMotifs_str.txt')
 
-
-# To get from user input?
 search_struct_motifs = 'str'  # else ''
 search_seq_motifs = 'nuc'  # else ''
 
@@ -206,8 +206,8 @@ if not is_there_a_background and len(header_to_seq) == DEFAULT_SEARCH_NUM_SEQ an
                     default_search = False
                     break
 
-                f.readline() # Skip dot-bracket
-                f.readline() # Skit bear
+                f.readline()  # Skip dot-bracket
+                f.readline()  # Skit bear
 
 
 user_id = sys.argv[3]
@@ -334,6 +334,24 @@ if not is_there_a_background:
                     int(minor), int(major)
                 ]
 
+
+# Read domain information
+motifs_to_domains_dict = {}
+for str_or_nuc, dir_str_or_nuc_motifs_domains in zip(
+        [search_struct_motifs, search_seq_motifs],
+        [dir_struct_motifs_domains, dir_nucleotide_motifs_domains],
+):
+    if str_or_nuc:
+        with open(dir_str_or_nuc_motifs_domains) as f:
+            for line in f:
+                line_split = line.strip().split('\t')
+
+                for motif in line_split[1:]:
+                    if motif not in motifs_to_domains_dict:
+                        motifs_to_domains_dict[motif] = []
+                    motifs_to_domains_dict[motif].append(line_split[0])
+
+
 motif_results_dict = {}
 
 for motif, input_or_background_to_count_dict in motif_to_input_or_background_to_count_dict.items():
@@ -346,7 +364,8 @@ for motif, input_or_background_to_count_dict in motif_to_input_or_background_to_
     # oddsratio, pvalue = stats.fisher_exact([[major, major_bg], [minor, minor_bg]])
     motif_results_dict[motif] = [
         input_or_background_to_count_dict['input'][1] / sum(input_or_background_to_count_dict['input']),
-        oddsratio, pvalue
+        oddsratio, pvalue,
+        motifs_to_domains_dict[motif] if motif in motifs_to_domains_dict else []
     ]
 
 
