@@ -20,8 +20,8 @@ def generate_output(path_results_html, path_processed_input, sequence_results_di
 
     motif_results_dict contains the enrichment information for each motif (motif_name: [coverage, odds ratio, p-value)
     {
-        'HITSCLIP_Nova_Zhang2011b_mm9_CDS_m1_run2.txt': [52.63, 9.78, 8.38e-05, [domain1, domain2, ...],
-         ...
+        'str': 'HITSCLIP_Nova_Zhang2011b_mm9_CDS_m1_run2.txt': [52.63, 9.78, 8.38e-05, [domain1, domain2, ...],
+        'nuc': ...
     }
 
     :return: nothing
@@ -51,9 +51,9 @@ def generate_output(path_results_html, path_processed_input, sequence_results_di
                       '''
                     )
                     for motif, vv in v.items():
-                        if vv[0] >= vv[1] and motif_results_dict[motif][2] <= 0.05:
+                        if vv[0] >= vv[1] and motif_results_dict[str_or_nuc][motif][2] <= 0.05:
                             fw.write("<tr>")
-                            fw.write('<td>{}</td><td>{}</td><td>{}</td>'.format(motif, vv, motif_results_dict[motif]))
+                            fw.write('<td>{}</td><td>{}</td><td>{}</td>'.format(motif, vv, motif_results_dict[str_or_nuc][motif]))
                             fw.write("</tr>")
                     fw.write('</table>')
             fw.write("<hr/>")

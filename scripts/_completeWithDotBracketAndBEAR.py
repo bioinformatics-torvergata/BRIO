@@ -218,6 +218,10 @@ dir_user = os.path.join(dir_base, 'results', user_id)
 if not os.path.exists(dir_user):
     os.makedirs(dir_user)
 
+#todo to activate at the end removing this line
+default_search = False
+#todo to activate at the end removing this line
+
 if default_search:
     with open(os.path.join(dir_user, 'Out.log'), 'w') as fw:
         fw.write('dc4464c5cfef2f5c2fc4b08c516bfa4e')
@@ -297,9 +301,11 @@ with open(os.path.join(dir_user, 'Out.log'), 'w') as fw:
                         fw.write('---> done\n')
 
 
-motif_to_input_or_background_to_count_dict = {}
+str_or_nuc_to_motif_to_input_or_background_to_count_dict = {}
 
 for str_or_nuc, input_or_background_to_output_paths in str_or_nuc_to_input_or_background_to_output_paths_dict.items():
+    str_or_nuc_to_motif_to_input_or_background_to_count_dict[str_or_nuc] = {}
+
     for input_or_background, output_path_list in input_or_background_to_output_paths.items():
         for output_path in output_path_list:
 
@@ -312,16 +318,16 @@ for str_or_nuc, input_or_background_to_output_paths in str_or_nuc_to_input_or_ba
             for seq, motif_to_info_dict in seq_to_motif_to_info_dict.items():
                 for motif, info in motif_to_info_dict.items():
 
-                    if motif not in motif_to_input_or_background_to_count_dict:
-                        motif_to_input_or_background_to_count_dict[motif] = {
+                    if motif not in str_or_nuc_to_motif_to_input_or_background_to_count_dict[str_or_nuc]:
+                        str_or_nuc_to_motif_to_input_or_background_to_count_dict[str_or_nuc][motif] = {
                             'input': [0, 0],
                             'background': [0, 0]
                         }
 
                     if info[0] < info[1]:
-                        motif_to_input_or_background_to_count_dict[motif][input_or_background][0] += 1
+                        str_or_nuc_to_motif_to_input_or_background_to_count_dict[str_or_nuc][motif][input_or_background][0] += 1
                     else:
-                        motif_to_input_or_background_to_count_dict[motif][input_or_background][1] += 1
+                        str_or_nuc_to_motif_to_input_or_background_to_count_dict[str_or_nuc][motif][input_or_background][1] += 1
 
 if not is_there_a_background:
     # Create the dictionary for the background: {name: [major, minor]}
@@ -329,10 +335,11 @@ if not is_there_a_background:
         for line in f:
             motif, _, minor, major = line.strip().split()  # minor (s<t) and major (s>+t)
 
-            if motif in motif_to_input_or_background_to_count_dict:
-                motif_to_input_or_background_to_count_dict[motif]['background'] = [
-                    int(minor), int(major)
-                ]
+            for str_or_nuc, motif_to_input_or_background_to_count_dict in str_or_nuc_to_motif_to_input_or_background_to_count_dict.items():
+                if motif in motif_to_input_or_background_to_count_dict:
+                    str_or_nuc_to_motif_to_input_or_background_to_count_dict[str_or_nuc][motif]['background'] = [
+                        int(minor), int(major)
+                    ]
 
 
 # Read domain information
@@ -354,19 +361,22 @@ for str_or_nuc, dir_str_or_nuc_motifs_domains in zip(
 
 motif_results_dict = {}
 
-for motif, input_or_background_to_count_dict in motif_to_input_or_background_to_count_dict.items():
-    oddsratio, pvalue = stats.fisher_exact(
-        [input_or_background_to_count_dict['input'], input_or_background_to_count_dict['background']])
-    # oddsratio, pvalue = stats.fisher_exact([
-    #    [motif_to_count[motif][1], background_dict[motif][1]],
-    #    [motif_to_count[motif][0], background_dict[motif][0]],
-    # ])
-    # oddsratio, pvalue = stats.fisher_exact([[major, major_bg], [minor, minor_bg]])
-    motif_results_dict[motif] = [
-        input_or_background_to_count_dict['input'][1] / sum(input_or_background_to_count_dict['input']),
-        oddsratio, pvalue,
-        motifs_to_domains_dict[motif] if motif in motifs_to_domains_dict else []
-    ]
+for str_or_nuc, motif_to_input_or_background_to_count_dict in str_or_nuc_to_motif_to_input_or_background_to_count_dict.items():
+    motif_results_dict[str_or_nuc] = {}
+
+    for motif, input_or_background_to_count_dict in motif_to_input_or_background_to_count_dict.items():
+        oddsratio, pvalue = stats.fisher_exact(
+            [input_or_background_to_count_dict['input'], input_or_background_to_count_dict['background']])
+        # oddsratio, pvalue = stats.fisher_exact([
+        #    [motif_to_count[motif][1], background_dict[motif][1]],
+        #    [motif_to_count[motif][0], background_dict[motif][0]],
+        # ])
+        # oddsratio, pvalue = stats.fisher_exact([[major, major_bg], [minor, minor_bg]])
+        motif_results_dict[str_or_nuc][motif] = [
+            input_or_background_to_count_dict['input'][1] / sum(input_or_background_to_count_dict['input']),
+            oddsratio, pvalue,
+            motifs_to_domains_dict[motif] if motif in motifs_to_domains_dict else []
+        ]
 
 
 input_str_or_nuc_to_to_output_paths_dict = {}
