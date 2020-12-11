@@ -395,7 +395,6 @@ with open(path_complete_input_rna_molecules) as f:
 
         input_header_to_seq_dict[header] = [sequence, seq_bear]
 
-print(input_header_to_seq_dict)
 output_generation.generate_output(
     os.path.join(dir_user, 'results.html'),
     input_header_to_seq_dict,
