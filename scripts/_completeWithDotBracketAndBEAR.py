@@ -383,9 +383,22 @@ input_str_or_nuc_to_to_output_paths_dict = {}
 for str_or_nuc, input_or_background_to_output_paths_dict in str_or_nuc_to_input_or_background_to_output_paths_dict.items():
     input_str_or_nuc_to_to_output_paths_dict[str_or_nuc] = input_or_background_to_output_paths_dict['input']
 
+
+input_header_to_seq_dict = {}
+with open(path_complete_input_rna_molecules) as f:
+    for line in f:
+        header = line.strip().lstrip('>')
+        sequence = f.readline().strip()
+
+        f.readline()  # Dot-bracket
+        seq_bear = f.readline().strip()
+
+        input_header_to_seq_dict[header] = [sequence, seq_bear]
+
+print(input_header_to_seq_dict)
 output_generation.generate_output(
     os.path.join(dir_user, 'results.html'),
-    path_complete_input_rna_molecules,
+    input_header_to_seq_dict,
     input_str_or_nuc_to_to_output_paths_dict,
     motif_results_dict
 )

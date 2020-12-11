@@ -1,16 +1,14 @@
 import json
 
-def generate_output(path_results_html, path_processed_input, sequence_results_dict, motif_results_dict):
+def generate_output(path_results_html, input_header_to_seq_dict, sequence_results_dict, motif_results_dict):
     """
     path_results_html is the path of the output page to create
 
-    path_processed_input is the path of the input file plus dot bracket and BEAR strings
-        >seq1
-        AGCA...
-        .(((...
-        :GGG...
-        >seq2
+    input_header_to_seq_dict contains the user input (primary sequence and bear sequence)
+    {
+        '>chr1:149783661-149783992(-)': ['AGCACUUUGCGA...', ':GGGGGGG::ff...],
         ...
+    }
 
     sequence_results_dict contains the paths of the resulting files, divided by sequences (seq) and structure (str)
     {

@@ -40,7 +40,7 @@ def parse_input(inputpath):
                     # Save the previous sequence
                     seqs[name] = {'seq': seq, 'db': db, 'bear': bear, 'counter': counter}
 
-                name = line
+                name = line.strip().lstrip('>')
                 seq = ""
                 db = ""
                 bear = ""
