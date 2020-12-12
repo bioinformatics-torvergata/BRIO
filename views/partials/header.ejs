@@ -1,9 +1,9 @@
 <!-- local CSS 
   personal styles.css goes after bootstrap to avoid unwanted overrides -->
 <link rel="stylesheet" href="/css/bootstrap.min.css">
-<link rel="stylesheet" href="/css/styles.css">
 <link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet"/>
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/css/styles.css">
 
 <!-- js from CDN -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -18,8 +18,8 @@
   <h1 id='WS_description'>Beam RNA Interaction mOtif search tool</h1>
 
 <!-- NAVBAR -->
-<nav class="navbar navbar-expand navbar-dark bg-primary">
-  <a class="navbar-brand" href="/">BRIO</a>
+<div class='container mt-4'>
+<nav class="navbar navbar-expand navbar-dark rounded bg-blue">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -44,13 +44,14 @@
         <a class="nav-link" href="/about">About</a>
       </li>
     </ul>
-    <form class="navbar-form navbar-left" action="/waiting" 
+    <form class="navbar-form navbar-left ml-auto" action="/waiting" 
     method = "post" enctype="multipart/form-data" id="search-uid">
         <div class="d-inline-block">
-          <input type="text" id ="uid" name="uid" class="form-control" placeholder="Insert your run ID">
+          <input type="text" id ="uid" name="uid" class="form-control mr-auto" placeholder="Insert your run ID">
         </div>
         <button type="submit" class="btn btn-default"><span class="fa fa-search"></span></button>
 
     </form>
   </div>
 </nav>
+</div>
