@@ -54,7 +54,7 @@ ul.error-tabs > li {
 }
 
 .seq-text-area{
-	height:50px;
+	height:auto;
 	font-size: 12px;
 	line-height: 14px;
 	padding-bottom: 2px
@@ -87,4 +87,9 @@ h3 {
 
  .mt-05{
  	margin-top: 0.5rem;
+ }
+
+ .dot-margin{
+ 	border-top-width: 0px;
+ 	padding-top: 0px;
  }
