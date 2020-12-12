@@ -1,14 +1,11 @@
 import json
 
-def generate_output(path_results_html, input_header_to_seq_dict, sequence_results_dict, motif_results_dict):
+def generate_output(path_results_html, dir_user_download, sequence_results_dict, motif_results_dict):
     """
     path_results_html is the path of the output page to create
 
-    input_header_to_seq_dict contains the user input (primary sequence and bear sequence)
-    {
-        '>chr1:149783661-149783992(-)': ['AGCACUUUGCGA...', ':GGGGGGG::ff...],
-        ...
-    }
+    dir_user_download: subfolder which contains a file for each motif, with information regarding the matches in each input sequence
+
 
     sequence_results_dict contains the paths of the resulting files, divided by sequences (seq) and structure (str)
     {

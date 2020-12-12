@@ -301,9 +301,22 @@ with open(os.path.join(dir_user, 'Out.log'), 'w') as fw:
                         fw.write('---> done\n')
 
 
+input_header_to_seq_and_bear_dict = {}
+with open(path_complete_input_rna_molecules) as f:
+    for line in f:
+        header = line.strip().lstrip('>')
+        sequence = f.readline().strip()
+
+        f.readline()  # Dot-bracket
+        seq_bear = f.readline().strip()
+
+        input_header_to_seq_and_bear_dict[header] = [sequence, seq_bear]
+
+str_or_nuc_to_motifs_to_seq_to_info_dict = {}
 str_or_nuc_to_motif_to_input_or_background_to_count_dict = {}
 
 for str_or_nuc, input_or_background_to_output_paths in str_or_nuc_to_input_or_background_to_output_paths_dict.items():
+    str_or_nuc_to_motifs_to_seq_to_info_dict[str_or_nuc] = {}
     str_or_nuc_to_motif_to_input_or_background_to_count_dict[str_or_nuc] = {}
 
     for input_or_background, output_path_list in input_or_background_to_output_paths.items():
@@ -317,7 +330,6 @@ for str_or_nuc, input_or_background_to_output_paths in str_or_nuc_to_input_or_ba
             # background    x   x
             for seq, motif_to_info_dict in seq_to_motif_to_info_dict.items():
                 for motif, (score, thresh, start, length) in motif_to_info_dict.items():
-
                     if motif not in str_or_nuc_to_motif_to_input_or_background_to_count_dict[str_or_nuc]:
                         str_or_nuc_to_motif_to_input_or_background_to_count_dict[str_or_nuc][motif] = {
                             'input': [0, 0],
@@ -328,6 +340,18 @@ for str_or_nuc, input_or_background_to_output_paths in str_or_nuc_to_input_or_ba
                         str_or_nuc_to_motif_to_input_or_background_to_count_dict[str_or_nuc][motif][input_or_background][0] += 1
                     else:
                         str_or_nuc_to_motif_to_input_or_background_to_count_dict[str_or_nuc][motif][input_or_background][1] += 1
+
+                    if input_or_background == 'input' and score > thresh:
+                            if motif not in str_or_nuc_to_motifs_to_seq_to_info_dict[str_or_nuc]:
+                                str_or_nuc_to_motifs_to_seq_to_info_dict[str_or_nuc][motif] = {}
+                            str_or_nuc_to_motifs_to_seq_to_info_dict[str_or_nuc][motif][seq] = [
+                                input_header_to_seq_and_bear_dict[seq][1 if str_or_nuc else 0][start:(start + length)],
+                                score,
+                                len(input_header_to_seq_and_bear_dict[seq][0]),
+                                start,
+                                start + length - 1,
+                                thresh
+                            ]
 
 if not is_there_a_background:
     with open(os.path.join(dir_base, 'resources', 'summary_AutoBg.txt')) as f:
@@ -379,20 +403,21 @@ for str_or_nuc, input_or_background_to_output_paths_dict in str_or_nuc_to_input_
     input_str_or_nuc_to_to_output_paths_dict[str_or_nuc] = input_or_background_to_output_paths_dict['input']
 
 
-input_header_to_seq_dict = {}
-with open(path_complete_input_rna_molecules) as f:
-    for line in f:
-        header = line.strip().lstrip('>')
-        sequence = f.readline().strip()
+dir_user_download = os.path.join(dir_user, 'download')
+if not os.path.exists(dir_user_download):
+    os.makedirs(dir_user_download)
 
-        f.readline()  # Dot-bracket
-        seq_bear = f.readline().strip()
+for str_or_nuc, motifs_to_seq_to_info_dict in str_or_nuc_to_motifs_to_seq_to_info_dict.items():
+    for motif, seq_to_info in motifs_to_seq_to_info_dict.items():
+        with open(os.path.join(dir_user_download, motif), 'w') as fw:
+            fw.write('\t'.join(['name', 'motif', 'score', 'length', 'start', 'end', 'threshold']) + '\n')
 
-        input_header_to_seq_dict[header] = [sequence, seq_bear]
+            for seq, info_list in seq_to_info.items():
+                fw.write('\t'.join([seq] + [str(x) for x in info_list]) + '\n')
 
 output_generation.generate_output(
     os.path.join(dir_user, 'results.html'),
-    input_header_to_seq_dict,
+    dir_user_download,
     input_str_or_nuc_to_to_output_paths_dict,
     motif_results_dict
 )
