@@ -308,15 +308,15 @@ for str_or_nuc, input_or_background_to_output_paths in str_or_nuc_to_input_or_ba
 
     for input_or_background, output_path_list in input_or_background_to_output_paths.items():
         for output_path in output_path_list:
-
             with open(output_path) as f:
-                # {">chr1:149783661-149783992(-)": {"ENCFF261SMW_DDX6_UTR_m2_run1.nuc.txt": [2.7200000000000006, 11.4, 31, 12],
+                # {"chr1:149783661-149783992(-)": {"ENCFF261SMW_DDX6_UTR_m2_run1.nuc.txt": [2.7200000000000006, 11.4, 31, 12],
                 seq_to_motif_to_info_dict = json.load(f)
 
-            #       s<t s>t
-            # input  0   0
+            #               s<t s>t
+            # input         x   x
+            # background    x   x
             for seq, motif_to_info_dict in seq_to_motif_to_info_dict.items():
-                for motif, info in motif_to_info_dict.items():
+                for motif, (score, thresh, start, length) in motif_to_info_dict.items():
 
                     if motif not in str_or_nuc_to_motif_to_input_or_background_to_count_dict[str_or_nuc]:
                         str_or_nuc_to_motif_to_input_or_background_to_count_dict[str_or_nuc][motif] = {
@@ -324,13 +324,12 @@ for str_or_nuc, input_or_background_to_output_paths in str_or_nuc_to_input_or_ba
                             'background': [0, 0]
                         }
 
-                    if info[0] < info[1]:
+                    if score < thresh:
                         str_or_nuc_to_motif_to_input_or_background_to_count_dict[str_or_nuc][motif][input_or_background][0] += 1
                     else:
                         str_or_nuc_to_motif_to_input_or_background_to_count_dict[str_or_nuc][motif][input_or_background][1] += 1
 
 if not is_there_a_background:
-    # Create the dictionary for the background: {name: [major, minor]}
     with open(os.path.join(dir_base, 'resources', 'summary_AutoBg.txt')) as f:
         for line in f:
             motif, _, minor, major = line.strip().split()  # minor (s<t) and major (s>+t)
@@ -366,12 +365,8 @@ for str_or_nuc, motif_to_input_or_background_to_count_dict in str_or_nuc_to_moti
 
     for motif, input_or_background_to_count_dict in motif_to_input_or_background_to_count_dict.items():
         oddsratio, pvalue = stats.fisher_exact(
-            [input_or_background_to_count_dict['input'], input_or_background_to_count_dict['background']])
-        # oddsratio, pvalue = stats.fisher_exact([
-        #    [motif_to_count[motif][1], background_dict[motif][1]],
-        #    [motif_to_count[motif][0], background_dict[motif][0]],
-        # ])
-        # oddsratio, pvalue = stats.fisher_exact([[major, major_bg], [minor, minor_bg]])
+            [input_or_background_to_count_dict['input'], input_or_background_to_count_dict['background']], alternative='less'
+        )
         motif_results_dict[str_or_nuc][motif] = [
             input_or_background_to_count_dict['input'][1] / sum(input_or_background_to_count_dict['input']),
             oddsratio, pvalue,
