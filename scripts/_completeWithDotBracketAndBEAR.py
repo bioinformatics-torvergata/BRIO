@@ -186,6 +186,8 @@ for row in sys.argv[1].split('\n'):
 
 default_search = False
 
+#todo to activate at the end removing this line
+'''
 if not is_there_a_background and len(header_to_seq) == DEFAULT_SEARCH_NUM_SEQ and \
         set(species_list) == set(DEFAULT_SEARCH_SPECIES) and \
         set(experiments_list) == set(DEFAULT_SEARCH_EXPERIMENTS):
@@ -208,7 +210,8 @@ if not is_there_a_background and len(header_to_seq) == DEFAULT_SEARCH_NUM_SEQ an
 
                 f.readline()  # Skip dot-bracket
                 f.readline()  # Skit bear
-
+'''
+#todo to activate at the end removing this line
 
 user_id = sys.argv[3]
 
@@ -217,10 +220,6 @@ dir_user = os.path.join(dir_base, 'results', user_id)
 # Directory preparation
 if not os.path.exists(dir_user):
     os.makedirs(dir_user)
-
-#todo to activate at the end removing this line
-default_search = False
-#todo to activate at the end removing this line
 
 if default_search:
     with open(os.path.join(dir_user, 'Out.log'), 'w') as fw:
