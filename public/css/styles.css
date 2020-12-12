@@ -42,3 +42,49 @@ ul.error-tabs > li {
 	margin: 1rem auto;
 	padding-bottom:  1rem;
 }
+
+/*new */
+
+.form-control {
+    height: calc(1.5em + .5rem + 2px);
+    padding: .25rem .5rem;
+    font-size: .875rem;
+    line-height: 1.5;
+    border-radius: .2rem;
+}
+
+.seq-text-area{
+	height:50px;
+	font-size: 12px;
+	line-height: 14px;
+	padding-bottom: 2px
+}
+
+h3 {
+	font-size: 1.17em;
+	margin-top: .5rem;
+}
+.bg-blue{
+	background-color: #336699;
+}
+
+.form-fieldset.container.rounded{
+	border: 2px solid #0D3184;
+	min-height: 15rem;
+
+	
+}
+
+.in-box{
+	background-color: #B7CFEC;
+	color: #0D3184;
+	border: 2px solid #0D3184;
+}
+
+ .algn {
+        display:inline
+    }
+
+ .mt-05{
+ 	margin-top: 0.5rem;
+ }
