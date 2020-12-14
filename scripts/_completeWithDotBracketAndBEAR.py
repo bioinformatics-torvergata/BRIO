@@ -123,7 +123,7 @@ def process_input_rna_molecules(input_rna_molecules, dir_output):
 
         # Calculate dotbracket
         missing_bear_rna_molecules_added_dot_bracket = subprocess.check_output(
-            [os.path.join(dir_base, 'scripts', 'RNAfold'), '--noPS', path_missing_dot_bracket_input],
+            [os.path.join(dir_base, 'scripts', 'RNAfold'), '-j 1', '--noPS', path_missing_dot_bracket_input],
             # To get strings
             universal_newlines=True
         )
