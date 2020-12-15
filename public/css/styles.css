@@ -62,7 +62,6 @@ ul.error-tabs > li {
 
 h3 {
 	font-size: 1.17em;
-	margin-top: .5rem;
 }
 .bg-blue{
 	background-color: #336699;
@@ -70,7 +69,7 @@ h3 {
 
 .form-fieldset.container.rounded{
 	border: 2px solid #0D3184;
-	min-height: 15rem;
+	min-height: 18rem;
 
 	
 }

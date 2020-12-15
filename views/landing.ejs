@@ -13,9 +13,7 @@
 <!-- INPUT FORM -->
 <div class='container'>
     <div class="form-header p-3 ml-1">
-        <% if (Object.keys(errors).length === 0) { %>
-            <h2 class="text-primary">Input form (choose one)</h2>
-        <% } else { %>
+        <% if (Object.keys(errors).length != 0)  { %>
             <h3 class="errors-heading text-danger">Oops, please correct the following (see at the bottom of the page for
                 more details):</h3>
             <ul class="errors-list">
@@ -39,7 +37,7 @@
 
                         <fieldset class='form-fieldset container rounded in-box pt-2'>
                             <!--TEXT-->
-                            <h3 class='form-fieldset algn pt-5'>Paste RNA sequence</h3> 
+                            <h3 class='form-fieldset algn'>Paste RNA sequence</h3> 
                             <button title="Format" id="format_pop_1" type="button"      class="btn btn-link algn dot-margin" data-container="body"
                                 data-toggle="popover">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle-fill" viewBox="0 0 16 16">
@@ -70,7 +68,7 @@
                     </td>
                     <td>
 
-                        <fieldset class='form-fieldset container rounded in-box'>
+                        <fieldset class='form-fieldset container rounded in-box pt-2'>
                             <!--UPLOAD-->
                             <h3 class='form-fieldset'>Or upload your RNA(s)</h3>
                             <div class="form-field <%= errors.message ? 'form-field-invalid' : '' %>">
@@ -155,7 +153,6 @@
         <div class="tab-content">
             <div id="menu1" class="tab-pane fade in active">
 
-                ********(to do more specific and with fashion tabs)********
                 <h3> There are problems with your input:</h3>
                 <div>
                     Not valid input(s):<br/>
@@ -180,7 +177,6 @@
             </div>
             <div id="menu2" class="tab-pane fade">
                 <h3> There are problems with your background:</h3>
-                ********(to do with fashion tabs)********
 
 
                 <div>
