@@ -1,7 +1,16 @@
 # BRIO
 BRIO webserver - Helmer-Citterich Lab
 
+To lunch the server in background: 
+	forever start index.js 
+	
 ## Important things
+
+* first time after git clone:
+	npm cache clean --force
+	rm -rf node_modules package-lock.json
+	npm install
+
 * docs
 	* errorCodes : table of common error codes
 
