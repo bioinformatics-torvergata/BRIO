@@ -32,7 +32,7 @@ def generate_output(path_results_html, dir_user_download, sequence_results_dict,
 
         fw.write('<br>Click here to download all your results \n')
         fw.write(
-            '<a href="' + dir_user_download + '.zip" download><button class="btn"><i class="fa fa-download"></i> Download</button></a>\n<br>\n')
+            '<a href="download.zip" download><button class="btn"><i class="fa fa-download"></i> Download</button></a>\n<br>\n')
 
         # fw.write('<script>\n$(document).ready(function()\n{\n$("#sequence").tablesorter({\nsortList: [[4,0]],\nheaders: {0:{sorter:false},8:{sorter:false}}\n});\n}\n);\n</script>')
         # fw.write('\n<script>\n$(document).ready(function()\n{\n$("#structure").tablesorter({\nsortList: [[4,0]],\nheaders: {0:{sorter:false},8:{sorter:false}}\n});\n}\n);\n</script>')
@@ -69,8 +69,12 @@ def generate_output(path_results_html, dir_user_download, sequence_results_dict,
                     organism = "Mus musculus"
                 else:
                     organism = "Homo sapiens"
-                # if float(p_value)>=0.05:continue
-                if float(coverage) < 0.5: continue
+
+                if float(p_value) >= 0.05:
+                    continue
+                if float(coverage) <= 0.5:
+                    continue
+
                 fw.write(
                     '<td> <div style="width:250px;height:100px"><img src="' + logo_link + '" width="100%" height="100%" ></div></td>\n')
                 fw.write('<td><div >' + region + '</div></td>\n')
@@ -82,7 +86,7 @@ def generate_output(path_results_html, dir_user_download, sequence_results_dict,
                 fw.write('<td><div > ' + organism + ' </div></td>\n')
                 # fw.write('<td><div > prova </div></td>\n</tr>\n')
                 fw.write(
-                    '<td><div ><a href="' + dir_user_download + '/' + motif + '" Download><button class="btn"><i class="fa fa-download"></i>Download</button></a></div></td>\n</tr>\n')
+                    '<td><div ><a href="download/' + motif + '" Download><button class="btn"><i class="fa fa-download"></i>Download</button></a></div></td>\n</tr>\n')
                 # <button class="btn"><i class="fa fa-download"></i> Show file</button></a></div></td>\n</tr>\n')
 
             fw.write("</tbody>\n</table>\n</div>\n")
