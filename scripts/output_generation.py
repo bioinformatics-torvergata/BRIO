@@ -51,13 +51,11 @@ def generate_output(path_results_html, dir_user_download, sequence_results_dict,
             for motif in motif_results_dict[str_or_nuc]:
 
                 if str_or_nuc == "nuc":
-                    logo_link = "../../images/logos/" + motif.split(".")[0] + "_wl.nuc.png"
-                    os.system("cp /mnt/data/var/www/html/brio/public/images/" + motif.split(".")[
-                        0] + "_wl.nuc.png " + dir_user_download + "/logos/")
+                    logo_link = "../images/logos/" + motif.split(".")[0] + "_wl.nuc.png"
+                    os.system("cp ../../public/images/logos/" + motif.split(".")[0] + "_wl.nuc.png " + dir_user_download + "/logos/")
                 else:
-                    logo_link = "../../images/logos/" + motif.split(".")[0] + "_wl.png"
-                    os.system("cp /mnt/data/var/www/html/brio/public/images/logos/" + motif.split(".")[
-                        0] + "_wl.png " + dir_user_download + "/logos/")
+                    logo_link = "../images/logos/" + motif.split(".")[0] + "_wl.png"
+                    os.system("cp ../../public/images/logos/" + motif.split(".")[0] + "_wl.png " + dir_user_download + "/logos/")
                 coverage = str("%.2g" % motif_results_dict[str_or_nuc][motif][0])
                 oddsratio = str("%.2g" % motif_results_dict[str_or_nuc][motif][1])
                 p_value = str("%.2g" % motif_results_dict[str_or_nuc][motif][2])

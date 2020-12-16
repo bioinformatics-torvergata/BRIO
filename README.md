@@ -7,9 +7,16 @@ To lunch the server in background:
 ## Important things
 
 * first time after git clone:
-	npm cache clean --force
+	```
+ 	npm cache clean --force
 	rm -rf node_modules package-lock.json
 	npm install
+ 	```
+
+* before to put online new things
+  
+	```sudo killall -9 node```
+
 
 * docs
 	* errorCodes : table of common error codes
