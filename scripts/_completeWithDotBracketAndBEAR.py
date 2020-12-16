@@ -215,7 +215,7 @@ if not is_there_a_background and len(header_to_seq) == DEFAULT_SEARCH_NUM_SEQ an
 
 user_id = sys.argv[3]
 
-dir_user = os.path.join(dir_base, 'results', user_id)
+dir_user = os.path.join(dir_base, 'public/results', user_id)
 
 # Directory preparation
 if not os.path.exists(dir_user):
