@@ -16,18 +16,18 @@ exports.check_rna_sequence = function(rna_seq) {
 
 exports.check_rna_secondary_structure = function(rna_struct) {
 	if(reg_exp_rna_secondary_structure.test(rna_struct)){
-		var count = 0
-		for (var i = 0; i < header_seq_struct_list[2].length; i++) {
-			if (header_seq_struct_list[2][i] === '('){
+		let count = 0;
+		for (let i = 0; i < rna_struct.length; i++) {
+			if (rna_struct[i] === '('){
 				count += 1
-			}else if(header_seq_struct_list[2][i] === ')'){
+			}else if(rna_struct[i] === ')'){
 				count -= 1
 			}
 			if (count < 0){
 				break
 			}
 		}
-		
+
 		return count === 0
 	}
 
