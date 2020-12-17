@@ -107,4 +107,8 @@ def generate_output(path_results_html, dir_user_download, sequence_results_dict,
         fw.write('evt.currentTarget.className += " active";\n}\n')
         fw.write('document.getElementById("defaultOpen").click();\n</script>\n')
 
-    os.system("zip -r " + dir_user_download + ".zip " + dir_user_download + " " + path_results_html)
+    os.system(
+        "zip -j " + os.path.join(os.path.dirname(dir_user_download), "download") + " " +
+        os.path.join(dir_user_download, "*.txt") + " " +
+        path_results_html
+    )
