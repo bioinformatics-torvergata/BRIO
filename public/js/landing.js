@@ -24,22 +24,37 @@ $(function () {
 
     //populate text area with examples
     $("#ex_w_str").click(function () {
-        $.ajax({
+        $("#inputRNA").val(
+            ">chr1:149783661-149783992(-)\n" +
+            "AGCACUUUGCGAGUCUUCAUUUGCAUACGGGCUCUAUAAGUAGCGCAUAACCAGCCCGUUUUGCGGUAGUUCGGAUUACUUCUUUAAGUCUCUUUUCUCUUUUUUCGCGCAAAAAUGCCGGAUCCAGCGAAAUCCGCUCCUGCUCCCAAGAAGGGCUCCAAAAAGGCUGUUACGAAAGUGCAGAAGAAGGACGGCAAGAAGCGCAAGCGCAGCCGCAAGGAGAGCUACUCCGUUUACGUGUACAAGGUGCUGAAGCAGGUCCACCCCGACACCGGCAUCUCGUCCAAGGCCAUGGGCAUCAUGAACUCCUUCGUCAACGACAUCUUCGAGC\n" +
+            ".(((((((..((((((............)))))).....(((((((......(((((.(((((.(((((..((((((((((....))))......((.((...((((.(((....)))))))...)).))))))))...)))))..))))).)))))........)).))))).))))))).((.((((((((((.....((....))...))))...((((.....)))).............((((((((..(..((......))..)..)))))))).(((((......))))).........)))))).))..(((.....)))...\n" +
+            ">chr1:149784741-149784985(-)\n" +
+            "CUUCCAGAGCUCGGCCGUGAUGGCGCUGCAGGAGGCCAGCGAGGCCUACCUGGUGGGGCUGUUCGAAGACACGAACCUGUGCGCCAUCCAUGCCAAGCGCGUGACCAUCAUGCCCAAGGACAUCCAGUUGGCCCGCCGCAUCCGCGGGGAGCGGGCCUAAGGCAUAUUUUUAAGUGGUCGAUCUAAAGGCUCUUUUCAGAGCCACUGCCGUUUUCAUCAAGAGCAGCUGUACCGGCUCUCCAUC\n" +
+            ".....(((((.(((..(.((((((((.(((((((.((.((.(((\n"
+        );
+        /*$.ajax({
             url: "examples/example_w_struct.txt",
             dataType: "text",
             success: function (data) {
                 $("#inputRNA").val(data);
             }
-        });
+        });*/
     });
     $("#ex_wo_str").click(function () {
-        $.ajax({
+        $("#inputRNA").val(
+            ">chr1:149783661-149783992(-)\n" +
+            "AGCACUUUGCGAGUCUUCAUUUGCAUACGGGCUCUAUAAGUAGCGCAUAACCAGCCCGUUUUGCGGUAGUUCGGAUUACUUCUUUAAGUCUCUUUUCUCUUUUUUCGCGCAAAAAUGCCGGAUCCAGCGAAAUCCGCUCCUGCUCCCAAGAAGGGCUCCAAAAAGGCUGUUACGAAAGUGCAGAAGAAGGACGGCAAGAAGCGCAAGCGCAGCCGCAAGGAGAGCUACUCCGUUUACGUGUACAAGGUGCUGAAGCAGGUCCACCCCGACACCGGCAUCUCGUCCAAGGCCAUGGGCAUCAUGAACUCCUUCGUCAACGACAUCUUCGAGC\n" +
+            ">chr1:149784741-149784985(-)\n" +
+            "CUUCCAGAGCUCGGCCGUGAUGGCGCUGCAGGAGGCCAGCGAGGCCUACCUGGUGGGGCUGUUCGAAGACACGAACCUGUGCGCCAUCCAUGCCAAGCGCGUGACCAUCAUGCCCAAGGACAUCCAGUUGGCCCGCCGCAUCCGCGGGGAGCGGGCCUAAGGCAUAUUUUUAAGUGGUCGAUCUAAAGGCUCUUUUCAGAGCCACUGCCGUUUUCAUCAAGAGCAGCUGUACCGGCUCUCCAUC\n"
+        );
+        /*$.ajax({
+            $("#inputRNA").val("A");
             url: "examples/example_wo_struct.txt",
             dataType: "text",
             success: function (data) {
                 $("#inputRNA").val(data);
             }
-        });
+        });*/
     });
 
 });
