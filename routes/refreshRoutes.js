@@ -16,27 +16,37 @@ _check_completeness = function (uid) {
 
 router.post('/waiting',
     (req, res) => {
-
-        let progress = _check_completeness(req.body.uid);
-        if (progress === '100') {
-            res.render('results',
-                {
-                    uid: req.body.uid
-                });
-        } else if (progress.length === 32) {
-            res.render('results',
-                {
-                    uid: progress
-                });
-        } else {
-            res.render('loading',
+        if (req.body.uid.length !== 32) {
+            res.render('landing',
                 {
                     userID: req.body.uid,
-                    progress: progress
+                    inputRNA: req.body.inputRNA,
+                    email: req.body.email,
+                    inputRNA_processed: {},
+                    inputBackground_processed: {},
+                    errors: '',
+                    progress: '0',
                 });
+        } else {
+            let progress = _check_completeness(req.body.uid);
+            if (progress === '100') {
+                res.render('results',
+                    {
+                        uid: req.body.uid
+                    });
+            } else if (progress.length === 32) {
+                res.render('results',
+                    {
+                        uid: progress
+                    });
+            } else {
+                res.render('loading',
+                    {
+                        userID: req.body.uid,
+                        progress: progress
+                    });
+            }
         }
-
-
     });
 
 module.exports = router;
