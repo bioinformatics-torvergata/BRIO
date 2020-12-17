@@ -2,8 +2,10 @@ import json
 import os
 
 
-def generate_output(path_results_html, dir_user_download, sequence_results_dict, motif_results_dict):
+def generate_output(dir_base, path_results_html, dir_user_download, sequence_results_dict, motif_results_dict):
     """
+    dir_base is the base directory of BRIO on the server
+
     path_results_html is the path of the output page to create
 
     dir_user_download: subfolder which contains a file for each motif, with information regarding the matches in each input sequence
@@ -52,16 +54,18 @@ def generate_output(path_results_html, dir_user_download, sequence_results_dict,
                 fw.write('<div id="Paris" class="tabcontent">\n<table id="sequence"')
             fw.write(
                 ' class="out_table">\n<thead>\n<tr>\n<th>Motif</th>\n<th>Region </th>\n<th>Coverage </th>\n<th> oddsratio </th>\n<th> p-value </th>\n<th>Protein </th>\n<th>Domains </th>\n<th>Organism </th>\n<th>Download</th></tr>\n</thead>\n<tbody>\n')
+
             for motif in motif_results_dict[str_or_nuc]:
 
                 if str_or_nuc == "nuc":
+                    path_logo_on_server = os.path.join(dir_base, 'public/images/logos', motif.split(".")[0] + "_wl.nuc.png")
                     logo_link = "../images/logos/" + motif.split(".")[0] + "_wl.nuc.png"
-                    os.system("cp ../public/images/logos/" + motif.split(".")[
-                        0] + "_wl.nuc.png " + dir_user_download + "/logos/")
                 else:
+                    path_logo_on_server = os.path.join(dir_base, 'public/images/logos', motif.split(".")[0] + "_wl.png")
                     logo_link = "../images/logos/" + motif.split(".")[0] + "_wl.png"
-                    os.system(
-                        "cp ../public/images/logos/" + motif.split(".")[0] + "_wl.png " + dir_user_download + "/logos/")
+
+                os.system("cp " + path_logo_on_server + " " + dir_user_download + "/logos/")
+
                 coverage = str("%.2g" % motif_results_dict[str_or_nuc][motif][0])
                 oddsratio = str("%.2g" % motif_results_dict[str_or_nuc][motif][1])
                 p_value = str("%.2g" % motif_results_dict[str_or_nuc][motif][2])
@@ -110,5 +114,6 @@ def generate_output(path_results_html, dir_user_download, sequence_results_dict,
     os.system(
         "zip -j " + os.path.join(os.path.dirname(dir_user_download), "download") + " " +
         os.path.join(dir_user_download, "*.txt") + " " +
+        os.path.join(dir_user_download, "logos/*.png") + " " +
         path_results_html
     )

@@ -415,6 +415,7 @@ for str_or_nuc, motifs_to_seq_to_info_dict in str_or_nuc_to_motifs_to_seq_to_inf
                 fw.write('\t'.join([seq] + [str(x) for x in info_list]) + '\n')
 
 output_generation.generate_output(
+    dir_base,
     os.path.join(dir_user, 'results.html'),
     dir_user_download,
     input_str_or_nuc_to_to_output_paths_dict,
