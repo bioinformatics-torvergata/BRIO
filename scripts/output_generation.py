@@ -26,16 +26,20 @@ def generate_output(path_results_html, dir_user_download, sequence_results_dict,
 
     # Dirty temporary solution
     # "best_score\tmotif_threshold\tposition\tmotif_size"
+    user = dir_user_download.split("/")[-2]
     os.system("mkdir " + dir_user_download + "/logos")
 
     with open(path_results_html, 'w') as fw:
 
         fw.write('<br>Click here to download all your results \n')
         fw.write(
-            '<a href="download.zip" download><button class="btn"><i class="fa fa-download"></i> Download</button></a>\n<br>\n')
+            '<a href="results/' + user + '/download.zip" download><button class="btn"><i class="fa fa-download"></i> Download</button></a>\n<br>\n')
 
-        # fw.write('<script>\n$(document).ready(function()\n{\n$("#sequence").tablesorter({\nsortList: [[4,0]],\nheaders: {0:{sorter:false},8:{sorter:false}}\n});\n}\n);\n</script>')
-        # fw.write('\n<script>\n$(document).ready(function()\n{\n$("#structure").tablesorter({\nsortList: [[4,0]],\nheaders: {0:{sorter:false},8:{sorter:false}}\n});\n}\n);\n</script>')
+        fw.write(
+            '<script>\n$(document).ready(function()\n{\n$("#sequence").tablesorter({\nsortList: [[4,0]],\nheaders: {0:{sorter:false},8:{sorter:false}}\n});\n}\n);\n</script>')
+        fw.write(
+            '\n<script>\n$(document).ready(function()\n{\n$("#structure").tablesorter({\nsortList: [[4,0]],\nheaders: {0:{sorter:false},8:{sorter:false}}\n});\n}\n);\n</script>')
+
         fw.write(
             '<div class="tab">\n<button class="tablinks" onclick="openCity(event, \'Paris\')" id="defaultOpen">Sequence</button>\n')
         fw.write('<button class="tablinks" onclick="openCity(event, \'London\')">Structure</button>\n')
@@ -43,19 +47,21 @@ def generate_output(path_results_html, dir_user_download, sequence_results_dict,
 
         for str_or_nuc in sequence_results_dict:
             if str_or_nuc == "str":
-                fw.write('<div id="London" class="tabcontent">')
+                fw.write('<div id="London" class="tabcontent">\n<table id="structure"')
             else:
-                fw.write('<div id="Paris" class="tabcontent">')
+                fw.write('<div id="Paris" class="tabcontent">\n<table id="sequence"')
             fw.write(
-                '<table id="structure" class="out_table">\n<thead>\n<tr>\n<th>Motif</th>\n<th>Region </th>\n<th>Coverage </th>\n<th> oddsratio </th>\n<th> p-value </th>\n<th>Protein </th>\n<th>Domains </th>\n<th>Organism </th>\n<th>Download</th></tr>\n</thead>\n<tbody>\n')
+                ' class="out_table">\n<thead>\n<tr>\n<th>Motif</th>\n<th>Region </th>\n<th>Coverage </th>\n<th> oddsratio </th>\n<th> p-value </th>\n<th>Protein </th>\n<th>Domains </th>\n<th>Organism </th>\n<th>Download</th></tr>\n</thead>\n<tbody>\n')
             for motif in motif_results_dict[str_or_nuc]:
 
                 if str_or_nuc == "nuc":
                     logo_link = "../images/logos/" + motif.split(".")[0] + "_wl.nuc.png"
-                    os.system("cp ../../public/images/logos/" + motif.split(".")[0] + "_wl.nuc.png " + dir_user_download + "/logos/")
+                    os.system("cp ../public/images/logos/" + motif.split(".")[
+                        0] + "_wl.nuc.png " + dir_user_download + "/logos/")
                 else:
                     logo_link = "../images/logos/" + motif.split(".")[0] + "_wl.png"
-                    os.system("cp ../../public/images/logos/" + motif.split(".")[0] + "_wl.png " + dir_user_download + "/logos/")
+                    os.system(
+                        "cp ../public/images/logos/" + motif.split(".")[0] + "_wl.png " + dir_user_download + "/logos/")
                 coverage = str("%.2g" % motif_results_dict[str_or_nuc][motif][0])
                 oddsratio = str("%.2g" % motif_results_dict[str_or_nuc][motif][1])
                 p_value = str("%.2g" % motif_results_dict[str_or_nuc][motif][2])
@@ -86,7 +92,7 @@ def generate_output(path_results_html, dir_user_download, sequence_results_dict,
                 fw.write('<td><div > ' + organism + ' </div></td>\n')
                 # fw.write('<td><div > prova </div></td>\n</tr>\n')
                 fw.write(
-                    '<td><div ><a href="download/' + motif + '" Download><button class="btn"><i class="fa fa-download"></i>Download</button></a></div></td>\n</tr>\n')
+                    '<td><div ><a href="results/' + user + '/download/' + motif + '" Download><button class="btn"><i class="fa fa-download"></i>Download</button></a></div></td>\n</tr>\n')
                 # <button class="btn"><i class="fa fa-download"></i> Show file</button></a></div></td>\n</tr>\n')
 
             fw.write("</tbody>\n</table>\n</div>\n")
