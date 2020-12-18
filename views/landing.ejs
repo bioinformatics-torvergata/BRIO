@@ -37,7 +37,7 @@
 
                         <fieldset class='form-fieldset container rounded in-box pt-2'>
                             <!--TEXT-->
-                            <h3 class='form-fieldset algn'>Paste RNA sequence</h3> 
+                            <h3 class='form-fieldset algn'>Paste RNAs</h3> 
                             <button title="Format" id="format_pop_1" type="button"      class="btn btn-link algn dot-margin" data-container="body"
                                 data-toggle="popover">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle-fill" viewBox="0 0 16 16">
@@ -49,7 +49,7 @@
                                 <label for="inputRNA">Input RNA</label>
 
 
-                                <textarea class="input form-control mt-0 seq-text-area" rows="5" id="inputRNA" name="inputRNA" placeholder="Paste one or more sequence/s" 
+                                <textarea class="input form-control mt-0 seq-text-area" rows="5" id="inputRNA" name="inputRNA" placeholder="Paste your RNA sequences here..." 
                                           autofocus><%= inputRNA %></textarea>
                                 <% if (errors.message) { %>
                                  <input type="button" value="Example without structures" id="ex_wo_str"
@@ -70,7 +70,7 @@
 
                         <fieldset class='form-fieldset container rounded in-box pt-2'>
                             <!--UPLOAD-->
-                            <h3 class='form-fieldset'>Or upload your RNA(s)</h3>
+                            <h3 class='form-fieldset'>Or upload your RNAs</h3>
                             <div class="form-field <%= errors.message ? 'form-field-invalid' : '' %>">
                                 <br>
 
