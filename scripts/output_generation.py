@@ -1,8 +1,8 @@
 import json
 import os
+import my_email
 
-
-def generate_output(dir_base, path_results_html, dir_user_download, sequence_results_dict, motif_results_dict):
+def generate_output(dir_base, path_results_html, dir_user_download, sequence_results_dict, motif_results_dict, user_email):
     """
     dir_base is the base directory of BRIO on the server
 
@@ -117,3 +117,6 @@ def generate_output(dir_base, path_results_html, dir_user_download, sequence_res
         os.path.join(dir_user_download, "logos/*.png") + " " +
         path_results_html
     )
+
+    if user_email != '':
+        my_email.send_email_with_code(code=user, user_email=user_email)

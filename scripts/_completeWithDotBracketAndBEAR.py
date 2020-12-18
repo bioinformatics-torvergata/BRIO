@@ -163,6 +163,8 @@ search_seq_motifs = 'nuc'  # else ''
 species_list = sys.argv[4].split(',')
 experiments_list = sys.argv[5].split(',')
 
+user_email = sys.argv[6]
+
 is_there_a_background = sys.argv[2]
 
 # Check if the input is the default one
@@ -419,7 +421,8 @@ output_generation.generate_output(
     os.path.join(dir_user, 'results.html'),
     dir_user_download,
     input_str_or_nuc_to_to_output_paths_dict,
-    motif_results_dict
+    motif_results_dict,
+    user_email
 )
 
 with open(os.path.join(dir_user, 'Out.log'), 'w') as fw:

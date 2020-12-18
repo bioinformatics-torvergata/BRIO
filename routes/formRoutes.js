@@ -173,7 +173,7 @@ router.post('/fileInput',
             console.log('user run ID: ' + userID);
 
             const pythonProcess = spawn('python3', ["scripts/_completeWithDotBracketAndBEAR.py",
-                valid_rnas_str, valid_rnas_background_str, userID, req.body.options_species, req.body.options_experiments
+                valid_rnas_str, valid_rnas_background_str, userID, req.body.options_species, req.body.options_experiments, req.body.email
             ]);
             pythonProcess.stdout.on('data', (data) => {
                 console.log('stdout:\n' + data); //test stream python -> node
