@@ -13,7 +13,7 @@
 <!-- INPUT FORM -->
 <div class='container'>
     <div class="form-header p-3 ml-1">
-        <% if (Object.keys(errors).length != 0)  { %>
+        <% if (Object.keys(errors).length !== 0)  { %>
             <h3 class="errors-heading text-danger">Oops, please correct the following (see at the bottom of the page for
                 more details):</h3>
             <ul class="errors-list">
@@ -22,120 +22,124 @@
                 <% }) %>
             </ul>
         <% } %>
-      
+
     </div>
 
 
     <!--INPUT-->
     <section class='input form'>
-    <div class='form container'>
-        <form method="post" action="/go/fileInput" novalidate enctype="multipart/form-data">
+        <div class='form container'>
+            <form method="post" action="/go/fileInput" novalidate enctype="multipart/form-data">
 
-            <table class='container-fluid'>
-                <tr>
-                    <td>
+                <table class='container-fluid'>
+                    <tr>
+                        <td>
 
-                        <fieldset class='form-fieldset container rounded in-box pt-2'>
-                            <!--TEXT-->
-                            <h3 class='form-fieldset algn'>Paste RNAs</h3> 
-                            <button title="Format" id="format_pop_1" type="button"      class="btn btn-link algn dot-margin" data-container="body"
-                                data-toggle="popover">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle-fill" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496 6.033a.237.237 0 0 1-.24-.247C5.35 4.091 6.737 3.5 8.005 3.5c1.396 0 2.672.73 2.672 2.24 0 1.08-.635 1.594-1.244 2.057-.737.559-1.01.768-1.01 1.486v.105a.25.25 0 0 1-.25.25h-.81a.25.25 0 0 1-.25-.246l-.004-.217c-.038-.927.495-1.498 1.168-1.987.59-.444.965-.736.965-1.371 0-.825-.628-1.168-1.314-1.168-.803 0-1.253.478-1.342 1.134-.018.137-.128.25-.266.25h-.825zm2.325 6.443c-.584 0-1.009-.394-1.009-.927 0-.552.425-.94 1.01-.94.609 0 1.028.388 1.028.94 0 .533-.42.927-1.029.927z"/>
-                                </svg>
-                          
-                            </button>   
-                            <div class="form-field form-group <%= errors.message ? 'form-field-invalid' : '' %>">
-                                <label for="inputRNA">Input RNA</label>
+                            <fieldset class='form-fieldset container rounded in-box pt-2'>
+                                <!--TEXT-->
+                                <h3 class='form-fieldset algn'>Paste RNAs</h3>
+                                <button title="Format" id="format_pop_1" type="button"
+                                        class="btn btn-link algn dot-margin" data-container="body"
+                                        data-toggle="popover">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-question-circle-fill" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                              d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496 6.033a.237.237 0 0 1-.24-.247C5.35 4.091 6.737 3.5 8.005 3.5c1.396 0 2.672.73 2.672 2.24 0 1.08-.635 1.594-1.244 2.057-.737.559-1.01.768-1.01 1.486v.105a.25.25 0 0 1-.25.25h-.81a.25.25 0 0 1-.25-.246l-.004-.217c-.038-.927.495-1.498 1.168-1.987.59-.444.965-.736.965-1.371 0-.825-.628-1.168-1.314-1.168-.803 0-1.253.478-1.342 1.134-.018.137-.128.25-.266.25h-.825zm2.325 6.443c-.584 0-1.009-.394-1.009-.927 0-.552.425-.94 1.01-.94.609 0 1.028.388 1.028.94 0 .533-.42.927-1.029.927z"/>
+                                    </svg>
+                                </button>
+                                <div class="form-field form-group <%= errors.message ? 'form-field-invalid' : '' %>">
+                                    <label for="inputRNA">Input RNA</label>
 
 
-                                <textarea class="input form-control mt-0 seq-text-area" rows="5" id="inputRNA" name="inputRNA" placeholder="Paste your RNA sequences here..." 
-                                          autofocus><%= inputRNA %></textarea>
-                                <% if (errors.message) { %>
-                                 <input type="button" value="Example without structures" id="ex_wo_str"
-                                       class="btn btn-light btn-sm mt-1">
-                                <input type="button" value="Example with structures" id="ex_w_str"
-                                       class="btn btn-light btn-sm mt-1">
-                                    <div class="error"><%= errors.message.msg %></div>
-                                <% } %>
-                                <input type="button" value="Example without structures" id="ex_wo_str"
-                                       class="btn btn-light btn-sm mt-2">
-                                <input type="button" value="Example with structures" id="ex_w_str"
-                                       class="btn btn-light btn-sm mt-2">
-                            </div>
-                        </fieldset>
+                                    <textarea class="input form-control mt-0 seq-text-area" rows="5" id="inputRNA"
+                                              name="inputRNA" placeholder="Paste your RNA sequences here..."
+                                              autofocus><%= inputRNA %></textarea>
+                                    <% if (errors.message) { %>
+                                        <input type="button" value="Example without structures" id="ex_wo_str"
+                                               class="btn btn-light btn-sm mt-1">
+                                        <input type="button" value="Example with structures" id="ex_w_str"
+                                               class="btn btn-light btn-sm mt-1">
+                                        <div class="error"><%= errors.message.msg %></div>
+                                    <% } %>
+                                    <input type="button" value="Example without structures" id="ex_wo_str"
+                                           class="btn btn-light btn-sm mt-2">
+                                    <input type="button" value="Example with structures" id="ex_w_str"
+                                           class="btn btn-light btn-sm mt-2">
+                                </div>
+                            </fieldset>
 
-                    </td>
-                    <td>
+                        </td>
+                        <td>
 
-                        <fieldset class='form-fieldset container rounded in-box pt-2'>
-                            <!--UPLOAD-->
-                            <h3 class='form-fieldset'>Or upload your RNAs</h3>
-                            <div class="form-field <%= errors.message ? 'form-field-invalid' : '' %>">
-                                <br>
+                            <fieldset class='form-fieldset container rounded in-box pt-2'>
+                                <!--UPLOAD-->
+                                <h3 class='form-fieldset'>Or upload your RNAs</h3>
+                                <div class="form-field <%= errors.message ? 'form-field-invalid' : '' %>">
+                                    <br/>
 
-                                <!--input file-->
-                                <label for="fileRNA">Input File</label>
-                                <input type="file" id="fileRNA" name="fileRNA"/>
-                                <% if (errors.message) { %>
-                                    <div class="error"><%= errors.message.msg %></div>
-                                <% } %>
-                                <br>
-                                <!--background file? -->
-                                <label for="fileBackground">Background File (optional)</label>
-                                <input type="file" class="input" id="fileBackground" name="fileBackground">
-                                <% if (errors.message) { %>
-                                    <div class="error"><%= errors.message.msg %></div>
-                                <% } %>
+                                    <!--input file-->
+                                    <label for="fileRNA">Input File</label>
+                                    <input type="file" id="fileRNA" name="fileRNA"/>
+                                    <% if (errors.message) { %>
+                                        <div class="error"><%= errors.message.msg %></div>
+                                    <% } %>
+                                    <br/>
+                                    <!--background file? -->
+                                    <label for="fileBackground">Background File (optional)</label>
+                                    <input type="file" class="input" id="fileBackground" name="fileBackground">
+                                    <% if (errors.message) { %>
+                                        <div class="error"><%= errors.message.msg %></div>
+                                    <% } %>
+                                </div>
+                            </fieldset>
 
-                            </div>
-                        </fieldset>
+                        </td>
+                    </tr>
+                </table>
 
-                    </td>
-                </tr>
-            </table>
+                <!-- FORM OPTIONS + MAIL-->
 
-            <!-- FORM OPTIONS + MAIL-->
+                <fieldset class='in-box form-fieldset form-options container-fluid rounded'>
 
-            <fieldset class='in-box form-fieldset form-options container-fluid rounded'>
-                
-                <h3 class="text-left">Select the species ad the type of experiments</h3>
-                <div class="form-options form-group container mt-2">
+                    <h3 class="text-left">Select the species ad the type of the experiments</h3>
+                    <div class="form-options form-group container mt-2">
 
-                    <select data-placeholder="Select species..." multiple class="chosen-select form-control "
-                            name="options_species">
-                        <option value='hg19' selected>Human (hg19)</option>
-                        <option value='mm9'>Mouse (mm9)</option>
-                    </select>
+                        <select data-placeholder="Select species..." multiple class="chosen-select form-control "
+                                name="options_species">
+                            <option value='hg19' selected>Human (hg19)</option>
+                            <option value='mm9'>Mouse (mm9)</option>
+                        </select>
 
-                    <select data-placeholder="Select experiments..." multiple class="chosen-select form-control "
-                            name="options_experiments">
-                        <option value='PAR' selected>PAR-CLIP</option>
-                        <option value='eCLIP' selected>eCLIP</option>
-                        <option value='HITS' selected>HITS</option>
-                    </select>
+                        <select data-placeholder="Select experiments..." multiple class="chosen-select form-control "
+                                name="options_experiments">
+                            <option value='PAR' selected>PAR-CLIP</option>
+                            <option value='eCLIP' selected>eCLIP</option>
+                            <option value='HITS' selected>HITS</option>
+                        </select>
 
-                </div>
+                    </div>
 
-                <div class="form-field text-left form-group <%= errors.email ? 'form-field-invalid' : '' %>">
-                    
+                    <div class="form-field text-left form-group <%= errors.email ? 'form-field-invalid' : '' %>">
+
                         <label for="email">Email</label>
-                        <input class="input form-control" placeholder="Enter your email here (optional)..." id="email" name="email" type="email" value="<%= email %>"/>
+                        <input class="input form-control" placeholder="Enter your email here (optional)..." id="email"
+                               name="email" type="email" value="<%= email %>"/>
                         <% if (errors.email) { %>
                             <div class="error"><%= errors.email.msg %></div>
-                        <% } %> 
-                </div>
+                        <% } %>
+                    </div>
 
+                    <!-- ACTION -->
+                    <div class="form-actions">
+                        <button class="btn btn-primary" type="submit">Go!</button>
+                    </div>
 
-                <!-- ACTION -->
-                <div class="form-actions">
-                    <button class="btn btn-primary" type="submit">Go!</button>
-                </div>
-
-            </fieldset>
-        </form>
-    </div>
+                </fieldset>
+            </form>
+        </div>
+    </section>
 </div>
+
 </section>
 <!-- ERROR TABS -->
 <% if (Object.keys(errors).length !== 0 && (!errors.email || Object.keys(errors).length > 1)) { %>
@@ -178,7 +182,6 @@
             <div id="menu2" class="tab-pane fade">
                 <h3> There are problems with your background:</h3>
 
-
                 <div>
                     Not valid input(s):<br/>
                     <%= inputBackground_processed.not_valid_inputs %>
@@ -198,14 +201,12 @@
                     <%= inputBackground_processed.valid_rnas %>
                 </div>
                 <br/>
-
             </div>
         </div>
     </div>
 
 <% } %>
 <%- include ("partials/footer.ejs") %>
-
 </body>
 
 

@@ -153,16 +153,25 @@ check_user_background_handler = function (value, {req}) {
 router.post('/fileInput',
     body('inputRNA').trim().custom(check_user_input_handler),
     body('fileBackground').custom(check_user_background_handler),
+    body('options_species').custom(input => {
+            if (input == null) {
+                throw new Error('Please select a species.');
+            }
+
+            return true;
+        }
+    ),
+    body('options_experiments').custom(input => {
+            if (input == null) {
+                throw new Error('Please select an experiment.');
+            }
+
+            return true;
+        }
+    ),
     input_validation_controller.check_email_handler(),
     (req, res) => {
         const errors = validationResult(req);
-
-        if (req.body.options_species == null) {
-            req.body.options_species = '.'
-        }
-        if (req.body.options_experiments == null) {
-            req.body.options_experiments = '.'
-        }
 
         let userID = ''
         let page_to_go;

@@ -42,9 +42,8 @@ def generate_output(dir_base, path_results_html, dir_user_download, sequence_res
         fw.write(
             '\n<script>\n$(document).ready(function()\n{\n$("#structure").tablesorter({\nsortList: [[4,0]],\nheaders: {0:{sorter:false},8:{sorter:false}}\n});\n}\n);\n</script>')
 
-        fw.write(
-            '<div class="tab">\n<button class="tablinks" onclick="openCity(event, \'Paris\')">Sequence</button>\n')
-        fw.write('<button class="tablinks" onclick="openCity(event, \'London\')" id="defaultOpen">Structure</button>\n')
+        fw.write('<div class="tab">\n<button class="tablinks" onclick="openCity(event, \'London\')" id="defaultOpen">Structure</button>\n')
+        fw.write('<button class="tablinks" onclick="openCity(event, \'Paris\')">Sequence</button>\n')
         fw.write('</div>')
 
         for str_or_nuc in sequence_results_dict:
