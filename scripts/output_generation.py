@@ -1,6 +1,7 @@
 import json
 import os
 import my_email
+import shutil
 
 def generate_output(dir_base, path_complete_input_rna_molecules, path_results_html, dir_user_download, sequence_results_dict, motif_results_dict, user_email):
     """
@@ -94,16 +95,16 @@ def generate_output(dir_base, path_complete_input_rna_molecules, path_results_ht
 
                 fw.write(
                     '<td> <div style="width:250px;height:100px"><img src="' + logo_link + '" width="100%" height="100%" ></div></td>\n')
-                fw.write('<td><div >' + region + '</div></td>\n')
-                fw.write('<td><div > ' + coverage + '</div></td>\n')
-                fw.write('<td><div > ' + oddsratio + ' </div></td>\n')
-                fw.write('<td><div > ' + p_value + ' </div></td>\n')
-                fw.write('<td><div > ' + protein + ' </div></td>\n')
-                fw.write('<td><div > ' + domains + ' </div></td>\n')
-                fw.write('<td><div > ' + organism + ' </div></td>\n')
+                fw.write('<td><div>' + region + '</div></td>\n')
+                fw.write('<td><div> ' + coverage + '</div></td>\n')
+                fw.write('<td><div> ' + oddsratio + ' </div></td>\n')
+                fw.write('<td><div> ' + p_value + ' </div></td>\n')
+                fw.write('<td><div> ' + protein + ' </div></td>\n')
+                fw.write('<td><div> ' + domains + ' </div></td>\n')
+                fw.write('<td><div><i>' + organism + ' </i></div></td>\n')
                 # fw.write('<td><div > prova </div></td>\n</tr>\n')
                 fw.write(
-                    '<td><div ><a href="results/' + user + '/download/' + motif + '" Download><button class="btn"><i class="fa fa-download"></i>Download</button></a></div></td>\n</tr>\n')
+                    '<td><div ><a href="results/' + user + '/download/motifs/' + motif + '" Download><button class="btn"><i class="fa fa-download"></i>Download</button></a></div></td>\n</tr>\n')
                 # <button class="btn"><i class="fa fa-download"></i> Show file</button></a></div></td>\n</tr>\n')
 
             fw.write("</tbody>\n</table>\n</div>\n")
@@ -118,13 +119,8 @@ def generate_output(dir_base, path_complete_input_rna_molecules, path_results_ht
         fw.write('evt.currentTarget.className += " active";\n}\n')
         fw.write('document.getElementById("defaultOpen").click();\n</script>\n')
 
-    os.system(
-        "zip -j " + os.path.join(os.path.dirname(dir_user_download), "download") + " " +
-        os.path.join(dir_user_download, "*.txt") + " " +
-        os.path.join(dir_user_download, "logos/*.png") + " " +
-        path_complete_input_rna_molecules + " " +
-        path_results_html
-    )
+    shutil.copyfile(path_complete_input_rna_molecules, os.path.join(dir_user_download, 'input.txt'))
+    shutil.make_archive(os.path.join(os.path.dirname(dir_user_download), "download"), 'zip', dir_user_download)
 
     if user_email != '':
         my_email.send_email_with_code(code=user, user_email=user_email)

@@ -100,21 +100,20 @@
                 <!-- FORM OPTIONS + MAIL-->
 
                 <fieldset class='in-box form-fieldset form-options container-fluid rounded'>
+                    <h3 class="text-left">Select the species and the type of the experiments:</h3>
 
-                    <h3 class="text-left">Select the species ad the type of the experiments</h3>
                     <div class="form-options form-group container mt-2">
-
-                        <select data-placeholder="Select species..." multiple class="chosen-select form-control "
+                        <select data-placeholder="Select species (hg19, mm9)..." multiple class="chosen-select form-control "
                                 name="options_species">
-                            <option value='hg19' selected>Human (hg19)</option>
+                            <option value='hg19'>Human (hg19)</option>
                             <option value='mm9'>Mouse (mm9)</option>
                         </select>
 
-                        <select data-placeholder="Select experiments..." multiple class="chosen-select form-control "
+                        <select data-placeholder="Select experiments (PAR-CLIP, eCLIP, HITS)..." multiple class="chosen-select form-control "
                                 name="options_experiments">
-                            <option value='PAR' selected>PAR-CLIP</option>
-                            <option value='eCLIP' selected>eCLIP</option>
-                            <option value='HITS' selected>HITS</option>
+                            <option value='PAR'>PAR-CLIP</option>
+                            <option value='eCLIP'>eCLIP</option>
+                            <option value='HITS'>HITS</option>
                         </select>
 
                     </div>
@@ -142,7 +141,9 @@
 
 </section>
 <!-- ERROR TABS -->
-<% if (Object.keys(errors).length !== 0 && (!errors.email || Object.keys(errors).length > 1)) { %>
+
+
+<% if (false && Object.keys(errors).length !== 0 && (!errors.email || Object.keys(errors).length > 1)) { %>
 
     <div class='container'>
         <ul class="nav nav-pills error-tabs bg-warning border border-danger">
@@ -206,6 +207,7 @@
     </div>
 
 <% } %>
+
 <%- include ("partials/footer.ejs") %>
 </body>
 

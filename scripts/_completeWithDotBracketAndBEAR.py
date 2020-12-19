@@ -402,12 +402,12 @@ for str_or_nuc, input_or_background_to_output_paths_dict in str_or_nuc_to_input_
     input_str_or_nuc_to_to_output_paths_dict[str_or_nuc] = input_or_background_to_output_paths_dict['input']
 
 dir_user_download = os.path.join(dir_user, 'download')
-if not os.path.exists(dir_user_download):
-    os.makedirs(dir_user_download)
+if not os.path.exists(os.path.join(dir_user, 'download/motifs')):
+    os.makedirs(os.path.join(dir_user, 'download/motifs'))
 
 for str_or_nuc, motifs_to_seq_to_info_dict in str_or_nuc_to_motifs_to_seq_to_info_dict.items():
     for motif, seq_to_info in motifs_to_seq_to_info_dict.items():
-        with open(os.path.join(dir_user_download, motif), 'w') as fw:
+        with open(os.path.join(dir_user_download, 'motifs', motif), 'w') as fw:
             fw.write('\t'.join(['name', 'motif', 'score', 'length', 'start', 'end', 'threshold']) + '\n')
 
             for seq, info_list in seq_to_info.items():
