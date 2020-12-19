@@ -22,7 +22,7 @@
 
 /* Create an active/current tablink class */
 .tab button.active {
-    background-color: rgba(82, 130, 180, 1);
+    background-color: #5390ce;
     color: white;
 }
 
@@ -91,18 +91,16 @@ h3 {
 }
 
 .bg-blue {
-    background-color: #336699;
+    background-color: #4a91d7;
 }
 
 .form-fieldset.container.rounded {
     border: 2px solid #0D3184;
     min-height: 18rem;
-
-
 }
 
 .in-box {
-    background-color: #B7CFEC;
+    background-color: #d3e7ff;
     color: #0D3184;
     border: 2px solid #0D3184;
 }
