@@ -14,6 +14,27 @@ _check_completeness = function (uid) {
     }
 }
 
+router.get('/waiting',
+    (req, res) => {
+        if (!req.query.uid || req.query.uid.length !== 32) {
+            res.render('landing',
+                {
+                    userID: req.body.uid,
+                    inputRNA: {},
+                    email: {},
+                    inputRNA_processed: {},
+                    inputBackground_processed: {},
+                    errors: '',
+                    progress: '0',
+                });
+        } else {
+            res.render('results',
+                {
+                    uid: req.query.uid
+                });
+        }
+    });
+
 router.post('/waiting',
     (req, res) => {
         if (req.body.uid.length !== 32) {
