@@ -28,10 +28,24 @@ router.get('/waiting',
                     progress: '0',
                 });
         } else {
-            res.render('results',
-                {
-                    uid: req.query.uid
-                });
+            let progress = _check_completeness(req.query.uid);
+            if (progress === '100') {
+                res.render('results',
+                    {
+                        uid: req.query.uid
+                    });
+            } else if (progress.length === 32) {
+                res.render('results',
+                    {
+                        uid: progress
+                    });
+            } else {
+                res.render('loading',
+                    {
+                        userID: req.query.uid,
+                        progress: progress
+                    });
+            }
         }
     });
 

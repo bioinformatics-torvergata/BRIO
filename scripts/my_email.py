@@ -5,7 +5,7 @@ from email.mime.text import MIMEText
 def send_email_with_code(user_email, code):
     link_results = f'http://160.80.35.91:8080/waiting?uid={code}'
 
-    mail_content = "Thanks for choosing BRIO,\nyou can find your results using the following identifier:\n\n" + \
+    mail_content = "Thanks for choosing BRIO,\nyou can find your results at the following links:\n\n" + \
                    link_results + "\n\n\nBest regards,\nBRIO Team"
 
     # The mail addresses and password
