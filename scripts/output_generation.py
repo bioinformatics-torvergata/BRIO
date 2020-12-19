@@ -2,9 +2,17 @@ import json
 import os
 import my_email
 
-def generate_output(dir_base, path_results_html, dir_user_download, sequence_results_dict, motif_results_dict, user_email):
+def generate_output(dir_base, path_complete_input_rna_molecules, path_results_html, dir_user_download, sequence_results_dict, motif_results_dict, user_email):
     """
     dir_base is the base directory of BRIO on the server
+
+    path_complete_input_rna_molecules complete valid user input
+    >header
+    sequence
+    dot-bracket
+    brear
+    >header
+    ...
 
     path_results_html is the path of the output page to create
 
@@ -114,6 +122,7 @@ def generate_output(dir_base, path_results_html, dir_user_download, sequence_res
         "zip -j " + os.path.join(os.path.dirname(dir_user_download), "download") + " " +
         os.path.join(dir_user_download, "*.txt") + " " +
         os.path.join(dir_user_download, "logos/*.png") + " " +
+        path_complete_input_rna_molecules + " " +
         path_results_html
     )
 

@@ -188,7 +188,7 @@ for row in sys.argv[1].split('\n'):
 
 default_search = False
 
-#todo to activate at the end removing this line
+# todo to activate at the end removing this line
 '''
 if not is_there_a_background and len(header_to_seq) == DEFAULT_SEARCH_NUM_SEQ and \
         set(species_list) == set(DEFAULT_SEARCH_SPECIES) and \
@@ -213,7 +213,7 @@ if not is_there_a_background and len(header_to_seq) == DEFAULT_SEARCH_NUM_SEQ an
                 f.readline()  # Skip dot-bracket
                 f.readline()  # Skit bear
 '''
-#todo to activate at the end removing this line
+# todo to activate at the end removing this line
 
 user_id = sys.argv[3]
 
@@ -229,7 +229,6 @@ if default_search:
         sys.exit()
 
 path_complete_input_rna_molecules, input_rna_to_length_dict = process_input_rna_molecules(sys.argv[1], dir_user)
-
 
 path_complete_input_rna_molecules_background = ''
 if is_there_a_background:
@@ -301,7 +300,6 @@ with open(os.path.join(dir_user, 'Out.log'), 'w') as fw:
                         ].append(path_str_or_nuc_search_out)
                         fw.write('---> done\n')
 
-
 input_header_to_seq_and_bear_dict = {}
 with open(path_complete_input_rna_molecules) as f:
     for line in f:
@@ -338,21 +336,23 @@ for str_or_nuc, input_or_background_to_output_paths in str_or_nuc_to_input_or_ba
                         }
 
                     if score < thresh:
-                        str_or_nuc_to_motif_to_input_or_background_to_count_dict[str_or_nuc][motif][input_or_background][0] += 1
+                        str_or_nuc_to_motif_to_input_or_background_to_count_dict[str_or_nuc][motif][
+                            input_or_background][0] += 1
                     else:
-                        str_or_nuc_to_motif_to_input_or_background_to_count_dict[str_or_nuc][motif][input_or_background][1] += 1
+                        str_or_nuc_to_motif_to_input_or_background_to_count_dict[str_or_nuc][motif][
+                            input_or_background][1] += 1
 
                     if input_or_background == 'input' and score > thresh:
-                            if motif not in str_or_nuc_to_motifs_to_seq_to_info_dict[str_or_nuc]:
-                                str_or_nuc_to_motifs_to_seq_to_info_dict[str_or_nuc][motif] = {}
-                            str_or_nuc_to_motifs_to_seq_to_info_dict[str_or_nuc][motif][seq] = [
-                                input_header_to_seq_and_bear_dict[seq][1 if str_or_nuc else 0][start:(start + length)],
-                                score,
-                                len(input_header_to_seq_and_bear_dict[seq][0]),
-                                start,
-                                start + length - 1,
-                                thresh
-                            ]
+                        if motif not in str_or_nuc_to_motifs_to_seq_to_info_dict[str_or_nuc]:
+                            str_or_nuc_to_motifs_to_seq_to_info_dict[str_or_nuc][motif] = {}
+                        str_or_nuc_to_motifs_to_seq_to_info_dict[str_or_nuc][motif][seq] = [
+                            input_header_to_seq_and_bear_dict[seq][1 if str_or_nuc else 0][start:(start + length)],
+                            score,
+                            len(input_header_to_seq_and_bear_dict[seq][0]),
+                            start,
+                            start + length - 1,
+                            thresh
+                        ]
 
 if not is_there_a_background:
     with open(os.path.join(dir_base, 'resources', 'summary_AutoBg.txt')) as f:
@@ -364,7 +364,6 @@ if not is_there_a_background:
                     str_or_nuc_to_motif_to_input_or_background_to_count_dict[str_or_nuc][motif]['background'] = [
                         int(minor), int(major)
                     ]
-
 
 # Read domain information
 motifs_to_domains_dict = {}
@@ -382,7 +381,6 @@ for str_or_nuc, dir_str_or_nuc_motifs_domains in zip(
                         motifs_to_domains_dict[motif] = []
                     motifs_to_domains_dict[motif].append(line_split[0])
 
-
 motif_results_dict = {}
 
 for str_or_nuc, motif_to_input_or_background_to_count_dict in str_or_nuc_to_motif_to_input_or_background_to_count_dict.items():
@@ -390,7 +388,8 @@ for str_or_nuc, motif_to_input_or_background_to_count_dict in str_or_nuc_to_moti
 
     for motif, input_or_background_to_count_dict in motif_to_input_or_background_to_count_dict.items():
         oddsratio, pvalue = stats.fisher_exact(
-            [input_or_background_to_count_dict['input'], input_or_background_to_count_dict['background']], alternative='less'
+            [input_or_background_to_count_dict['input'], input_or_background_to_count_dict['background']],
+            alternative='less'
         )
         motif_results_dict[str_or_nuc][motif] = [
             input_or_background_to_count_dict['input'][1] / sum(input_or_background_to_count_dict['input']),
@@ -398,11 +397,9 @@ for str_or_nuc, motif_to_input_or_background_to_count_dict in str_or_nuc_to_moti
             motifs_to_domains_dict[motif] if motif in motifs_to_domains_dict else []
         ]
 
-
 input_str_or_nuc_to_to_output_paths_dict = {}
 for str_or_nuc, input_or_background_to_output_paths_dict in str_or_nuc_to_input_or_background_to_output_paths_dict.items():
     input_str_or_nuc_to_to_output_paths_dict[str_or_nuc] = input_or_background_to_output_paths_dict['input']
-
 
 dir_user_download = os.path.join(dir_user, 'download')
 if not os.path.exists(dir_user_download):
@@ -418,6 +415,7 @@ for str_or_nuc, motifs_to_seq_to_info_dict in str_or_nuc_to_motifs_to_seq_to_inf
 
 output_generation.generate_output(
     dir_base,
+    path_complete_input_rna_molecules,
     os.path.join(dir_user, 'results.html'),
     dir_user_download,
     input_str_or_nuc_to_to_output_paths_dict,
