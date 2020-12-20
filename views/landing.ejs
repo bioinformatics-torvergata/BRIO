@@ -25,7 +25,8 @@
 
     </div>
 
-
+<div style="min-height:1rem;padding:.5rem;width:80%;text-align:center;margin: auto"> <span style="font-size:20px;font-weight:bold;color:#0D3184">BRIO (BEAM RNA Interaction mOtifs) is a web server designed for searching known sequence and structure protein binding motifs in RNA molecules of interest</span></div>
+<br><br>
     <!--INPUT-->
     <section class='input form'>
         <div class='form container'>
@@ -65,7 +66,9 @@
                                            class="btn btn-light btn-sm mt-2">
                                     <input type="button" value="Example with structures" id="ex_w_str"
                                            class="btn btn-light btn-sm mt-2">
-                                </div>
+                                <button class="btn btn-light btn-sm mt-2" type="button"><a href="/waiting?uid=938b946cff087f6c8dae070a51e72ad3">Get an example result</a></button>
+
+				</div>
                             </fieldset>
 
                         </td>
@@ -78,14 +81,15 @@
                                     <br/>
 
                                     <!--input file-->
-                                    <label for="fileRNA">Input File</label>
+                                    <label for="fileRNA">Input File (fasta/Dot-Bracket/Bear format)</label>
                                     <input type="file" id="fileRNA" name="fileRNA"/>
                                     <% if (errors.message) { %>
                                         <div class="error"><%= errors.message.msg %></div>
                                     <% } %>
                                     <br/>
-                                    <!--background file? -->
-                                    <label for="fileBackground">Background File (optional)</label>
+                                    <hr>
+				    <!--background file? -->
+                                    <label for="fileBackground">Background File (optional)</label><br/>
                                     <input type="file" class="input" id="fileBackground" name="fileBackground">
                                     <% if (errors.message) { %>
                                         <div class="error"><%= errors.message.msg %></div>
@@ -96,22 +100,22 @@
                         </td>
                     </tr>
                 </table>
-
+<br>
                 <!-- FORM OPTIONS + MAIL-->
 
-                <fieldset class='in-box form-fieldset form-options container-fluid rounded'>
-                    <h3 class="text-left">Select the species and the type of the experiments:</h3>
+                <fieldset class='in-box form-fieldset form-options container-fluid rounded' style="padding-top:.5rem">
+                    <h3 class="text-left">Select at least one species and one type of experiments:</h3>
 
                     <div class="form-options form-group container mt-2">
-                        <select data-placeholder="Select species (hg19, mm9)..." multiple class="chosen-select form-control "
+                        <select data-placeholder="Select species (hg19, mm9)" multiple class="chosen-select form-control "
                                 name="options_species">
-                            <option value='hg19' selected>Human (hg19)</option>
+                            <option value='hg19'>Human (hg19)</option>
                             <option value='mm9'>Mouse (mm9)</option>
                         </select>
 
-                        <select data-placeholder="Select experiments (PAR-CLIP, eCLIP, HITS)..." multiple class="chosen-select form-control "
+                        <select data-placeholder="Select experiments (PAR-CLIP, eCLIP, HITS)" multiple class="chosen-select form-control "
                                 name="options_experiments">
-                            <option value='PAR' selected>PAR-CLIP</option>
+                            <option value='PAR'>PAR-CLIP</option>
                             <option value='eCLIP'>eCLIP</option>
                             <option value='HITS'>HITS</option>
                         </select>
@@ -120,8 +124,8 @@
 
                     <div class="form-field text-left form-group <%= errors.email ? 'form-field-invalid' : '' %>">
 
-                        <label for="email">Email</label>
-                        <input class="input form-control" placeholder="Enter your email here (optional)..." id="email"
+                        <label for="email">Email (optional)</label>
+                        <input class="input form-control" placeholder="Enter your email here" id="email"
                                name="email" type="email" value="<%= email %>"/>
                         <% if (errors.email) { %>
                             <div class="error"><%= errors.email.msg %></div>

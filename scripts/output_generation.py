@@ -41,7 +41,6 @@ def generate_output(dir_base, path_complete_input_rna_molecules, path_results_ht
     os.system("mkdir " + dir_user_download + "/logos")
 
     with open(path_results_html, 'w') as fw:
-
         fw.write('<br>Click here to download all your results \n')
         fw.write(
             '<a href="results/' + user + '/download.zip" download><button class="btn"><i class="fa fa-download"></i> Download</button></a>\n<br>\n')
@@ -64,6 +63,9 @@ def generate_output(dir_base, path_complete_input_rna_molecules, path_results_ht
                 ' class="out_table">\n<thead>\n<tr>\n<th>Motif</th>\n<th>Region </th>\n<th>Coverage </th>\n<th> oddsratio </th>\n<th> p-value </th>\n<th>Protein </th>\n<th>Domains </th>\n<th>Organism </th>\n<th>Download</th></tr>\n</thead>\n<tbody>\n')
 
             for motif in motif_results_dict[str_or_nuc]:
+                p_value = str("%.2g" % motif_results_dict[str_or_nuc][motif][2])
+                if float(p_value) >= 0.05:
+                    continue
 
                 if str_or_nuc == "nuc":
                     path_logo_on_server = os.path.join(dir_base, 'public/images/logos', motif.split(".")[0] + "_wl.nuc.png")
@@ -75,8 +77,11 @@ def generate_output(dir_base, path_complete_input_rna_molecules, path_results_ht
                 os.system("cp " + path_logo_on_server + " " + dir_user_download + "/logos/")
 
                 coverage = str("%.2g" % motif_results_dict[str_or_nuc][motif][0])
+                if float(coverage) <= 0.5:
+                    continue
+
                 oddsratio = str("%.2g" % motif_results_dict[str_or_nuc][motif][1])
-                p_value = str("%.2g" % motif_results_dict[str_or_nuc][motif][2])
+
                 region = motif.split("_")[-3]
                 protein = motif.split("_")[1]
                 if motif_results_dict[str_or_nuc][motif][3]:
@@ -87,11 +92,6 @@ def generate_output(dir_base, path_complete_input_rna_molecules, path_results_ht
                     organism = "Mus musculus"
                 else:
                     organism = "Homo sapiens"
-
-                if float(p_value) >= 0.05:
-                    continue
-                if float(coverage) <= 0.5:
-                    continue
 
                 fw.write(
                     '<td> <div style="width:250px;height:100px"><img src="' + logo_link + '" width="100%" height="100%" ></div></td>\n')
