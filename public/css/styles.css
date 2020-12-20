@@ -92,3 +92,17 @@ h3 {
  	border-top-width: 0px;
  	padding-top: 0px;
  }
+
+ .seq_font{
+ 	font-family: monospace, monospace;
+ 	font-size: 12px;
+ }
+
+ .break-seq{
+ 	word-wrap: break-word;
+ }
+
+ .justy{
+ 	text-align: justify;
+  	text-justify: inter-word;
+ }
