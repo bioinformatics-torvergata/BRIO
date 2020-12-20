@@ -1,0 +1,69 @@
+DZF
+Interaction with METTL14
+KHx2
+ABC|transporter2
+LisH
+PUA
+Znf_RanBP2
+Znf_CCCHx4
+G3BP1-binding
+PAZ
+AAA_11
+ABC|transporter1
+UPF1-type
+RRMx4
+Piwi
+KHx1
+KOWx2
+S1x1
+Znf_CCCHx3
+Lax1
+Helicase|C-terminal
+HRDC
+Positively charged region required for RNA-binding
+3-5|exonuclease
+DRBMx2
+MPN
+Alpha-ketoglutarate binding
+Interphase loop
+Znf_CCHCx2
+TNase-likex4
+SPOC
+RRM
+ARID
+ResIII
+FHA
+G-patch
+RRMx2
+DRBMx1
+AAA_12
+Znf_CCCHx5
+JmjN
+JmjC
+Gate loop 2
+SET
+Ribosomal_S3_C
+Znf_RanBP2x2
+KHx3
+RRMx1
+HTH
+CSD
+CXC
+DRBM
+TNase-likex2
+Tudor
+Helicase|ATP-binding
+Gate loop 1
+KOWx1
+RRMx3
+Znf_RanBP2x1
+TNase-likex1
+PPIase|cyclophilin-type
+Ku
+S-adenosyl-L-methionine binding
+R3H
+CSDx1
+TROVEx1
+KHx4
+SAP
+TNase-likex3
