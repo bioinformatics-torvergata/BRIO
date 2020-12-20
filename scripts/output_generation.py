@@ -3,7 +3,7 @@ import os
 import my_email
 import shutil
 
-def generate_output(dir_base, path_complete_input_rna_molecules, path_results_html, dir_user_download, sequence_results_dict, motif_results_dict, user_email):
+def generate_output(dir_base, path_complete_input_rna_molecules, path_results_html, dir_user_download, sequence_results_dict, motif_results_dict, user_email, species_to_protein_to_link_dict):
     """
     dir_base is the base directory of BRIO on the server
 
@@ -19,7 +19,6 @@ def generate_output(dir_base, path_complete_input_rna_molecules, path_results_ht
 
     dir_user_download: subfolder which contains a file for each motif, with information regarding the matches in each input sequence
 
-
     sequence_results_dict contains the paths of the resulting files, divided by sequences (seq) and structure (str)
     {
         'str': ['~/BRIO/results/<random_code>/search_out.motifs_PAR_hg19_str.txt', ...],
@@ -30,6 +29,15 @@ def generate_output(dir_base, path_complete_input_rna_molecules, path_results_ht
     {
         'str': 'HITSCLIP_Nova_Zhang2011b_mm9_CDS_m1_run2.txt': [52.63, 9.78, 8.38e-05, [domain1, domain2, ...],
         'nuc': ...
+    }
+
+    user_email
+
+    species_to_protein_to_link_dict:
+    {
+        'hg19': {
+            Nova_: link to the UniprotId page of the protein,
+            }
     }
 
     :return: nothing
@@ -99,7 +107,17 @@ def generate_output(dir_base, path_complete_input_rna_molecules, path_results_ht
                 fw.write('<td><div> ' + coverage + '</div></td>\n')
                 fw.write('<td><div> ' + oddsratio + ' </div></td>\n')
                 fw.write('<td><div> ' + p_value + ' </div></td>\n')
-                fw.write('<td><div> ' + protein + ' </div></td>\n')
+
+                if "_mm9_" in motif:
+                    species = "mm9"
+                else:
+                    species = "hg19"
+
+                if protein in species_to_protein_to_link_dict[species] and species_to_protein_to_link_dict[species][protein]:
+                    fw.write(f'<td><div><a href="{species_to_protein_to_link_dict[species][protein]}" target="_blank">' + protein + ' </div></td>\n')
+                else:
+                    fw.write('<td><div> ' + protein + ' </div></td>\n')
+
                 fw.write('<td><div> ' + domains + ' </div></td>\n')
                 fw.write('<td><div><i>' + organism + ' </i></div></td>\n')
                 # fw.write('<td><div > prova </div></td>\n</tr>\n')

@@ -1,0 +1,1287 @@
+%!PS-Adobe-3.0 EPSF-3.0
+%%Title:        Sequence Logo: 
+%%Creator:      WebLogo 3.7.7
+%%CreationDate: 2020-12-20 17:05:14.259009
+%%BoundingBox:  0  0  362  80 
+%%Pages: 0
+%%DocumentFonts: 
+%%EndComments
+
+
+% ---- VARIABLES ----
+
+/True   true def
+/False  false def
+
+/debug              False        def
+
+/logo_height        80  def
+/logo_width         362  def
+/logo_title         () def
+/show_title         False def
+
+/logo_margin        2 def
+/xaxis_label_height 6.0 def
+/title_height       0 def
+/stroke_width       0.5 def
+/tic_length         5 def
+
+/lines_per_logo     1 def
+/line_width         358.0 def
+/line_height        70.0 def
+/line_margin_left   30.0 def
+/line_margin_right  4 def
+/line_margin_bottom 12.0 def
+/line_margin_top    4 def
+
+/stack_width         10.8 def
+/stack_height        54.0 def
+/stacks_per_line     30 def
+/stack_margin        0.5 def
+
+/show_yaxis             True def      
+/show_yaxis_label       True def
+/yaxis_label            (bits) def
+/yaxis_scale          4.169925001442312 def              % height in units 
+/yaxis_tic_interval     1.0 def           % in units
+/yaxis_minor_tic_interval 0.2 def   % in units
+
+/show_xaxis_label       False def             % True or False
+/show_xaxis             True def                   % True or False
+/xaxis_label            () def
+/xaxis_tic_interval     1 def
+/rotate_numbers         False def               % True or False
+/number_interval        5 def
+/show_ends              False def          
+/end_type               (-) def          % d: DNA, p: PROTEIN, -: none
+
+/show_fineprint         True def
+/fineprint              (WebLogo 3.7.7) def
+/logo_label             () def
+
+/show_boxes             False def    % True or False
+/shrink                 false def    % True or False
+/shrink_fraction        0.5 def               
+
+/show_errorbars         True def      % True or False
+/errorbar_fraction      0.9 def
+/errorbar_width_fraction  0.25 def
+/errorbar_gray          0.75 def
+
+/fontsize               10 def
+/small_fontsize         6 def
+/title_fontsize         12 def
+/number_fontsize        8 def
+
+
+/UseCIEColor true def       % Fix for issue 4
+/default_color [ 0.0 0.0 0.0 ] def 
+
+
+% ---- DERIVED PARAMETERS ----
+
+/char_width stack_width 2 stack_margin mul sub def
+/char_width2 char_width 2 div def
+/char_width4 char_width 4 div def
+
+% movements to place 5'/N and 3'/C symbols
+/leftEndDeltaX  fontsize neg         def
+/leftEndDeltaY  fontsize 1.25 mul neg def
+/rightEndDeltaX fontsize 0.25 mul     def
+/rightEndDeltaY leftEndDeltaY        def
+
+
+% ---- PROCEDURES ----
+
+
+/SetTitleFont {/ArialMT findfont title_fontsize scalefont setfont} bind def
+/SetLogoFont  {/ArialMT findfont char_width  scalefont setfont} bind def
+/SetStringFont{/ArialMT findfont fontsize scalefont setfont} bind def
+/SetPrimeFont {/Symbol findfont fontsize scalefont setfont} bind def
+/SetSmallFont {/ArialMT findfont small_fontsize scalefont setfont} bind def
+/SetNumberFont {/ArialMT findfont number_fontsize scalefont setfont} bind def
+
+/DrawBox { % width height 
+    /hh exch def
+    /ww exch def
+    gsave
+        0.2 setlinewidth
+        %0.5 setgray
+        
+        %0 0 moveto 
+        hh 0 rlineto
+        0 ww rlineto
+        hh neg 0 rlineto
+        0 ww neg rlineto
+        stroke
+    grestore
+} bind def
+
+
+/StartLogo { 
+  %save 
+  gsave 
+
+  
+  debug { 
+    logo_margin logo_margin moveto
+    logo_height logo_margin 2 mul sub
+    logo_width logo_margin 2 mul sub
+    DrawBox } if
+    
+  show_title { DrawTitle } if
+  show_xaxis_label { DrawXaxisLable } if
+  show_fineprint { DrawFineprint } if
+  DrawLogoLabel
+  
+  
+  MoveToFirstLine
+} bind def
+
+
+/DrawLogoLabel {
+  gsave 
+    SetTitleFont
+    
+    logo_margin
+    logo_height title_fontsize sub logo_margin sub
+    moveto
+    
+    debug { title_fontsize logo_label stringwidth pop DrawBox } if
+    0 title_fontsize 4 div rmoveto % Move up to baseline (approximatly)
+    logo_label show
+    
+  grestore
+} bind def
+
+/DrawTitle {
+  gsave 
+    SetTitleFont
+    
+    logo_width 2 div logo_title stringwidth pop 2 div sub 
+    logo_height title_fontsize sub logo_margin sub
+    moveto
+    
+    debug { title_fontsize logo_title stringwidth pop DrawBox } if
+    
+    0 title_fontsize 4 div rmoveto % Move up to baseline (approximatly)
+    logo_title show
+    
+  grestore
+} bind def
+
+/DrawXaxisLable {
+  % Print X-axis label, bottom center
+  gsave
+    SetStringFont
+
+    logo_width 2 div xaxis_label stringwidth pop 2 div sub
+    xaxis_label_height logo_margin add fontsize sub
+    moveto
+    %fontsize 3 div
+    
+    debug { fontsize xaxis_label stringwidth pop DrawBox } if
+
+    xaxis_label show
+
+  grestore
+} bind def
+
+
+/DrawFineprint {
+    gsave
+    
+    SetSmallFont
+
+    logo_width fineprint stringwidth pop sub 
+        logo_margin sub line_margin_right sub
+    logo_margin 
+    moveto
+    
+    debug { small_fontsize fineprint stringwidth pop DrawBox } if
+        
+    fineprint show
+    grestore
+} bind def
+
+/MoveToFirstLine {
+    logo_margin 
+    logo_height logo_margin sub title_height sub line_height sub
+    moveto
+} bind def
+
+/EndLogo { 
+  grestore 
+  %showpage 
+  %restore 
+} bind def
+
+
+/StartLine{ 
+    gsave 
+  
+    % Draw outer box
+    debug { line_height line_width DrawBox } if  
+
+    % Move to lower left corner of content area
+    line_margin_left line_margin_bottom rmoveto
+
+    % Draw inner content box
+    debug { 
+        line_height line_margin_bottom sub line_margin_top sub
+        line_width line_margin_left sub line_margin_right sub
+        DrawBox
+    } if  
+  
+    show_yaxis { DrawYaxis } if
+    show_xaxis { DrawLeftEnd } if
+    
+} bind def
+
+/EndLine{ 
+    show_xaxis { DrawRightEnd } if
+    grestore 
+    0 line_height neg rmoveto 
+} bind def
+
+
+/DrawYaxis {
+  gsave    
+    stack_margin neg 0 translate
+    DrawYaxisBar
+    DrawYaxisLabel
+  grestore
+} bind def
+
+
+/DrawYaxisBar { 
+  gsave  
+    stack_margin neg 0 rmoveto
+    
+    SetNumberFont
+    stroke_width setlinewidth
+    
+    /str 10 string def % string to hold number  
+    /smallgap stack_margin  def
+
+    % Draw first tic and bar
+    gsave    
+      tic_length neg 0 rmoveto 
+      tic_length 0 rlineto 
+      0 stack_height rlineto
+      stroke
+    grestore
+
+    % Draw the tics
+    % initial increment limit proc for
+    0 yaxis_tic_interval yaxis_scale abs 
+    {/loopnumber exch def
+
+      % convert the number coming from the loop to a string
+      % and find its width
+      loopnumber 10 str cvrs
+      /stringnumber exch def % string representing the number
+
+      stringnumber stringwidth pop
+      /numberwidth exch def % width of number to show
+
+      /halfnumberheight
+         stringnumber CharBoxHeight 2 div
+      def
+
+      gsave
+        numberwidth % move back width of number
+        neg loopnumber stack_height yaxis_scale div mul % shift on y axis
+        halfnumberheight sub % down half the digit
+        rmoveto % move back the width of the string
+
+        tic_length neg smallgap sub % Move back a bit more  
+        0 rmoveto % move back the width of the tic  
+
+        stringnumber show
+        smallgap 0 rmoveto % Make a small gap  
+
+        % now show the tic mark
+        0 halfnumberheight rmoveto % shift up again
+        tic_length 0 rlineto
+        stroke
+     grestore
+    } for
+    
+    % Draw the minor tics
+    % initial increment limit proc for
+    0 yaxis_minor_tic_interval yaxis_scale abs 
+    {/loopnumber2 exch def
+      gsave
+        0
+        loopnumber2 stack_height yaxis_scale div mul 
+        rmoveto 
+
+        tic_length 2 div neg 0 rlineto
+        stroke
+     grestore
+    } for    
+    
+  grestore
+} bind def
+
+/DrawYaxisLabel {
+  gsave
+    SetStringFont
+
+    % How far we move left depends on the size of
+    % the tic labels.
+    /str 10 string def % string to hold number  
+    yaxis_scale yaxis_tic_interval div cvi yaxis_tic_interval mul 
+    str cvs stringwidth pop
+    tic_length 1.25 mul  add neg  
+
+    stack_height
+    yaxis_label stringwidth pop
+    sub 2 div
+
+    rmoveto
+    90 rotate
+    
+    yaxis_label show
+  grestore
+} bind def
+
+
+%Take a single character and return the bounding box
+/CharBox { % <char> CharBox <lx> <ly> <ux> <uy>
+  gsave
+    newpath
+    0 0 moveto
+    % take the character off the stack and use it here:
+    true charpath 
+    flattenpath 
+    pathbbox % compute bounding box of 1 pt. char => lx ly ux uy
+    % the path is here, but toss it away ...
+  grestore
+} bind def
+
+
+% The height of a characters bounding box
+/CharBoxHeight { % <char> CharBoxHeight <num>
+  CharBox
+  exch pop sub neg exch pop
+} bind def
+
+
+% The width of a characters bounding box
+/CharBoxWidth { % <char> CharBoxHeight <num>
+  CharBox
+  pop exch pop sub neg 
+} bind def
+
+
+/DrawLeftEnd {
+  gsave
+    SetStringFont
+    leftEndDeltaX leftEndDeltaY rmoveto
+    
+    show_ends {
+        debug { leftEndDeltaY neg leftEndDeltaX neg DrawBox } if
+        end_type (d) eq {(5) show DrawPrime} if
+        end_type (p) eq {(N) show} if
+    } if
+  grestore
+} bind def
+
+/DrawRightEnd { 
+  gsave
+    SetStringFont
+    rightEndDeltaX rightEndDeltaY rmoveto
+    
+    show_ends {
+        debug { rightEndDeltaY neg leftEndDeltaX neg  DrawBox } if
+        end_type (d) eq {(3) show DrawPrime} if
+        end_type (p) eq {(C) show} if
+    } if
+  grestore
+} bind def
+
+/DrawPrime {
+  gsave
+    SetPrimeFont
+    (\242) show 
+  grestore
+} bind def
+
+
+/StartStack {  % <stackNumber> startstack
+  show_xaxis {DrawNumber}{pop} ifelse
+  gsave
+  debug { stack_height stack_width DrawBox } if
+    
+} bind def
+
+/EndStack {
+  grestore
+  stack_width 0 rmoveto
+} bind def
+
+
+/DrawNumber { % number MakeNumber
+    /n exch def
+    
+    
+  gsave
+    %0 stack_margin neg rmoveto
+    stroke_width setlinewidth
+    stack_width  0 rlineto
+    stack_width 2 div neg 0 rmoveto
+    
+    n () eq 
+    {  0 tic_length 4 div neg rlineto  } 
+    { 0 tic_length 2 div neg rlineto } 
+    ifelse
+
+    stroke
+  grestore   
+
+
+
+  gsave
+    n
+    SetNumberFont
+    stack_width 2 div tic_length 2 div neg rmoveto 
+
+    rotate_numbers {
+        90 rotate     
+        dup stringwidth pop neg % find the length of the number
+        stack_margin sub        % Move down a bit
+        (0) CharBoxHeight 2 div neg % left half height of numbers
+        rmoveto 
+        show
+    } {
+        dup stringwidth pop neg 2 div number_fontsize neg  rmoveto
+        show
+    } ifelse
+    
+    
+
+  grestore
+} bind def
+
+
+
+% Draw a character whose height is proportional to symbol bits
+/ShowSymbol{ % interval color character ShowSymbol
+    /char exch def
+    /color exch def
+    /interval exch def
+    /fraction_width exch def
+    
+    /char_height 
+       interval yaxis_scale div stack_height mul
+       stack_margin sub
+       dup 
+       % if char_height is negative or very small replace with zero 
+       % BUG FIX: This used to be '0.0 gt' but it seems that DrawHeight
+       % has a finite, non-zero minimum, which results in a rangecheck error
+       0.01 gt {}{pop 0.0} ifelse 
+    def 
+
+    char_height 0.0 gt {
+        show_boxes {
+            gsave
+                /ww char_height stack_margin add def
+                /hh stack_width def
+                stroke_width setlinewidth
+                hh 0 rlineto
+                0 ww rlineto
+                hh neg 0 rlineto
+                0 ww neg rlineto
+                stroke
+            grestore     
+        } if
+
+        gsave
+            stack_margin stack_margin rmoveto
+            debug { char_height char_width DrawBox } if
+            1 fraction_width sub char_width mul 2 div  0 rmoveto
+            fraction_width char_width mul char_height color char DrawChar
+        grestore
+        
+    } if
+    0 interval yaxis_scale div stack_height mul rmoveto
+} bind def
+
+
+/DrawChar { % <width> <height> <char> ShowChar
+    /tc exch def    % The character
+    /color exch def % The color of the character
+    /ysize exch def % the y size of the character
+    /xsize exch def % the x size of the character
+    /xmulfactor 1 def 
+    /ymulfactor 1 def
+    
+    gsave
+        SetLogoFont    
+        color aload pop setrgbcolor
+
+        % IReplacementHack
+        % Deal with the lack of bars on the letter 'I' in Arial and Helvetica
+        % by replacing with 'I' from Courier.
+        tc (I) eq {
+            /Courier findfont char_width  scalefont setfont    
+        } if
+
+
+        shrink {
+            xsize 1 shrink_fraction sub 2 div mul
+            ysize 1 shrink_fraction sub 2 div mul rmoveto 
+            shrink_fraction shrink_fraction scale
+        } if
+        
+        % Calculate the font scaling factors
+        % Loop twice to catch small correction due to first scaling
+        2 {
+            gsave
+            xmulfactor ymulfactor scale
+      
+            ysize % desired size of character in points
+            tc CharBoxHeight 
+            dup 0.0 ne {
+                div % factor by which to scale up the character
+                /ymulfactor exch def
+            } {pop pop} ifelse
+
+            xsize % desired size of character in points
+            tc CharBoxWidth  
+            dup 0.0 ne {
+                div % factor by which to scale up the character
+                /xmulfactor exch def
+            } {pop pop} ifelse
+            grestore
+        } repeat
+
+
+  
+        % Draw the character
+        xmulfactor ymulfactor scale
+        % Move lower left corner of character to start point
+        tc CharBox pop pop % llx lly : Lower left corner
+        exch neg exch neg
+        rmoveto
+        
+        tc show    
+
+    grestore
+} bind def
+
+/DrawErrorbar{ % interval_down interval_up DrawErrorbar
+    
+    gsave
+    /points_per_unit stack_height yaxis_scale div def 
+    /height_up   exch points_per_unit mul def 
+    /height_down exch points_per_unit mul def
+    
+    show_errorbars {
+    
+    stroke_width setlinewidth
+    errorbar_gray setgray     
+    stack_width 2 div 0 rmoveto
+    
+    /errorbar_width char_width errorbar_width_fraction mul def
+    /errorbar_width2 errorbar_width 2 div def
+    
+    gsave 
+        0 height_down neg rmoveto
+        errorbar_width2 neg 0 rlineto
+        errorbar_width 0 rlineto
+        errorbar_width2 neg 0 rlineto
+        0 height_down errorbar_fraction mul rlineto 
+        stroke
+    grestore
+
+    gsave 
+        0 height_up  rmoveto
+        errorbar_width2 neg 0 rlineto
+        errorbar_width 0 rlineto
+        errorbar_width2 neg 0 rlineto
+        0 height_up neg errorbar_fraction mul rlineto 
+        stroke
+    grestore
+    } if
+           
+    grestore
+    
+} bind def
+
+/DrawErrorbarFirst{ % interval_down interval_up center DrawErrorbarFirst
+    gsave
+    /points_per_unit stack_height yaxis_scale div def 
+    /center   exch points_per_unit mul def 
+
+    0 center rmoveto
+    DrawErrorbar
+    grestore
+} bind def
+
+%%EndProlog
+
+%%Page: 1 1
+
+% Example Data
+%StartLogo
+%    StartLine
+%        (1) StartStack
+%            1.2 [0 0 0] (C) ShowSymbol
+%            2.2 [0 0 0] (I) ShowSymbol
+%            0.5 0.5 DrawErrorbar
+%        EndStack
+%        (2) StartStack
+%            0.5 [0 0 0] (I) ShowSymbol
+%            0.9 [0 0 0] (L) ShowSymbol
+%            1.0 [0 0 0] (G) ShowSymbol
+%            0.5 0.5 DrawErrorbar        
+%        EndStack
+%        (234) StartStack
+%        EndStack
+%        (235) StartStack
+%        EndStack
+%    EndLine
+%EndLogo
+
+StartLogo
+
+StartLine
+() StartStack
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (Y) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (W) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (H) ShowSymbol
+ 1.000000 0.000171 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (N) ShowSymbol
+ 1.000000 0.000171 [ 0.0 1.0 0.0 ] (G) ShowSymbol
+ 1.000000 0.000855 [ 1.0 0.6470588235294118 0.0 ] (R) ShowSymbol
+ 1.000000 0.001196 [ 0.0 0.0 1.0 ] (S) ShowSymbol
+ 1.000000 0.006324 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (E) ShowSymbol
+ 1.000000 0.006495 [ 0.0 0.0 1.0 ] (X) ShowSymbol
+ 1.000000 0.015040 [ 1.0 0.6470588235294118 0.0 ] (V) ShowSymbol
+ 1.000000 0.015382 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (D) ShowSymbol
+ 1.000000 0.018800 [ 1.0 0.6470588235294118 0.0 ] (F) ShowSymbol
+ 1.000000 0.088360 [ 1.0 0.5490196078431373 0.0 ] (B) ShowSymbol
+ 1.000000 0.115877 [ 1.0 0.0 0.0 ] (Q) ShowSymbol
+ 1.000000 0.127840 [ 0.5019607843137255 0.0 0.5019607843137255 ] (T) ShowSymbol
+ 1.000000 0.248503 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (C) ShowSymbol
+ 1.000000 0.418729 [ 1.0 0.0 0.0 ] (A) ShowSymbol
+ 1.000000 0.634588 [ 1.0 0.0 0.0 ] (Z) ShowSymbol
+EndStack
+
+() StartStack
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (Y) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (W) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (R) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (N) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (H) ShowSymbol
+ 1.000000 0.000367 [ 0.0 1.0 0.0 ] (G) ShowSymbol
+ 1.000000 0.000734 [ 0.0 0.0 1.0 ] (S) ShowSymbol
+ 1.000000 0.002019 [ 0.0 0.0 1.0 ] (X) ShowSymbol
+ 1.000000 0.004588 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (E) ShowSymbol
+ 1.000000 0.006790 [ 1.0 0.6470588235294118 0.0 ] (V) ShowSymbol
+ 1.000000 0.011378 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (D) ShowSymbol
+ 1.000000 0.012479 [ 1.0 0.6470588235294118 0.0 ] (F) ShowSymbol
+ 1.000000 0.080381 [ 0.5019607843137255 0.0 0.5019607843137255 ] (T) ShowSymbol
+ 1.000000 0.104055 [ 1.0 0.5490196078431373 0.0 ] (B) ShowSymbol
+ 1.000000 0.143696 [ 1.0 0.0 0.0 ] (Q) ShowSymbol
+ 1.000000 0.284455 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (C) ShowSymbol
+ 1.000000 0.491648 [ 1.0 0.0 0.0 ] (A) ShowSymbol
+ 1.000000 0.681040 [ 1.0 0.0 0.0 ] (Z) ShowSymbol
+EndStack
+
+() StartStack
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (Y) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (W) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (S) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (R) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (N) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (H) ShowSymbol
+ 1.000000 0.000000 [ 0.0 1.0 0.0 ] (G) ShowSymbol
+ 1.000000 0.001188 [ 0.0 0.0 1.0 ] (X) ShowSymbol
+ 1.000000 0.002574 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (E) ShowSymbol
+ 1.000000 0.003762 [ 1.0 0.6470588235294118 0.0 ] (V) ShowSymbol
+ 1.000000 0.007326 [ 1.0 0.6470588235294118 0.0 ] (F) ShowSymbol
+ 1.000000 0.008910 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (D) ShowSymbol
+ 1.000000 0.042966 [ 0.5019607843137255 0.0 0.5019607843137255 ] (T) ShowSymbol
+ 1.000000 0.102365 [ 1.0 0.5490196078431373 0.0 ] (B) ShowSymbol
+ 1.000000 0.168695 [ 1.0 0.0 0.0 ] (Q) ShowSymbol
+ 1.000000 0.295018 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (C) ShowSymbol
+ 1.000000 0.554791 [ 1.0 0.0 0.0 ] (A) ShowSymbol
+ 1.000000 0.779916 [ 1.0 0.0 0.0 ] (Z) ShowSymbol
+EndStack
+
+() StartStack
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (Y) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (W) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (S) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (R) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (N) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (H) ShowSymbol
+ 1.000000 0.000000 [ 0.0 1.0 0.0 ] (G) ShowSymbol
+ 1.000000 0.000809 [ 0.0 0.0 1.0 ] (X) ShowSymbol
+ 1.000000 0.000809 [ 1.0 0.6470588235294118 0.0 ] (V) ShowSymbol
+ 1.000000 0.002022 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (E) ShowSymbol
+ 1.000000 0.004448 [ 1.0 0.6470588235294118 0.0 ] (F) ShowSymbol
+ 1.000000 0.006874 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (D) ShowSymbol
+ 1.000000 0.017993 [ 0.5019607843137255 0.0 0.5019607843137255 ] (T) ShowSymbol
+ 1.000000 0.135453 [ 1.0 0.5490196078431373 0.0 ] (B) ShowSymbol
+ 1.000000 0.199742 [ 1.0 0.0 0.0 ] (Q) ShowSymbol
+ 1.000000 0.279195 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (C) ShowSymbol
+ 1.000000 0.566678 [ 1.0 0.0 0.0 ] (A) ShowSymbol
+ 1.000000 0.794927 [ 1.0 0.0 0.0 ] (Z) ShowSymbol
+EndStack
+
+(5) StartStack
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (Y) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (W) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (V) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (S) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (R) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (N) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (H) ShowSymbol
+ 1.000000 0.000000 [ 0.0 1.0 0.0 ] (G) ShowSymbol
+ 1.000000 0.000427 [ 0.0 0.0 1.0 ] (X) ShowSymbol
+ 1.000000 0.000853 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (E) ShowSymbol
+ 1.000000 0.002560 [ 1.0 0.6470588235294118 0.0 ] (F) ShowSymbol
+ 1.000000 0.003841 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (D) ShowSymbol
+ 1.000000 0.005974 [ 0.5019607843137255 0.0 0.5019607843137255 ] (T) ShowSymbol
+ 1.000000 0.111588 [ 1.0 0.5490196078431373 0.0 ] (B) ShowSymbol
+ 1.000000 0.212295 [ 1.0 0.0 0.0 ] (Q) ShowSymbol
+ 1.000000 0.286758 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (C) ShowSymbol
+ 1.000000 0.614481 [ 1.0 0.0 0.0 ] (A) ShowSymbol
+ 1.000000 0.881396 [ 1.0 0.0 0.0 ] (Z) ShowSymbol
+EndStack
+
+() StartStack
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (Y) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (W) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (V) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (S) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (R) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (N) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (H) ShowSymbol
+ 1.000000 0.000000 [ 0.0 1.0 0.0 ] (G) ShowSymbol
+ 1.000000 0.000210 [ 0.0 0.0 1.0 ] (X) ShowSymbol
+ 1.000000 0.000421 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (E) ShowSymbol
+ 1.000000 0.000841 [ 1.0 0.6470588235294118 0.0 ] (F) ShowSymbol
+ 1.000000 0.002733 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (D) ShowSymbol
+ 1.000000 0.004415 [ 0.5019607843137255 0.0 0.5019607843137255 ] (T) ShowSymbol
+ 1.000000 0.127835 [ 1.0 0.5490196078431373 0.0 ] (B) ShowSymbol
+ 1.000000 0.206050 [ 1.0 0.0 0.0 ] (Q) ShowSymbol
+ 1.000000 0.339352 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (C) ShowSymbol
+ 1.000000 0.566008 [ 1.0 0.0 0.0 ] (A) ShowSymbol
+ 1.000000 0.841442 [ 1.0 0.0 0.0 ] (Z) ShowSymbol
+EndStack
+
+() StartStack
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (Y) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (W) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (V) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (S) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (R) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (N) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (H) ShowSymbol
+ 1.000000 0.000000 [ 0.0 1.0 0.0 ] (G) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (F) ShowSymbol
+ 1.000000 0.000000 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (E) ShowSymbol
+ 1.000000 0.000212 [ 0.0 0.0 1.0 ] (X) ShowSymbol
+ 1.000000 0.001271 [ 0.5019607843137255 0.0 0.5019607843137255 ] (T) ShowSymbol
+ 1.000000 0.001483 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (D) ShowSymbol
+ 1.000000 0.107015 [ 1.0 0.5490196078431373 0.0 ] (B) ShowSymbol
+ 1.000000 0.191144 [ 1.0 0.0 0.0 ] (Q) ShowSymbol
+ 1.000000 0.460482 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (C) ShowSymbol
+ 1.000000 0.551180 [ 1.0 0.0 0.0 ] (A) ShowSymbol
+ 1.000000 0.792970 [ 1.0 0.0 0.0 ] (Z) ShowSymbol
+EndStack
+
+() StartStack
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (Y) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (X) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (W) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (V) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (S) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (R) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (N) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (H) ShowSymbol
+ 1.000000 0.000000 [ 0.0 1.0 0.0 ] (G) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (F) ShowSymbol
+ 1.000000 0.000000 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (E) ShowSymbol
+ 1.000000 0.001254 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (D) ShowSymbol
+ 1.000000 0.002717 [ 0.5019607843137255 0.0 0.5019607843137255 ] (T) ShowSymbol
+ 1.000000 0.115774 [ 1.0 0.5490196078431373 0.0 ] (B) ShowSymbol
+ 1.000000 0.176168 [ 1.0 0.0 0.0 ] (Q) ShowSymbol
+ 1.000000 0.498411 [ 1.0 0.0 0.0 ] (A) ShowSymbol
+ 1.000000 0.612095 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (C) ShowSymbol
+ 1.000000 0.670191 [ 1.0 0.0 0.0 ] (Z) ShowSymbol
+EndStack
+
+() StartStack
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (Y) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (X) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (W) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (V) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (S) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (R) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (N) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (H) ShowSymbol
+ 1.000000 0.000000 [ 0.0 1.0 0.0 ] (G) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (F) ShowSymbol
+ 1.000000 0.000000 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (E) ShowSymbol
+ 1.000000 0.001251 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (D) ShowSymbol
+ 1.000000 0.004797 [ 0.5019607843137255 0.0 0.5019607843137255 ] (T) ShowSymbol
+ 1.000000 0.151010 [ 1.0 0.5490196078431373 0.0 ] (B) ShowSymbol
+ 1.000000 0.160396 [ 1.0 0.0 0.0 ] (Q) ShowSymbol
+ 1.000000 0.397340 [ 1.0 0.0 0.0 ] (A) ShowSymbol
+ 1.000000 0.633241 [ 1.0 0.0 0.0 ] (Z) ShowSymbol
+ 1.000000 0.724598 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (C) ShowSymbol
+EndStack
+
+(10) StartStack
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (Y) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (X) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (W) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (V) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (S) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (R) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (N) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (H) ShowSymbol
+ 1.000000 0.000000 [ 0.0 1.0 0.0 ] (G) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (F) ShowSymbol
+ 1.000000 0.000000 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (E) ShowSymbol
+ 1.000000 0.001261 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (D) ShowSymbol
+ 1.000000 0.003783 [ 0.5019607843137255 0.0 0.5019607843137255 ] (T) ShowSymbol
+ 1.000000 0.143958 [ 1.0 0.0 0.0 ] (Q) ShowSymbol
+ 1.000000 0.207846 [ 1.0 0.5490196078431373 0.0 ] (B) ShowSymbol
+ 1.000000 0.321121 [ 1.0 0.0 0.0 ] (A) ShowSymbol
+ 1.000000 0.595587 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (C) ShowSymbol
+ 1.000000 0.814782 [ 1.0 0.0 0.0 ] (Z) ShowSymbol
+EndStack
+
+() StartStack
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (Y) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (W) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (V) ShowSymbol
+ 1.000000 0.000000 [ 0.5019607843137255 0.0 0.5019607843137255 ] (T) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (S) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (R) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (N) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (H) ShowSymbol
+ 1.000000 0.000000 [ 0.0 1.0 0.0 ] (G) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (F) ShowSymbol
+ 1.000000 0.000000 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (E) ShowSymbol
+ 1.000000 0.000000 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (D) ShowSymbol
+ 1.000000 0.012219 [ 0.0 0.0 1.0 ] (X) ShowSymbol
+ 1.000000 0.150297 [ 1.0 0.0 0.0 ] (Q) ShowSymbol
+ 1.000000 0.174980 [ 1.0 0.5490196078431373 0.0 ] (B) ShowSymbol
+ 1.000000 0.299617 [ 1.0 0.0 0.0 ] (A) ShowSymbol
+ 1.000000 0.304260 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (C) ShowSymbol
+ 1.000000 1.487088 [ 1.0 0.0 0.0 ] (Z) ShowSymbol
+EndStack
+
+() StartStack
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (Y) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (W) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (V) ShowSymbol
+ 1.000000 0.000000 [ 0.5019607843137255 0.0 0.5019607843137255 ] (T) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (S) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (R) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (N) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (H) ShowSymbol
+ 1.000000 0.000000 [ 0.0 1.0 0.0 ] (G) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (F) ShowSymbol
+ 1.000000 0.000000 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (E) ShowSymbol
+ 1.000000 0.000000 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (D) ShowSymbol
+ 1.000000 0.048636 [ 0.0 0.0 1.0 ] (X) ShowSymbol
+ 1.000000 0.066109 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (C) ShowSymbol
+ 1.000000 0.128724 [ 1.0 0.5490196078431373 0.0 ] (B) ShowSymbol
+ 1.000000 0.149110 [ 1.0 0.0 0.0 ] (Q) ShowSymbol
+ 1.000000 0.292978 [ 1.0 0.0 0.0 ] (A) ShowSymbol
+ 1.000000 2.208402 [ 1.0 0.0 0.0 ] (Z) ShowSymbol
+EndStack
+
+() StartStack
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (Y) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (W) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (V) ShowSymbol
+ 1.000000 0.000000 [ 0.5019607843137255 0.0 0.5019607843137255 ] (T) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (S) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (R) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (N) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (H) ShowSymbol
+ 1.000000 0.000000 [ 0.0 1.0 0.0 ] (G) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (F) ShowSymbol
+ 1.000000 0.000000 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (E) ShowSymbol
+ 1.000000 0.000000 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (D) ShowSymbol
+ 1.000000 0.011218 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (C) ShowSymbol
+ 1.000000 0.019230 [ 1.0 0.5490196078431373 0.0 ] (B) ShowSymbol
+ 1.000000 0.079805 [ 0.0 0.0 1.0 ] (X) ShowSymbol
+ 1.000000 0.158969 [ 1.0 0.0 0.0 ] (Q) ShowSymbol
+ 1.000000 0.308644 [ 1.0 0.0 0.0 ] (A) ShowSymbol
+ 1.000000 2.606968 [ 1.0 0.0 0.0 ] (Z) ShowSymbol
+EndStack
+
+() StartStack
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (Y) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (W) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (V) ShowSymbol
+ 1.000000 0.000000 [ 0.5019607843137255 0.0 0.5019607843137255 ] (T) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (S) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (R) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (N) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (H) ShowSymbol
+ 1.000000 0.000000 [ 0.0 1.0 0.0 ] (G) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (F) ShowSymbol
+ 1.000000 0.000000 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (E) ShowSymbol
+ 1.000000 0.000000 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (D) ShowSymbol
+ 1.000000 0.004396 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (C) ShowSymbol
+ 1.000000 0.005748 [ 1.0 0.5490196078431373 0.0 ] (B) ShowSymbol
+ 1.000000 0.027051 [ 1.0 0.0 0.0 ] (A) ShowSymbol
+ 1.000000 0.063232 [ 1.0 0.0 0.0 ] (Q) ShowSymbol
+ 1.000000 0.467307 [ 1.0 0.0 0.0 ] (Z) ShowSymbol
+ 1.000000 2.792348 [ 0.0 0.0 1.0 ] (X) ShowSymbol
+EndStack
+
+(15) StartStack
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (Y) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (W) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (V) ShowSymbol
+ 1.000000 0.000000 [ 0.5019607843137255 0.0 0.5019607843137255 ] (T) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (S) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (R) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (N) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (H) ShowSymbol
+ 1.000000 0.000000 [ 0.0 1.0 0.0 ] (G) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (F) ShowSymbol
+ 1.000000 0.000000 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (E) ShowSymbol
+ 1.000000 0.000000 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (D) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.5490196078431373 0.0 ] (B) ShowSymbol
+ 1.000000 0.002779 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (C) ShowSymbol
+ 1.000000 0.011115 [ 1.0 0.0 0.0 ] (A) ShowSymbol
+ 1.000000 0.018656 [ 1.0 0.0 0.0 ] (Q) ShowSymbol
+ 1.000000 0.082168 [ 1.0 0.0 0.0 ] (Z) ShowSymbol
+ 1.000000 3.829741 [ 0.0 0.0 1.0 ] (X) ShowSymbol
+EndStack
+
+() StartStack
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (Y) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (W) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (V) ShowSymbol
+ 1.000000 0.000000 [ 0.5019607843137255 0.0 0.5019607843137255 ] (T) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (S) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (R) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (N) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (H) ShowSymbol
+ 1.000000 0.000000 [ 0.0 1.0 0.0 ] (G) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (F) ShowSymbol
+ 1.000000 0.000000 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (E) ShowSymbol
+ 1.000000 0.000000 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (D) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.5490196078431373 0.0 ] (B) ShowSymbol
+ 1.000000 0.002465 [ 1.0 0.0 0.0 ] (A) ShowSymbol
+ 1.000000 0.003287 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (C) ShowSymbol
+ 1.000000 0.009449 [ 1.0 0.0 0.0 ] (Q) ShowSymbol
+ 1.000000 0.021363 [ 1.0 0.0 0.0 ] (Z) ShowSymbol
+ 1.000000 4.045846 [ 0.0 0.0 1.0 ] (X) ShowSymbol
+EndStack
+
+() StartStack
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (Y) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (W) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (V) ShowSymbol
+ 1.000000 0.000000 [ 0.5019607843137255 0.0 0.5019607843137255 ] (T) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (S) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (R) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (N) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (H) ShowSymbol
+ 1.000000 0.000000 [ 0.0 1.0 0.0 ] (G) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (F) ShowSymbol
+ 1.000000 0.000000 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (E) ShowSymbol
+ 1.000000 0.000000 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (D) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.5490196078431373 0.0 ] (B) ShowSymbol
+ 1.000000 0.003246 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (C) ShowSymbol
+ 1.000000 0.004463 [ 1.0 0.0 0.0 ] (A) ShowSymbol
+ 1.000000 0.015014 [ 1.0 0.0 0.0 ] (Q) ShowSymbol
+ 1.000000 0.040171 [ 1.0 0.0 0.0 ] (Z) ShowSymbol
+ 1.000000 3.969269 [ 0.0 0.0 1.0 ] (X) ShowSymbol
+EndStack
+
+() StartStack
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (Y) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (W) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (V) ShowSymbol
+ 1.000000 0.000000 [ 0.5019607843137255 0.0 0.5019607843137255 ] (T) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (S) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (R) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (N) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (H) ShowSymbol
+ 1.000000 0.000000 [ 0.0 1.0 0.0 ] (G) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (F) ShowSymbol
+ 1.000000 0.000000 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (E) ShowSymbol
+ 1.000000 0.000000 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (D) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.5490196078431373 0.0 ] (B) ShowSymbol
+ 1.000000 0.001102 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (C) ShowSymbol
+ 1.000000 0.018006 [ 1.0 0.0 0.0 ] (A) ShowSymbol
+ 1.000000 0.043728 [ 1.0 0.0 0.0 ] (Q) ShowSymbol
+ 1.000000 0.267512 [ 1.0 0.0 0.0 ] (Z) ShowSymbol
+ 1.000000 3.321122 [ 0.0 0.0 1.0 ] (X) ShowSymbol
+EndStack
+
+() StartStack
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (Y) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (W) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (V) ShowSymbol
+ 1.000000 0.000000 [ 0.5019607843137255 0.0 0.5019607843137255 ] (T) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (S) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (R) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (N) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (H) ShowSymbol
+ 1.000000 0.000000 [ 0.0 1.0 0.0 ] (G) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (F) ShowSymbol
+ 1.000000 0.000000 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (E) ShowSymbol
+ 1.000000 0.000000 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (D) ShowSymbol
+ 1.000000 0.006926 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (C) ShowSymbol
+ 1.000000 0.008130 [ 1.0 0.5490196078431373 0.0 ] (B) ShowSymbol
+ 1.000000 0.054502 [ 1.0 0.0 0.0 ] (A) ShowSymbol
+ 1.000000 0.089131 [ 1.0 0.0 0.0 ] (Q) ShowSymbol
+ 1.000000 0.779295 [ 1.0 0.0 0.0 ] (Z) ShowSymbol
+ 1.000000 2.054232 [ 0.0 0.0 1.0 ] (X) ShowSymbol
+EndStack
+
+(20) StartStack
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (Y) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (W) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (V) ShowSymbol
+ 1.000000 0.000000 [ 0.5019607843137255 0.0 0.5019607843137255 ] (T) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (S) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (R) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (N) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (H) ShowSymbol
+ 1.000000 0.000000 [ 0.0 1.0 0.0 ] (G) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (F) ShowSymbol
+ 1.000000 0.000000 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (E) ShowSymbol
+ 1.000000 0.000000 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (D) ShowSymbol
+ 1.000000 0.017376 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (C) ShowSymbol
+ 1.000000 0.034436 [ 1.0 0.5490196078431373 0.0 ] (B) ShowSymbol
+ 1.000000 0.072032 [ 0.0 0.0 1.0 ] (X) ShowSymbol
+ 1.000000 0.160491 [ 1.0 0.0 0.0 ] (Q) ShowSymbol
+ 1.000000 0.308030 [ 1.0 0.0 0.0 ] (A) ShowSymbol
+ 1.000000 2.547011 [ 1.0 0.0 0.0 ] (Z) ShowSymbol
+EndStack
+
+() StartStack
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (Y) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (W) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (V) ShowSymbol
+ 1.000000 0.000000 [ 0.5019607843137255 0.0 0.5019607843137255 ] (T) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (S) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (R) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (N) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (H) ShowSymbol
+ 1.000000 0.000000 [ 0.0 1.0 0.0 ] (G) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (F) ShowSymbol
+ 1.000000 0.000000 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (E) ShowSymbol
+ 1.000000 0.000000 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (D) ShowSymbol
+ 1.000000 0.023707 [ 0.0 0.0 1.0 ] (X) ShowSymbol
+ 1.000000 0.119374 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (C) ShowSymbol
+ 1.000000 0.145313 [ 1.0 0.5490196078431373 0.0 ] (B) ShowSymbol
+ 1.000000 0.164558 [ 1.0 0.0 0.0 ] (Q) ShowSymbol
+ 1.000000 0.298993 [ 1.0 0.0 0.0 ] (A) ShowSymbol
+ 1.000000 2.019599 [ 1.0 0.0 0.0 ] (Z) ShowSymbol
+EndStack
+
+() StartStack
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (Y) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (W) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (V) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (S) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (R) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (N) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (H) ShowSymbol
+ 1.000000 0.000000 [ 0.0 1.0 0.0 ] (G) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (F) ShowSymbol
+ 1.000000 0.000228 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (E) ShowSymbol
+ 1.000000 0.000228 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (D) ShowSymbol
+ 1.000000 0.000683 [ 0.5019607843137255 0.0 0.5019607843137255 ] (T) ShowSymbol
+ 1.000000 0.009792 [ 0.0 0.0 1.0 ] (X) ShowSymbol
+ 1.000000 0.147784 [ 1.0 0.0 0.0 ] (Q) ShowSymbol
+ 1.000000 0.180575 [ 1.0 0.5490196078431373 0.0 ] (B) ShowSymbol
+ 1.000000 0.302856 [ 1.0 0.0 0.0 ] (A) ShowSymbol
+ 1.000000 0.411702 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (C) ShowSymbol
+ 1.000000 1.208918 [ 1.0 0.0 0.0 ] (Z) ShowSymbol
+EndStack
+
+() StartStack
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (Y) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (X) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (W) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (V) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (S) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (R) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (N) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (H) ShowSymbol
+ 1.000000 0.000000 [ 0.0 1.0 0.0 ] (G) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (F) ShowSymbol
+ 1.000000 0.001649 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (E) ShowSymbol
+ 1.000000 0.003298 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (D) ShowSymbol
+ 1.000000 0.004534 [ 0.5019607843137255 0.0 0.5019607843137255 ] (T) ShowSymbol
+ 1.000000 0.145926 [ 1.0 0.0 0.0 ] (Q) ShowSymbol
+ 1.000000 0.192507 [ 1.0 0.5490196078431373 0.0 ] (B) ShowSymbol
+ 1.000000 0.344823 [ 1.0 0.0 0.0 ] (A) ShowSymbol
+ 1.000000 0.636469 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (C) ShowSymbol
+ 1.000000 0.718913 [ 1.0 0.0 0.0 ] (Z) ShowSymbol
+EndStack
+
+() StartStack
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (Y) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (X) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (W) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (V) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (S) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (R) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (N) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (H) ShowSymbol
+ 1.000000 0.000000 [ 0.0 1.0 0.0 ] (G) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (F) ShowSymbol
+ 1.000000 0.003702 [ 0.5019607843137255 0.0 0.5019607843137255 ] (T) ShowSymbol
+ 1.000000 0.003702 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (E) ShowSymbol
+ 1.000000 0.004936 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (D) ShowSymbol
+ 1.000000 0.127522 [ 1.0 0.5490196078431373 0.0 ] (B) ShowSymbol
+ 1.000000 0.165779 [ 1.0 0.0 0.0 ] (Q) ShowSymbol
+ 1.000000 0.445917 [ 1.0 0.0 0.0 ] (A) ShowSymbol
+ 1.000000 0.612313 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (C) ShowSymbol
+ 1.000000 0.679982 [ 1.0 0.0 0.0 ] (Z) ShowSymbol
+EndStack
+
+(25) StartStack
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (Y) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (X) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (W) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (V) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (S) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (R) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (N) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (H) ShowSymbol
+ 1.000000 0.000000 [ 0.0 1.0 0.0 ] (G) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (F) ShowSymbol
+ 1.000000 0.002078 [ 0.5019607843137255 0.0 0.5019607843137255 ] (T) ShowSymbol
+ 1.000000 0.004779 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (E) ShowSymbol
+ 1.000000 0.005402 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (D) ShowSymbol
+ 1.000000 0.106172 [ 1.0 0.5490196078431373 0.0 ] (B) ShowSymbol
+ 1.000000 0.181594 [ 1.0 0.0 0.0 ] (Q) ShowSymbol
+ 1.000000 0.464374 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (C) ShowSymbol
+ 1.000000 0.553301 [ 1.0 0.0 0.0 ] (A) ShowSymbol
+ 1.000000 0.746946 [ 1.0 0.0 0.0 ] (Z) ShowSymbol
+EndStack
+
+() StartStack
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (Y) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (X) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (W) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (V) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (S) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (R) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (N) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (H) ShowSymbol
+ 1.000000 0.000000 [ 0.0 1.0 0.0 ] (G) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (F) ShowSymbol
+ 1.000000 0.002098 [ 0.5019607843137255 0.0 0.5019607843137255 ] (T) ShowSymbol
+ 1.000000 0.006086 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (D) ShowSymbol
+ 1.000000 0.006505 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (E) ShowSymbol
+ 1.000000 0.120034 [ 1.0 0.5490196078431373 0.0 ] (B) ShowSymbol
+ 1.000000 0.197048 [ 1.0 0.0 0.0 ] (Q) ShowSymbol
+ 1.000000 0.337647 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (C) ShowSymbol
+ 1.000000 0.572049 [ 1.0 0.0 0.0 ] (A) ShowSymbol
+ 1.000000 0.843803 [ 1.0 0.0 0.0 ] (Z) ShowSymbol
+EndStack
+
+() StartStack
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (Y) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (X) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (W) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (V) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (S) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (R) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (N) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (H) ShowSymbol
+ 1.000000 0.000000 [ 0.0 1.0 0.0 ] (G) ShowSymbol
+ 1.000000 0.000413 [ 1.0 0.6470588235294118 0.0 ] (F) ShowSymbol
+ 1.000000 0.005993 [ 0.5019607843137255 0.0 0.5019607843137255 ] (T) ShowSymbol
+ 1.000000 0.007440 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (E) ShowSymbol
+ 1.000000 0.007440 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (D) ShowSymbol
+ 1.000000 0.135367 [ 1.0 0.5490196078431373 0.0 ] (B) ShowSymbol
+ 1.000000 0.198400 [ 1.0 0.0 0.0 ] (Q) ShowSymbol
+ 1.000000 0.301734 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (C) ShowSymbol
+ 1.000000 0.562341 [ 1.0 0.0 0.0 ] (A) ShowSymbol
+ 1.000000 0.834521 [ 1.0 0.0 0.0 ] (Z) ShowSymbol
+EndStack
+
+() StartStack
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (Y) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (W) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (R) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (N) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (H) ShowSymbol
+ 1.000000 0.000000 [ 0.0 1.0 0.0 ] (G) ShowSymbol
+ 1.000000 0.000207 [ 0.0 0.0 1.0 ] (S) ShowSymbol
+ 1.000000 0.000413 [ 1.0 0.6470588235294118 0.0 ] (V) ShowSymbol
+ 1.000000 0.000826 [ 0.0 0.0 1.0 ] (X) ShowSymbol
+ 1.000000 0.001240 [ 1.0 0.6470588235294118 0.0 ] (F) ShowSymbol
+ 1.000000 0.008678 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (E) ShowSymbol
+ 1.000000 0.008884 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (D) ShowSymbol
+ 1.000000 0.009504 [ 0.5019607843137255 0.0 0.5019607843137255 ] (T) ShowSymbol
+ 1.000000 0.111569 [ 1.0 0.5490196078431373 0.0 ] (B) ShowSymbol
+ 1.000000 0.199172 [ 1.0 0.0 0.0 ] (Q) ShowSymbol
+ 1.000000 0.292972 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (C) ShowSymbol
+ 1.000000 0.581606 [ 1.0 0.0 0.0 ] (A) ShowSymbol
+ 1.000000 0.838008 [ 1.0 0.0 0.0 ] (Z) ShowSymbol
+EndStack
+
+() StartStack
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (Y) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (W) ShowSymbol
+ 1.000000 0.000000 [ 1.0 0.6470588235294118 0.0 ] (R) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (N) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (H) ShowSymbol
+ 1.000000 0.000000 [ 0.0 1.0 0.0 ] (G) ShowSymbol
+ 1.000000 0.000391 [ 0.0 0.0 1.0 ] (S) ShowSymbol
+ 1.000000 0.001369 [ 1.0 0.6470588235294118 0.0 ] (V) ShowSymbol
+ 1.000000 0.001955 [ 0.0 0.0 1.0 ] (X) ShowSymbol
+ 1.000000 0.002933 [ 1.0 0.6470588235294118 0.0 ] (F) ShowSymbol
+ 1.000000 0.011733 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (D) ShowSymbol
+ 1.000000 0.011929 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (E) ShowSymbol
+ 1.000000 0.025030 [ 0.5019607843137255 0.0 0.5019607843137255 ] (T) ShowSymbol
+ 1.000000 0.118308 [ 1.0 0.5490196078431373 0.0 ] (B) ShowSymbol
+ 1.000000 0.179124 [ 1.0 0.0 0.0 ] (Q) ShowSymbol
+ 1.000000 0.300169 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (C) ShowSymbol
+ 1.000000 0.538544 [ 1.0 0.0 0.0 ] (A) ShowSymbol
+ 1.000000 0.751693 [ 1.0 0.0 0.0 ] (Z) ShowSymbol
+EndStack
+
+(30) StartStack
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (Y) ShowSymbol
+ 1.000000 0.000000 [ 0.0 0.0 1.0 ] (W) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (N) ShowSymbol
+ 1.000000 0.000000 [ 0.19607843137254902 0.803921568627451 0.19607843137254902 ] (H) ShowSymbol
+ 1.000000 0.000184 [ 1.0 0.6470588235294118 0.0 ] (R) ShowSymbol
+ 1.000000 0.000184 [ 0.0 1.0 0.0 ] (G) ShowSymbol
+ 1.000000 0.000369 [ 0.0 0.0 1.0 ] (S) ShowSymbol
+ 1.000000 0.004054 [ 0.0 0.0 1.0 ] (X) ShowSymbol
+ 1.000000 0.006080 [ 1.0 0.6470588235294118 0.0 ] (V) ShowSymbol
+ 1.000000 0.007554 [ 1.0 0.6470588235294118 0.0 ] (F) ShowSymbol
+ 1.000000 0.012898 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (E) ShowSymbol
+ 1.000000 0.013819 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (D) ShowSymbol
+ 1.000000 0.053802 [ 0.5019607843137255 0.0 0.5019607843137255 ] (T) ShowSymbol
+ 1.000000 0.115526 [ 1.0 0.5490196078431373 0.0 ] (B) ShowSymbol
+ 1.000000 0.145191 [ 1.0 0.0 0.0 ] (Q) ShowSymbol
+ 1.000000 0.287066 [ 0.13333333333333333 0.5450980392156862 0.13333333333333333 ] (C) ShowSymbol
+ 1.000000 0.494350 [ 1.0 0.0 0.0 ] (A) ShowSymbol
+ 1.000000 0.689842 [ 1.0 0.0 0.0 ] (Z) ShowSymbol
+EndStack
+
+EndLine
+
+EndLogo
+
+
+%%EOF

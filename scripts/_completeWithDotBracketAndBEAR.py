@@ -167,6 +167,10 @@ user_email = sys.argv[6]
 
 is_there_a_background = sys.argv[2]
 
+default_search = False
+
+# todo to activate at the end removing this line
+'''
 # Check if the input is the default one
 DEFAULT_SEARCH_ID = 'dc4464c5cfef2f5c2fc4b08c516bfa4e'
 DEFAULT_SEARCH_NUM_SEQ = 2
@@ -186,10 +190,6 @@ for row in sys.argv[1].split('\n'):
     else:
         header_to_seq[current_header] += row
 
-default_search = False
-
-# todo to activate at the end removing this line
-'''
 if not is_there_a_background and len(header_to_seq) == DEFAULT_SEARCH_NUM_SEQ and \
         set(species_list) == set(DEFAULT_SEARCH_SPECIES) and \
         set(experiments_list) == set(DEFAULT_SEARCH_EXPERIMENTS):
@@ -416,6 +416,21 @@ for str_or_nuc, motifs_to_seq_to_info_dict in str_or_nuc_to_motifs_to_seq_to_inf
                     fw.write('\t'.join([seq] + [str(x) for x in info_list]) + '\n')
 
 
+species_to_protein_to_link_dict = {}
+
+path_protein_links = os.path.join(dir_base, 'resources/protein_links.txt')
+with open(path_protein_links) as f:
+    f.readline()
+
+    for line in f:
+        protein_name, species, link = line.split('\t')
+
+        if species not in species_to_protein_to_link_dict:
+            species_to_protein_to_link_dict[species] = {}
+
+        species_to_protein_to_link_dict[species][protein_name] = link.strip()
+
+
 output_generation.generate_output(
     dir_base,
     path_complete_input_rna_molecules,
@@ -423,7 +438,8 @@ output_generation.generate_output(
     dir_user_download,
     input_str_or_nuc_to_to_output_paths_dict,
     motif_results_dict,
-    user_email
+    user_email,
+    species_to_protein_to_link_dict
 )
 
 with open(os.path.join(dir_user, 'Out.log'), 'w') as fw:
