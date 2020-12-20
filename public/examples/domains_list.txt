@@ -1,69 +1,69 @@
-DZF
-Interaction with METTL14
-KHx2
-ABC|transporter2
-LisH
-PUA
-Znf_RanBP2
-Znf_CCCHx4
-G3BP1-binding
-PAZ
-AAA_11
-ABC|transporter1
-UPF1-type
-RRMx4
-Piwi
-KHx1
-KOWx2
-S1x1
-Znf_CCCHx3
-Lax1
-Helicase|C-terminal
-HRDC
-Positively charged region required for RNA-binding
 3-5|exonuclease
-DRBMx2
-MPN
-Alpha-ketoglutarate binding
-Interphase loop
-Znf_CCHCx2
-TNase-likex4
-SPOC
-RRM
-ARID
-ResIII
-FHA
-G-patch
-RRMx2
-DRBMx1
+AAA_11
 AAA_12
-Znf_CCCHx5
-JmjN
-JmjC
-Gate loop 2
-SET
-Ribosomal_S3_C
-Znf_RanBP2x2
-KHx3
-RRMx1
-HTH
+ABC|transporter1
+ABC|transporter2
+Alpha-ketoglutarate binding
+ARID
 CSD
+CSDx1
 CXC
 DRBM
-TNase-likex2
-Tudor
-Helicase|ATP-binding
+DRBMx1
+DRBMx2
+DZF
+FHA
+G3BP1-binding
 Gate loop 1
-KOWx1
-RRMx3
-Znf_RanBP2x1
-TNase-likex1
-PPIase|cyclophilin-type
-Ku
-S-adenosyl-L-methionine binding
-R3H
-CSDx1
-TROVEx1
+Gate loop 2
+G-patch
+Helicase|ATP-binding
+Helicase|C-terminal
+HRDC
+HTH
+Interaction with METTL14
+Interphase loop
+JmjC
+JmjN
+KHx1
+KHx2
+KHx3
 KHx4
+KOWx1
+KOWx2
+Ku
+Lax1
+LisH
+MPN
+PAZ
+Piwi
+Positively charged region required for RNA-binding
+PPIase|cyclophilin-type
+PUA
+R3H
+ResIII
+Ribosomal_S3_C
+RRM
+RRMx1
+RRMx2
+RRMx3
+RRMx4
+S1x1
+S-adenosyl-L-methionine binding
 SAP
+SET
+SPOC
+TNase-likex1
+TNase-likex2
 TNase-likex3
+TNase-likex4
+TROVEx1
+Tudor
+UPF1-type
+Znf_CCCHx3
+Znf_CCCHx4
+Znf_CCCHx5
+Znf_CCHCx2
+Znf_RanBP2
+Znf_RanBP2x1
+Znf_RanBP2x2
