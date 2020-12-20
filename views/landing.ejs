@@ -81,7 +81,7 @@
                                     <br/>
 
                                     <!--input file-->
-                                    <label for="fileRNA">Input File (fasta/Dot-Bracket/Bear format)</label>
+                                    <label for="fileRNA">Input File (multiFASTA w/ or w/o dot-bracket)</label>
                                     <input type="file" id="fileRNA" name="fileRNA"/>
                                     <% if (errors.message) { %>
                                         <div class="error"><%= errors.message.msg %></div>
@@ -89,7 +89,7 @@
                                     <br/>
                                     <hr>
 				    <!--background file? -->
-                                    <label for="fileBackground">Background File (optional)</label><br/>
+                                    <label for="fileBackground">Background File (multiFASTA w/ or w/o dot-bracket, optional)</label><br/>
                                     <input type="file" class="input" id="fileBackground" name="fileBackground">
                                     <% if (errors.message) { %>
                                         <div class="error"><%= errors.message.msg %></div>
