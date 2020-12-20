@@ -3,7 +3,7 @@
 <head></head>
 <body>
 <%- include ("partials/header.ejs") %>
-<div class='container'>
+<div class='container justy'>
 
 	<h2 class="text-primary pt-3 pb-3 pl-3">Documentation</h2>
 
@@ -12,49 +12,118 @@
 	<div class="container doc_bubble rounded">
 		<fieldset id='description' >
 		<legend class="text-secondary">Info</legend>
-		Brio is a webserver for the identification of known protein interaction motifs in RNA molecules. We collected sequence and secondary structure RNA motifs identified in CLIP, HITS-CLIP, PARCLIP and eCLIP experiments (Adinolfi et al., 2019) and these motifs are searched into the input RNA sequences and/or secondary structure. 
-		<br><br>
-		The search is performed with a BEAM-derived method (Pietrosanto et al., 2016).<br>
-		BRIO is able to find the best match for the collections of sequence and structure ungapped motifs starting from RNA sequences or structures using the search tool based on <a href="http://beam.uniroma2.it/home">BEAM</a>.
-		<br><br>
-		BRIO uses the same engine of BEAM, in particular: <br>
-		- Each query sequence is aligned with the motif models' Position Frequency Matrix in the chosen realm (secondary structure -in BEAR- or sequence).
-		<br>
-		- The starting alignment position with the highest ungapped alignment score is reported and a score is considered valid if its value is over the motif threshold, which is the minimum score of the core elements forming the motif extracted by BEAM.
+		BRIO (BEAM RNA Interaction mOtifs) is a web server designed for searching known sequence and structure protein binding motifs in RNA molecules of interest.<br>
+		BRIO is addressed to users with a collection of RNA sequences that are interested in the identification of sequence or structure motifs involved in the interaction of these molecules with RNA binding proteins or domains.<br>
+		The dataset of known motifs contains 2508 sequence and 2296 structure motifs, associated with the binding of 186 single proteins and 69 single protein domains. 
+		<br>The motifs were identified in Homo sapiens and Mus musculus, in three different types of experiments (PAR-CLIP, eCLIP, HITS, (Adinolfi et al., 2019)).<br> 
+		The search is based on the <a href="http://beam.uniroma2.it/home">BEAM</a> algorithm for motifs finding (Pietrosanto et al., 2016). 
 		
+		</fieldset>
+	</div>
+	<div class="container doc_bubble rounded break-seq">
+
+		<fieldset id='input'>
+		<legend class="text-secondary">Input</legend>
+		Users can either insert only the RNA sequence/s of interest in the appropriate window, or the sequence and the corresponding secondary structure in the dot-bracket notation, in multiFASTA format. Alternatively, the input upload is also available. Sequences submitted without the secondary structure are folded with the RNAfold program (Lorenz et al., 2011). The RNA molecules have to be at least 3 nucleotides long, and shorter than 3000. At most 100 sequences can be submitted.<br><br>
+ 		Example of an input in multiFASTA format with dot-braket notations:<br><br>
+ 		<p class="seq_font">
+ 		>chr1:149783661-149783992(-) 
+		AGCACUUUGCGAGUCUUCAUUUGCAUACGGGCUCUAUAAGUAGCGCAUAACCAGCCCGUUUUGCGGUAGUUCGGAUUACUUCUUUAAGUCUCUUUUCUCUUUUUUCGCGCAAAAAUGCCGGAUCCAGCGAAAUCCGCUCCUGCUCCCAAGAAGGGCUCCAAAAAGGCUGUUACGAAAGUGCAGAAGAAGGACGGCAAGAAGCGCAAGCGCAGCCGCAAGGAGAGCUACUCCGUUUACGUGUACAAGGUGCUGAAGCAGGUCCACCCCGACACCGGCAUCUCGUCCAAGGCCAUGGGCAUCAUGAACUCCUUCGUCAACGACAUCUUCGAGC 
+		.(((((((..((((((............)))))).....(((((((......(((((.(((((.(((((..((((((((((....))))......((.((...((((.(((....)))))))...)).))))))))...)))))..))))).)))))........)).))))).))))))).((.((((((((((.....((....))...))))...((((.....)))).............((((((((..(..((......))..)..)))))))).(((((......))))).........)))))).))..(((.....)))... 
+		>chr1:149784741-149784985(-) 
+		CUUCCAGAGCUCGGCCGUGAUGGCGCUGCAGGAGGCCAGCGAGGCCUACCUGGUGGGGCUGUUCGAAGACACGAACCUGUGCGCCAUCCAUGCCAAGCGCGUGACCAUCAUGCCCAAGGACAUCCAGUUGGCCCGCCGCAUCCGCGGGGAGCGGGCCUAAGGCAUAUUUUUAAGUGGUCGAUCUAAAGGCUCUUUUCAGAGCCACUGCCGUUUUCAUCAAGAGCAGCUGUACCGGCUCUCCAUC 
+		.....(((((.(((..(.((((((((.(((((((.((.((.(((....))).)).)).)).((((......))))))))))))))))))((((.....))))((((((.(((((...((....))....(((((((....(((....))))))))))...)))))........))))))........((((((....))))))((.((.(((((.....))))).)).)).)))))))).....
+		</p>
+		Users can choose to compare their RNAs to the whole dataset of motifs, or to only human or mouse motifs. Users can also choose to select only a subset of the experiments analyzed (PAR-CLIP, eCLIP, HITS), deleting the unwanted type of experiment. Addition of species or of experimental data can be done by clicking on the empty lines of the box reported below. Deletion is done by clicking on the X character at the right of each species/dataset.<br>
+		<img src="../../images/spec_exp.png" class="mt-3">
+
+
 		</fieldset>
 	</div>
 	<div class="container doc_bubble rounded">
 
-		<fieldset id='data_collected'>
-		<legend class="text-secondary">Data collected</legend>
-		BRIO collects motifs that have been identified in protein-RNA binding experiments involving 181 RNA binding proteins (RBPs), 131 of which are composed of one or more known RNA binding domains. <br><br>
 
-		The list of all the motifs collected (Adinolfi et al., 2019) are schematized in the table below.
-		<br>
-		<table id="motif_table">
-			<thead>
-				<tr>
-					<th>motifs</th>
-					<th>4804</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>sequence motifs</td>
-					<td>2296 (2112 hg19 + 184 mm9)</td>
-				</tr>
-				<tr>
-					<td>structure motifs</td>
-					<td>2508 (2319 hg19 + 189 mm9)</td>
-				</tr>
-			</tbody>
-			</table>
-		<br>
-		For more information about the motifs collected and the datasets analysed please see <a href="https://academic.oup.com/nar/article/47/10/4958/5436775" target="_blank"> here </a>
-		
+		<fieldset id='method'>
+		<legend class="text-secondary">Method</legend>
+		BRIO uses the substitution matrices (classic MBR, Matrix of Bear encoded RNA, for structure, and classic substitution matrix for nucleotides, with 3 for nucleotide matching and -2 otherwise), and scans the models in any single input RNA using a sliding-window ungapped alignment keeping the best match that, at the end, is compared to the original minimum score of the model. BRIO returns a collection of protein binding motifs identified in the input RNA molecules, with related statistics (position of the motif in the set of RNA molecules in which the motif was originally identified, p-value, odds ratio, BEAM score). BRIO applies the Fisher’s Test to determine if a motif is enriched in the input RNA molecules with respect to a set of background RNAs. The background can be specified by the user. By default, all Rfam 14.3 sequences are considered (Bateman et al., 2011). 
+
 		</fieldset>
 	</div>
+	<div class="container doc_bubble rounded">
+
+
+		<fieldset id='Dataset of protein binding motifs'>
+		<legend class="text-secondary">Data collected</legend>
+		BRIO compares the input RNA molecules with the secondary structure and sequence motifs identified in 186 RNA binding proteins and 69 protein domains analyzing Y par-CLIP, eCLIP, HITS-CLIP experiments in human and mouse (Adinolfi et al., 2019).<br>
+		<div class="container-sm mt-3">
+		<table class="table">
+		<thead>
+		    <tr>
+		      <th scope="col">Motif type</th>
+		      <th scope="col"># of motifs</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr>
+		      <td>sequence motifs</td>
+		      <td>2296 (2112 hg19 + 184 mm9)</td>
+		    </tr>
+		    <tr>
+		      <td>structure motifs </td>
+		      <td>2508 (2319 hg19 + 189 mm9)</td>
+		    </tr>
+		</tbody>
+		</table>
+		</div>
+		</fieldset>
+
+	</div>
+	<div class="container doc_bubble rounded">
+
+
+		<fieldset id='output'>
+		<legend class="text-secondary">Output</legend>
+		The server compares each RNA sequence and secondary structure with the dataset of sequence and secondary structure motifs selected by the user.<br>
+		The output is composed of two tables, one for structure and the other for sequence motifs.<br>
+		Here follows an example of the structure motifs output Table (the sequence motifs Table can be accessed by selecting the appropriate tab, at the top of the Table, and is shown further below). The Table contents can be sorted in ascending or descending order by clicking on the appropriate arrow of the single columns.<br>
+		<img src="../../images/output.png"  width="700"><br>
+
+		By default the different motifs are sorted according to the p-value, in each column the user can see: 
+		<div class="container">
+		<ol>
+  			<li>the logo of the secondary structure motif in the qBEAR alphabet;
+			</li>
+ 			<li>The type of mapping regions from gencode annotation of the RNAs datasets where the motif was originally found, includes UTR, CDS and the entire transcript for those involving RBPs known to act in the nucleus on unspliced RNAs;
+			</li>
+ 			<li>the coverage represents the number of input sequences in which the motif has a score higher than its associated threshold, divided by the number of query sequences;</li>
+ 			<li>oddsratio is the prior odds ratio and not a posterior estimate;</li>
+ 			<li>the Fisher’s Test p-value. The Fisher’s Test is applied to determine if a motif is enriched in the input RNA molecules with respect to a set of background RNAs;</li>
+ 			<li>the protein associated to the RNA secondary structure motif in the CLIP experiment analyzed in Adinolfi et al. (2019);</li>
+ 			<li>the protein domain associated to the RNA secondary structure motif (this information is not always available);</li>
+ 			<li>the organism in which the experiment was performed (human or mouse); </li>
+ 			<li>last column reports the link for the download of the information on the motif described in the row.</li>
+		</ol>
+		</div>	
+		an example of the sequence motifs Table:<br> 
+		<img src="../../images/output2.png"  width="700"><br>
+		in the first column of the sequence motifs Table the sequence logo of the motifs identified is reported. All logos have been obtained with WebLogo (Crooks et al., 2004).
+
+		</fieldset>
+
+	</div>
+	<div class="container doc_bubble rounded">
+
+
+		<fieldset id='encodings'>
+		<legend class="text-secondary">Encodings</legend>
+		BEAR: the BEAR encoding represents each position of an RNA molecule with a character taken from a set of 83, each describing its structural context and its length (Mattei et al., 2014).<br>
+		quickBEAR(qBEAR): qBEAR was originally developed as a way to show alignments of RNA structures in a Logo form (Crooks et al., 2004), where each position of an RNA molecule is described by one of 18 characters encoding for structural contexts and length groups (Pietrosanto et al., 2016).<br>
+		The following TABLE illustrates the mapping between Secondary Structure Elements and qBEAR and BEAR encodings used throughout the work. Motivations for BEAR can be found in the original work (Mattei et al., 2014).<br>
+		<img src="../../images/bear.png"><br>
+
+
+		</fieldset>	
+	</div>	
 	<div class="container doc_bubble rounded">
 
 		<fieldset id='other_tools'>
@@ -67,6 +136,20 @@
 
 		</fieldset>
 
+	</div>
+	<div class="container doc_bubble rounded">
+
+		<fieldset id='references'>
+			<legend class="text-secondary" >References</legend>
+			<ul>
+  				<li>Adinolfi M, Pietrosanto M, Parca L, Ausiello G, Ferrè F, Helmer-Citterich M. (2019) Discovering sequence and structure landscapes in RNA interaction motifs. Nucleic Acids Res, 47:4958-4969.</li>
+  				<li>Bateman,A., Finn,R.D. and Petrov,A.I. (2017) Rfam 13.0: shifting to a genome-centric resource for non-coding RNA families. Nucleic Acids Res., 46, 335–342.</li>
+  				<li>Crooks, Gavin E., et al. "WebLogo: a sequence logo generator." Genome research 14.6 (2004): 1188-1190.</li>
+  				<li>Lorenz R, Bernhart S.H., Hoener zu Siederdissen C., Tafer H., Flamm C., Stadler P.F. and Hofacker I.L.  (2011), "ViennaRNA Package 2.0", Algorithms for Molecular Biology: 6:26</li>
+  				<li>Mattei,E., Ausiello,G., Ferrè,F. and Helmer-Citterich,M. (2014) A novel approach to represent and compare RNA secondary structures. Nucleic Acids Res., 42, 6146–6157.</li>
+  				<li>Pietrosanto,M., Mattei,E., Helmer-Citterich,M. and Ferrè,F. (2016) A novel method for the identification of conserved structural patterns in RNA: From small scale to high-throughput applications. Nucleic Acids Res., 44, 8600–8609.</li>
+  			</ul>
+		</fieldset>
 	</div>
 	</div>
 </div>
