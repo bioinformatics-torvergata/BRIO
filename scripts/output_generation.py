@@ -166,11 +166,12 @@ def generate_output(dir_base, path_complete_input_rna_molecules, path_results_ht
             fw.write('document.getElementById(cityName).style.display = "block";\n')
             fw.write('evt.currentTarget.className += " active";\n}\n')
             fw.write('document.getElementById("defaultOpen").click();\n</script>\n')
+
+            shutil.make_archive(os.path.join(os.path.dirname(dir_user_download), "download"), 'zip', dir_user_download)
         else:
             fw.write('<h2 class="text-center"">Sorry, no results found.</h2>')
 
     shutil.copyfile(path_complete_input_rna_molecules, os.path.join(dir_user_download, 'input.txt'))
-    shutil.make_archive(os.path.join(os.path.dirname(dir_user_download), "download"), 'zip', dir_user_download)
 
     if user_email != '':
         my_email.send_email_with_code(code=user, user_email=user_email)
