@@ -1,46 +1,72 @@
 /*styles.css*/
 
+/* Style the buttons inside the tab */
+.tab button {
+    background-color: rgba(82, 130, 180, 0.2);
+    -webkit-border-radius: 10px 10px 0 0;
+    color: #8b8686;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: 0.3s;
+    font-size: 17px;
+    /*margin: 0 5px 0 2px;*/
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: rgba(82, 130, 180, 0.5);
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+    background-color: #5390ce;
+    color: white;
+}
+
 div.form {
-	display: inline-block;
+    display: inline-block;
 }
 
 div.form-header {
-	padding: 2rem;
+    padding: 2rem;
 
 }
 
 fieldset.form-fieldset {
-	border : 2px solid #222222;
-	display: inline-block;
-	padding-bottom: .5rem;
+    border: 2px solid #222222;
+    display: inline-block;
+    padding-bottom: .5rem;
 }
 
 fieldset.form-options {
-	text-align: center;
+    text-align: center;
 }
 
 legend.form-fieldset {
 
-	width:inherit; /* Or auto */
-    padding:0 5%; /* To give a bit of padding on the left and right */
-    border-bottom:none;
+    width: inherit; /* Or auto */
+    padding: 0 5%; /* To give a bit of padding on the left and right */
+    border-bottom: none;
 }
 
 ul.error-tabs > li {
-	margin: auto;
+    margin: auto;
 }
 
-#WS_description{
-    text-align:center;
-    color: rgba(82,130,180, 0.8);
-	-webkit-text-stroke: 1px #0D3184;
-	font-size:1.5em;
+#WS_description {
+    text-align: center;
+    color: rgba(82, 130, 180, 0.8);
+    -webkit-text-stroke: 1px #0D3184;
+    font-size: 1.5em;
 }
 
 .doc_bubble {
-	border: 2px solid #6c757d;
-	margin: 1rem auto;
-	padding-bottom:  1rem;
+    border: 2px solid #6c757d;
+    margin: 1rem auto;
+    padding-bottom: 1rem;
 }
 
 /*new */
@@ -53,56 +79,36 @@ ul.error-tabs > li {
     border-radius: .2rem;
 }
 
-.seq-text-area{
-	height:auto;
-	font-size: 12px;
-	line-height: 14px;
-	padding-bottom: 2px
+.seq-text-area {
+    height: auto;
+    font-size: 12px;
+    line-height: 14px;
+    padding-bottom: 2px
 }
 
 h3 {
-	font-size: 1.17em;
-}
-.bg-blue{
-	background-color: #336699;
+    font-size: 1.17em;
 }
 
-.form-fieldset.container.rounded{
-	border: 2px solid #0D3184;
-	min-height: 18rem;
-
-	
+.bg-blue {
+    background-color: #4a91d7;
 }
 
-.in-box{
-	background-color: #B7CFEC;
-	color: #0D3184;
-	border: 2px solid #0D3184;
+.form-fieldset.container.rounded {
+    border: 2px solid #0D3184;
+    min-height: 18rem;
 }
 
- .algn {
-        display:inline
-    }
+.in-box {
+    background-color: #d3e7ff;
+    color: #0D3184;
+    border: 2px solid #0D3184;
+}
 
- .mt-05{
- 	margin-top: 0.5rem;
- }
+.algn {
+    display: inline
+}
 
- .dot-margin{
- 	border-top-width: 0px;
- 	padding-top: 0px;
- }
-
- .seq_font{
- 	font-family: monospace, monospace;
- 	font-size: 12px;
- }
-
- .break-seq{
- 	word-wrap: break-word;
- }
-
- .justy{
- 	text-align: justify;
-  	text-justify: inter-word;
- }
+.mt-05 {
+    margin-top: 0.5rem;
+}

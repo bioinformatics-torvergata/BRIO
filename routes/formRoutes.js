@@ -13,7 +13,7 @@ const router = express.Router();
 // shortest RNA structure in the dataset: 11 nt
 const MIN_LEN_RNA_SEQ = 3
 const MAX_LEN_RNA_SEQ = 3000
-const MAX_INPUT_SIZE = 50000 // bytes/characters
+const MAX_INPUT_SEQUENCES = 100
 
 const {body, validationResult, matchedData} = require('express-validator');
 const spawn = require("child_process").spawn;
@@ -48,9 +48,8 @@ _check_rna_sequences = function (input_rna_sequences_str, input_name_str) {
     if (input_rna_sequences_str.replace(/^>/, '').length === 0) {
         throw new Error(input_name_str + ' is empty.');
     }
-    if (input_rna_sequences_str.length > MAX_INPUT_SIZE) {
-        throw new Error(input_name_str + ' is too big (' + input_rna_sequences_str.length + ' characters, but the max is ' + MAX_INPUT_SIZE + ')');
-    }
+
+    let num_rna_molecules = 0;
 
     // The '>' symbol will be re-added for each input RNA
     input_rna_sequences_str.replace(/^>/, '').split('>').forEach(function (header_seq_struct) {
@@ -105,6 +104,11 @@ _check_rna_sequences = function (input_rna_sequences_str, input_name_str) {
             processed_entry += dot_bracket + '\n'
         }
 
+        num_rna_molecules += 1;
+        if (num_rna_molecules > MAX_INPUT_SEQUENCES) {
+            throw new Error('Too many sequences. The max number of sequences allowed is ' + MAX_INPUT_SEQUENCES);
+        }
+
         valid_rnas_xxx_str += processed_entry
     });
 
@@ -153,16 +157,25 @@ check_user_background_handler = function (value, {req}) {
 router.post('/fileInput',
     body('inputRNA').trim().custom(check_user_input_handler),
     body('fileBackground').custom(check_user_background_handler),
+    body('options_species').custom(input => {
+            if (input == null) {
+                throw new Error('Please select a species.');
+            }
+
+            return true;
+        }
+    ),
+    body('options_experiments').custom(input => {
+            if (input == null) {
+                throw new Error('Please select an experiment.');
+            }
+
+            return true;
+        }
+    ),
     input_validation_controller.check_email_handler(),
     (req, res) => {
         const errors = validationResult(req);
-
-        if (req.body.options_species == null) {
-            req.body.options_species = '.'
-        }
-        if (req.body.options_experiments == null) {
-            req.body.options_experiments = '.'
-        }
 
         let userID = ''
         let page_to_go;
@@ -173,7 +186,7 @@ router.post('/fileInput',
             console.log('user run ID: ' + userID);
 
             const pythonProcess = spawn('python3', ["scripts/_completeWithDotBracketAndBEAR.py",
-                valid_rnas_str, valid_rnas_background_str, userID, req.body.options_species, req.body.options_experiments
+                valid_rnas_str, valid_rnas_background_str, userID, req.body.options_species, req.body.options_experiments, req.body.email
             ]);
             pythonProcess.stdout.on('data', (data) => {
                 console.log('stdout:\n' + data); //test stream python -> node

@@ -11,17 +11,15 @@
 	<%- include ("partials/header.ejs") %>
 	<h2 class="text-primary">Loading</h2>
 	<div>
-	    ID: <%= userID %><br>
-	    progress: <pre><%= progress %></pre>
-	</div>
-
-	<br/><br/>
-	<div>
-	    <h4>...a polite (and appealing) waiting message...</h4>
-	    <br/>
-	    ...Please copy your run ID to retrieve your results...
+		<h4>Run ID: <%= userID %></h4><br/>
+	    progress:<br/><br/>
+		<pre><%= progress %></pre>
 	</div>
 	<br/>
+	<div>
+	    <h5>Please take note of the run ID, or of the following link, to be able to retrieve your results in the future.</h5>
+		<a href='/waiting?uid=<%= userID %>'>/waiting?uid=<%= userID %></a>
+	</div>
 
 	<%- include ("partials/footer.ejs") %>
 	<form action="/waiting" id="run_data" method="post" enctype="multipart/form-data">
