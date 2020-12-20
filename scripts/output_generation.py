@@ -52,6 +52,8 @@ def generate_output(dir_base, path_complete_input_rna_molecules, path_results_ht
         fw.write('<br>Click here to download all your results \n')
         fw.write(
             '<a href="results/' + user + '/download.zip" download><button class="btn"><i class="fa fa-download"></i> Download</button></a>\n<br>\n')
+        fw.write("<br>Click here to download the input used to obtain these results\n")
+        fw.write('<a href="results/'+ user +'/complete_input_with_dot_bracket_and_bear.txt" download><button class="btn"><i class="fa fa-download"></i> Download</button></a>\n<br>\n<br>')
 
         fw.write(
             '<script>\n$(document).ready(function()\n{\n$("#sequence").tablesorter({\nsortList: [[4,0]],\nheaders: {0:{sorter:false},8:{sorter:false}}\n});\n}\n);\n</script>')
