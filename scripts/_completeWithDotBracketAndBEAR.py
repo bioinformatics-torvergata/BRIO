@@ -314,6 +314,9 @@ with open(path_complete_input_rna_molecules) as f:
 str_or_nuc_to_motifs_to_seq_to_info_dict = {}
 str_or_nuc_to_motif_to_input_or_background_to_count_dict = {}
 
+
+seq_to_str_or_nuc_to_all_motifs_dict = {}
+
 for str_or_nuc, input_or_background_to_output_paths in str_or_nuc_to_input_or_background_to_output_paths_dict.items():
     str_or_nuc_to_motifs_to_seq_to_info_dict[str_or_nuc] = {}
     str_or_nuc_to_motif_to_input_or_background_to_count_dict[str_or_nuc] = {}
@@ -328,7 +331,14 @@ for str_or_nuc, input_or_background_to_output_paths in str_or_nuc_to_input_or_ba
             # input         x   x
             # background    x   x
             for seq, motif_to_info_dict in seq_to_motif_to_info_dict.items():
+                if seq not in seq_to_str_or_nuc_to_all_motifs_dict:
+                    seq_to_str_or_nuc_to_all_motifs_dict[seq] = {}
+                if str_or_nuc not in seq_to_str_or_nuc_to_all_motifs_dict[seq]:
+                    seq_to_str_or_nuc_to_all_motifs_dict[seq][str_or_nuc] = []
+
                 for motif, (score, thresh, start, length) in motif_to_info_dict.items():
+                    seq_to_str_or_nuc_to_all_motifs_dict[seq][str_or_nuc].append(motif)
+
                     if motif not in str_or_nuc_to_motif_to_input_or_background_to_count_dict[str_or_nuc]:
                         str_or_nuc_to_motif_to_input_or_background_to_count_dict[str_or_nuc][motif] = {
                             'input': [0, 0],
@@ -365,6 +375,7 @@ if not is_there_a_background:
                         int(minor), int(major)
                     ]
 
+
 # Read domain information
 motifs_to_domains_dict = {}
 for str_or_nuc, dir_str_or_nuc_motifs_domains in zip(
@@ -397,6 +408,7 @@ for str_or_nuc, motif_to_input_or_background_to_count_dict in str_or_nuc_to_moti
             motifs_to_domains_dict[motif] if motif in motifs_to_domains_dict else []
         ]
 
+
 input_str_or_nuc_to_to_output_paths_dict = {}
 for str_or_nuc, input_or_background_to_output_paths_dict in str_or_nuc_to_input_or_background_to_output_paths_dict.items():
     input_str_or_nuc_to_to_output_paths_dict[str_or_nuc] = input_or_background_to_output_paths_dict['input']
@@ -405,6 +417,17 @@ dir_user_download = os.path.join(dir_user, 'download')
 dir_user_download_motifs = os.path.join(dir_user, 'download/motifs')
 if not os.path.exists(dir_user_download_motifs):
     os.makedirs(dir_user_download_motifs)
+
+
+seq_to_sign_motifs_dict = {}
+
+for seq, str_or_nuc_to_all_motifs_dict in seq_to_str_or_nuc_to_all_motifs_dict.items():
+    seq_to_sign_motifs_dict[seq] = list()
+
+    for str_or_nuc, motif_list in str_or_nuc_to_all_motifs_dict.items():
+        for motif in motif_list:
+            if motif_results_dict[str_or_nuc][motif][2] <= 0.05:
+                seq_to_sign_motifs_dict[seq].append(motif)
 
 for str_or_nuc, motifs_to_seq_to_info_dict in str_or_nuc_to_motifs_to_seq_to_info_dict.items():
     for motif, seq_to_info in motifs_to_seq_to_info_dict.items():
@@ -438,6 +461,7 @@ output_generation.generate_output(
     dir_user_download,
     input_str_or_nuc_to_to_output_paths_dict,
     motif_results_dict,
+    seq_to_sign_motifs_dict,
     user_email,
     species_to_protein_to_link_dict
 )

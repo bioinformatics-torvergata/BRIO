@@ -5,7 +5,8 @@ import shutil
 
 
 def generate_output(dir_base, path_complete_input_rna_molecules, path_results_html, dir_user_download,
-                    sequence_results_dict, motif_results_dict, user_email, species_to_protein_to_link_dict):
+                    sequence_results_dict, motif_results_dict, seq_to_sign_motifs_dict,
+                    user_email, species_to_protein_to_link_dict):
     """
     dir_base is the base directory of BRIO on the server
 
@@ -31,6 +32,11 @@ def generate_output(dir_base, path_complete_input_rna_molecules, path_results_ht
     {
         'str': 'HITSCLIP_Nova_Zhang2011b_mm9_CDS_m1_run2.txt': [52.63, 9.78, 8.38e-05, [domain1, domain2, ...],
         'nuc': ...
+    }
+
+    seq_to_sign_motifs_dict
+    {
+        'header' : ['HITSCLIP_Nova_Zhang2011b_mm9_CDS_m1_run2.txt', ...], ...
     }
 
     user_email
