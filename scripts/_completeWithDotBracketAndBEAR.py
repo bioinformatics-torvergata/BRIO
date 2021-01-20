@@ -419,15 +419,25 @@ if not os.path.exists(dir_user_download_motifs):
     os.makedirs(dir_user_download_motifs)
 
 
+#print(seq_to_str_or_nuc_to_all_motifs_dict)
+
+################################################
+#seq_to_str_or_nuc_to_filt_motifs_dict = {}
 seq_to_sign_motifs_dict = {}
 
 for seq, str_or_nuc_to_all_motifs_dict in seq_to_str_or_nuc_to_all_motifs_dict.items():
-    seq_to_sign_motifs_dict[seq] = list()
+    #seq_to_str_or_nuc_to_filt_motifs_dict[seq] = {
+    #    'str': [],
+    #    'nuc': []
+    #}
+    seq_to_sign_motifs_dict[seq] = []
 
     for str_or_nuc, motif_list in str_or_nuc_to_all_motifs_dict.items():
         for motif in motif_list:
-            if motif_results_dict[str_or_nuc][motif][2] <= 0.05:
+            if motif_results_dict[str_or_nuc][motif][0] > 0.5 and motif_results_dict[str_or_nuc][motif][2] < 0.05:
+                #seq_to_str_or_nuc_to_filt_motifs_dict[seq][str_or_nuc].append(motif)
                 seq_to_sign_motifs_dict[seq].append(motif)
+################################################
 
 for str_or_nuc, motifs_to_seq_to_info_dict in str_or_nuc_to_motifs_to_seq_to_info_dict.items():
     for motif, seq_to_info in motifs_to_seq_to_info_dict.items():
