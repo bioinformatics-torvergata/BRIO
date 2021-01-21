@@ -337,8 +337,6 @@ for str_or_nuc, input_or_background_to_output_paths in str_or_nuc_to_input_or_ba
                     seq_to_str_or_nuc_to_all_motifs_dict[seq][str_or_nuc] = []
 
                 for motif, (score, thresh, start, length) in motif_to_info_dict.items():
-                    seq_to_str_or_nuc_to_all_motifs_dict[seq][str_or_nuc].append(motif)
-
                     if motif not in str_or_nuc_to_motif_to_input_or_background_to_count_dict[str_or_nuc]:
                         str_or_nuc_to_motif_to_input_or_background_to_count_dict[str_or_nuc][motif] = {
                             'input': [0, 0],
@@ -351,6 +349,8 @@ for str_or_nuc, input_or_background_to_output_paths in str_or_nuc_to_input_or_ba
                     else:
                         str_or_nuc_to_motif_to_input_or_background_to_count_dict[str_or_nuc][motif][
                             input_or_background][1] += 1
+
+                        seq_to_str_or_nuc_to_all_motifs_dict[seq][str_or_nuc].append(motif)
 
                     if input_or_background == 'input' and score > thresh:
                         if motif not in str_or_nuc_to_motifs_to_seq_to_info_dict[str_or_nuc]:
