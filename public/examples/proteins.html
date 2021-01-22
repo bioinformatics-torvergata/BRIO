@@ -1,0 +1,1614 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+<!-- local CSS personal styles.css goes after bootstrap to avoid unwanted overrides -->
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet"/>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/css/styles.css">
+
+<!-- js from CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.jquery.min.js"></script>
+<!-- custom js-->
+<script src="/js/navbar.js"></script>
+
+
+<a href='.'><img src='../../images/logo.png' style='width: 38%; margin-left: auto; margin-right: auto; display: block' alt="Beam RNA Interaction mOtif search tool"></a></h1>
+ <h1 id='WS_description'>Beam RNA Interaction mOtif search tool</h1>
+<!-- NAVBAR -->
+
+<nav class="navbar navbar-expand navbar-dark rounded bg-blue container mt-4">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/documentation">Documentation</a>
+      </li>
+      <li class="nav-item active dropdown">
+        <a class="nav-link dropdown-toggle" href="/downloads" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Downloads
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="/download/all_motifs.zip">Data</a>
+        </div>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/about">Contacts</a>
+      </li>
+    </ul>
+    <form class="navbar-form navbar-left ml-auto" action="/waiting" 
+    method = "post" enctype="multipart/form-data" id="search-uid">
+        <div class="d-inline-block">
+          <input type="text" id ="uid" name="uid" class="form-control mr-auto" placeholder="Search your run ID">
+        </div>
+        <button type="submit" class="btn btn-default"><span class="fa fa-search"></span></button>
+
+    </form>
+  </div>
+</nav>
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
+
+<div class='container mt-4'>
+<table id="domain" class="display">
+        <thead>
+            <tr>
+                <th>Protein</th>
+                <th>Organism</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q7KZF4">SND1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q01130">SRSF2</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9Y6M1">IGF2BP2</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q96PU8">QKI</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q15427">SF3B4</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q15424">SAFB</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q13242">SRSF9</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P14866">HNRNPL</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q13595">TRA2A</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8WUA2">PPIL4</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9NVV4">MTPAP</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q01844">EWSR1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P33240">CSTF2</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q15717">ELAVL1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q16630">CPSF6</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="-">AARS</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q12906">ILF3</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q14444">CAPRIN1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P05455">SSB</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q08J23">NSUN2</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q86U42">PABPN1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q07955">SFRS1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q15029">EFTUD2</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9NRR4">DROSHA</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/O60832">DKC1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="-">ELAVL1A</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q13148">TARDBP</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q969S3">ZNF622</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P38919">EIF4A3</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q01085">TIAL1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P31483">TIA1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8TEQ6">GEMIN5</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q96I24">FUBP3</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9P287">BCCIP</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P35637">FUS</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9H0L4">CSTF2T</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q13283">G3BP1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q6P6C2">ALKBH5</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q17RY0">CPEB4</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q6ZN17">LIN28B</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9ULX6">AKAP8L</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P26599">PTBP1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q5T1V6">DDX59</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q92667">AKAP1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8WYQ5">DGCR8</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8N302">AGGF1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9HAV4">XPO5</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/O43172">PRPF4</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9NQT4">EXOSC5</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q12849">GRSF1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9Y606">PUS1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="-">Ago</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8IWS0">PHF6</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/O75940">SMNDC1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9H0D6">XRN2</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q92833">JARID2</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8N5P1">ZC3H8</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q4G0J3">LARP7</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q07666">KHDRBS1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q00839">HNRNPU</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q7L2E3">DHX30</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P83369">LSM11</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9UGR2">ZC3H7B</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8NC51">SERBP1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9UNX4">WDR3</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9HCE1">MOV10</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q15233">NONO</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q15007">WTAP</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q14978">NOLC1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9NZI8">IGF2BP1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q07955">SRSF1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q96T37">RBM15</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q16629">SRSF7</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P10155">TROVE2</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9NW64">RBM22</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9Y3I0">C22ORF28</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="-">Nova</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P98179">Rbm3</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9Y2R4">DDX52</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/O60508">CDC40</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P26368">U2AF2</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q15061">WDR43</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/O43251">RBFOX2</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9BQ67">GRWD1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/O00425">IGF2BP3</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9NVU7">SDAD1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q14493">SLBP</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P23396">RPS3</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P16989">YBX3</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P98175">RBM10</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q14527">HLTF</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8IYB8">SUPV3L1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q6P2Q9">PRPF8</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="-">nElavl</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q92917">GPKOW</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9NYF8">BCLAF1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9Y5K5">UCHL5</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9H9Z2">LIN28A</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q86U44">METTL3</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q14671">PUM1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9Y221">NIP7</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9NUL3">STAU2</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P52756">RBM5</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P62280">RPS11</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q86XP3">DDX42</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P0DN76">U2AF1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q15366">PCBP2</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9NR30">DDX21</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q12874">SF3A3</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="-">ELAVL1MNASE</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9GZR7">DDX24</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q13148">TDP-43</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/O95218">ZRANB2</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q02790">FKBP4</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9NR56">Mbnl1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q13310">PABPC4</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="-">HuRMNase</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9Y5J1">UTP18</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P12956">XRCC6</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P51116">FXR2</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q53F19">C17ORF85</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P52298">NCBP2</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P07910">HNRNPC</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q6KC79">NIPBL</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9BUJ2">HNRNPUL1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q92945">KHSRP</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9NRW3">APOBEC3C</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8TB72">PUM2</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P43243">MATR3</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P51114">FXR1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9Y3A5">SBDS</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/O00571">DDX3X</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9NY61">AATF</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q5VZF2">Mbnl2</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9NYY8">FASTKD2</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q71RC2">LARP4</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="-">AGO1234</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q15910">EZH2</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9BRD0">BUD13</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P06748">NPM1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9BVP2">GNL3</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q13427">PPIG</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P35269">GTF2F1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/O43251">FOX2</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P26196">DDX6</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q15717">HuR</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/O15371">EIF3D</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P62487">POLR2G</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9NWH9">SLTM</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/O15226">NKRF</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q06787">FMR1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P53999">SUB1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9NQZ2">UTP3</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q14191">WRN</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q92804">TAF15</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P09651">HNRNPA1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9UKV8">AGO2</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/O60306">AQR</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P78344">EIF4G2</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P61981">YWHAG</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8NE71">ABCF1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P50579">METAP2</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q969Z0">TBRG4</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P52272">HNRNPM</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9NZB2">FAM120A</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9UGY1">NOL12</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/O75533">SF3B1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q14011">Cirbp</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P61978">HNRNPK</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9UKV8">Ago2</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9C0B1">FTO</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8NHQ9">DDX55</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q92900">UPF1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/O75152">ZC3H11A</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="-">LIN28</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/O15372">EIF3H</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q2TB10">ZNF800</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="-">Ago2MNase</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8N8A6">DDX51</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P23246">SFPQ</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="-">IGF2BP123</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="-">Rbfox</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8IX01">SUGP2</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/O75821">EIF3G</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q14151">SAFB2</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q15365">PCBP1</a></td>
+				<td><em>Homo sapiens</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q78PY7">SND1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q62093">SRSF2</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q5SF07">IGF2BP2</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9QYS9">QKI</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8QZY9">SF3B4</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/D3YXK2">SAFB</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9D0B0">SRSF9</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8R081">HNRNPL</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q6PFR5">TRA2A</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9CXG3">PPIL4</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9D0D3">MTPAP</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q61545">EWSR1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8BIQ5">CSTF2</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P70372">ELAVL1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q6NVF9">CPSF6</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8BGQ7">AARS</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9Z1X4">ILF3</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q60865">CAPRIN1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P32067">SSB</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q1HFZ0">NSUN2</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8CCS6">PABPN1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q6PDM2">SFRS1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/O08810">EFTUD2</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q5HZJ0">DROSHA</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9ESX5">DKC1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="-">ELAVL1A</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q921F2">TARDBP</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q91VY9">ZNF622</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q91VC3">EIF4A3</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P70318">TIAL1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P52912">TIA1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8BX17">GEMIN5</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="-">FUBP3</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9CWI3">BCCIP</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P56959">FUS</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8C7E9">CSTF2T</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P97855">G3BP1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q3TSG4">ALKBH5</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q7TN98">CPEB4</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q45KJ6">LIN28B</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9R0L7">AKAP8L</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P17225">PTBP1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9DBN9">DDX59</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/O08715">AKAP1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9EQM6">DGCR8</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q7TN31">AGGF1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q924C1">XPO5</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9DAW6">PRPF4</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9CRA8">EXOSC5</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8C5Q4">GRSF1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9WU56">PUS1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="-">Ago</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9D4J7">PHF6</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8BGT7">SMNDC1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9DBR1">XRN2</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q62315">JARID2</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9JJ48">ZC3H8</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q05CL8">LARP7</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q60749">KHDRBS1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8VEK3">HNRNPU</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q99PU8">DHX30</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8BUV6">LSM11</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="-">ZC3H7B</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9CY58">SERBP1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8BHB4">WDR3</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P23249">MOV10</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q99K48">NONO</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9ER69">WTAP</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/E9Q5C9">NOLC1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/O88477">IGF2BP1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q6PDM2">SRSF1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q0VBL3">RBM15</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8BL97">SRSF7</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/O08848">TROVE2</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8BHS3">RBM22</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="-">C22ORF28</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="-">Nova</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/O89086">Rbm3</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8K301">DDX52</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9DC48">CDC40</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P26369">U2AF2</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q6ZQL4">WDR43</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8BP71">RBFOX2</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q810D6">GRWD1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9CPN8">IGF2BP3</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q80UZ2">SDAD1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P97440">SLBP</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P62908">RPS3</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9JKB3">YBX3</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q99KG3">RBM10</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q6PCN7">HLTF</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q80YD1">SUPV3L1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q99PV0">PRPF8</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="-">nElavl</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q56A08">GPKOW</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8K019">BCLAF1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9WUP7">UCHL5</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8K3Y3">LIN28A</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8C3P7">METTL3</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q80U78">PUM1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9CXK8">NIP7</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8CJ67">STAU2</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q91YE7">RBM5</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P62281">RPS11</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q810A7">DDX42</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9D883">U2AF1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q61990">PCBP2</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9JIK5">DDX21</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9D554">SF3A3</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="-">ELAVL1MNASE</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9ESV0">DDX24</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q921F2">TDP-43</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9R020">ZRANB2</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P30416">FKBP4</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9JKP5">Mbnl1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="-">PABPC4</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="-">HuRMNase</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q5SSI6">UTP18</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P23475">XRCC6</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9WVR4">FXR2</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="-">C17ORF85</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9CQ49">NCBP2</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9Z204">HNRNPC</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q6KCD5">NIPBL</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8VDM6">HNRNPUL1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q3U0V1">KHSRP</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="-">APOBEC3C</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q80U58">PUM2</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8K310">MATR3</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q61584">FXR1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P70122">SBDS</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q62167">DDX3X</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9JKX4">AATF</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8C181">Mbnl2</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q922E6">FASTKD2</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8BWW4">LARP4</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="-">AGO1234</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q61188">EZH2</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8R149">BUD13</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q61937">NPM1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8CI11">GNL3</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/A2AR02">PPIG</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q3THK3">GTF2F1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8BP71">FOX2</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P54823">DDX6</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="-">HuR</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/O70194">EIF3D</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P62488">POLR2G</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8CH25">SLTM</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8BY02">NKRF</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P35922">FMR1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P11031">SUB1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9JI13">UTP3</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/O09053">WRN</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="-">TAF15</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P49312">HNRNPA1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8CJG0">AGO2</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8CFQ3">AQR</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q62448">EIF4G2</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P61982">YWHAG</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q6P542">ABCF1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/O08663">METAP2</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q91YM4">TBRG4</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9D0E1">HNRNPM</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q6A0A9">FAM120A</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8BG17">NOL12</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q99NB9">SF3B1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P60824">Cirbp</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P61979">HNRNPK</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8CJG0">Ago2</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8BGW1">FTO</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q6ZPL9">DDX55</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9EPU0">UPF1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q6NZF1">ZC3H11A</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="-">LIN28</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q91WK2">EIF3H</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q0VEE6">ZNF800</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="-">Ago2MNase</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q6P9R1">DDX51</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8VIJ6">SFPQ</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="-">IGF2BP123</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="-">Rbfox</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q8CH09">SUGP2</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q9Z1D1">EIF3G</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/Q80YR5">SAFB2</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+			<tr>
+				<td><a href="https://www.uniprot.org/uniprot/P60335">PCBP1</a></td>
+				<td><em>Mus musculus</em></td>
+			</tr>
+
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Protein</th>
+                <th>Organism</th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<hr>
+
+<footer class="page-footer font-small pt-4">
+ <div class="container rounded text-center text-md-left bg-blue">
+ 	<div class="row">
+ 		<div class="col-md-6 mt-md-0 mt-3">
+			<h3>Other RNA related tools from our group:</h3>
+			<ul>
+				<li>Secondary structure aligner - <a href="http://beagle.bio.uniroma2.it/" class="text-white linkborder" target="_blank">Beagle</a></li>
+				<li>Secondary structure motifs discovery - <a href="http://beam.uniroma2.it/" class="text-white linkborder" target="_blank">BEAM</a></li>
+
+			</ul>
+		</div>
+	
+	</div>
+
+	<div class="footer-copyright py-0">© 2020 Copyright:
+    	<a href="http://bioinformatica.uniroma2.it/" class="text-white linkborder" target="_blank"> Centre for Molecular Bioinformatics</a> Tor Vergata University, 00133 Rome, Italy 
+  	</div>
+
+</div>
+
+
+</footer>
+
+</body>
+
+
+  
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#domain').DataTable();
+} );
+</script>
+</html>
