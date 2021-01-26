@@ -1,8 +1,10 @@
 # BRIO
 BRIO webserver - Helmer-Citterich Lab
 
-To lunch the server in background: 
-	forever start index.js 
+* To lunch the server in background: 
+	```
+	sudo forever start index.js 
+	```
 	
 ## Important things
 
@@ -12,6 +14,14 @@ To lunch the server in background:
 	rm -rf node_modules package-lock.json
 	npm install
  	```
+
+
+* to change port:
+	```
+	change ports on index.js
+	first 1024 ports can only be assigned by sudoers
+	```
+ 	
 
 * before to put online new things
   
