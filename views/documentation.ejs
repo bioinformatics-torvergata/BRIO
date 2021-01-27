@@ -109,8 +109,7 @@
 
             <fieldset id='output'>
                 <legend class="text-secondary">Output</legend>
-                This server compares each RNA sequence and secondary structure with the dataset of sequence and secondary
-                structure motifs selected by the user.<br>
+                This server compares each RNA sequence and secondary structure with the dataset of sequence and secondary structure motifs identified in the CLIP experiments selected by the user.<br>
 
                 The output is composed of two tables, one focused on showing the results for each single input sequence provided, 
                 the other focused on showing the results regarding the enriched motifs found in the entire input set.<br>
@@ -127,7 +126,7 @@
                 <div class="container">
                     <ul>
                         <li>the start and the end position of the motif in the selected particular sequence;</li>
-                        <li>the representation of the motif in qBEAR alphabet for structure motifs or in IUPAC nucleic acid notation for sequence motifs;</li>
+                        <li>the representation of the motif in BEAR alphabet for structure motifs or in IUPAC nucleic acid notation for sequence motifs;</li>
                         <li>the type of the motif: sequence or structural;</li>
                         <li>the protein associated with the RNA secondary structure motif in the CLIP experiment analyzed by Adinolfi et al. (2019) and the type of the CLIP experiment.</li>
                     </ul>
@@ -141,7 +140,7 @@
                 In each column the user can see:
                 <div class="container">
                     <ol>
-                        <li>the logo of the secondary structure motif in the qBEAR alphabet or, in case of sequence motifs, in the IUPAC nucleic acid notation (logos have been generated using WebLogo (Crooks et al., 2004);
+                        <li>the logo of the secondary structure motif in the BEAR alphabet or, in case of sequence motifs, in the IUPAC nucleic acid notation (logos have been generated using WebLogo (Crooks et al., 2004);
                         </li>
                         <li>the type of motif: structural or sequence motif;</li>
                         <li>The type of mapping regions from gencode annotation of the RNAs datasets where the motif was originally found, includes UTR, CDS and the entire transcript for those involving RBPs known to act in the nucleus on unspliced RNAs;
@@ -150,8 +149,8 @@
                         </li>
                         <li>the Fisher’s Test p-value. The Fisher’s Test is applied to determine if a motif is enriched in the input RNA molecules with respect to a set of background RNAs;
                         </li>
-                        <li>The type of the CLIP experiment analyzed by Adinolfi et al. (2019);</li>
-                        <li>the protein associated to the RNA secondary structure motif in the CLIP experiment analyzed in the article cited in the previous point;
+                        <li>The type of the CLIP experiment analyzed (parCLIP/eCLIP/hitsCLIP);</li>
+                        <li>the protein associated to the RNA secondary structure motif in the CLIP experiment analyzed;
 
                         </li>
                         <li>the protein domain associated to the RNA secondary structure motif (this information is not always available);
