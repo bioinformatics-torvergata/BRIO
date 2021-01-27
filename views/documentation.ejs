@@ -109,36 +109,53 @@
 
             <fieldset id='output'>
                 <legend class="text-secondary">Output</legend>
-                The server compares each RNA sequence and secondary structure with the dataset of sequence and secondary
+                This server compares each RNA sequence and secondary structure with the dataset of sequence and secondary
                 structure motifs selected by the user.<br>
-                The output is composed of two tables, one for structure and the other for sequence motifs.<br>
-                Here follows an example of the structure motifs output Table (the sequence motifs Table can be accessed
-                by selecting the appropriate tab, at the top of the Table, and is shown further below). The Table
-                contents can be sorted in ascending or descending order by clicking on the appropriate arrow of the
-                single columns.<br>
-                <img src="../../images/output.png" width="700"><br>
 
-                By default the different motifs are sorted according to the p-value, in each column the user can see:
+                The output is composed of two tables, one focused on showing the results for each single input sequence provided, 
+                the other focused on showing the results regarding the enriched motifs found in the entire input set.<br>
+                Here follows an example of the sequence-focused results output Table (the Enriched Motifs Table can be accessed 
+                by selecting the appropriate tab, at the top of the Table, and is shown further below). <br>
+                <img src="../../images/seq_output1.png" width="700"><br>
+                Each row of this Table represents one of the input sequence/s given by the user, the four columns contains the
+                name of the sequence, the number of sequence motifs found in that sequence, the number of structural motifs, 
+                and the total length of the input sequence.<br>
+                For each sequence, by clicking on the “+” symbol, another table will appear, containing detailed informations 
+                about all the motifs found in that sequence:<br>
+                <img src="../../images/seq_output2.png" width="700"><br>
+                In particular, in this case, the columns will display the following information for each motif:<br>
+                <div class="container">
+                    <ul>
+                        <li>the start and the end position of the motif in the selected particular sequence;</li>
+                        <li>the representation of the motif in qBEAR alphabet for structure motifs or in IUPAC nucleic acid notation for sequence motifs;</li>
+                        <li>the type of the motif: sequence or structural;</li>
+                        <li>the protein associated with the RNA secondary structure motif in the CLIP experiment analyzed by Adinolfi et al. (2019) and the type of the CLIP experiment.</li>
+                    </ul>
+                </div>
+
+                The Table contents can be sorted in ascending or descending order by clicking on the appropriate arrow of the single columns.<br>
+                In the Enriched Motifs Table, by default the different motifs are sorted according to the name of the protein associated with the RNA secondary structure motif in the CLIP experiment analyzed by Adinolfi et al. (2019):<br>
+                <img src="../../images/mot_output.png" width="700"><br>
+
+
+                In each column the user can see:
                 <div class="container">
                     <ol>
-                        <li>the logo of the secondary structure motif in the qBEAR alphabet;
+                        <li>the logo of the secondary structure motif in the qBEAR alphabet or, in case of sequence motifs, in the IUPAC nucleic acid notation (logos have been generated using WebLogo (Crooks et al., 2004);
                         </li>
-                        <li>The type of mapping regions from gencode annotation of the RNAs datasets where the motif was
-                            originally found, includes UTR, CDS and the entire transcript for those involving RBPs known
-                            to act in the nucleus on unspliced RNAs;
+                        <li>the type of motif: structural or sequence motif;</li>
+                        <li>The type of mapping regions from gencode annotation of the RNAs datasets where the motif was originally found, includes UTR, CDS and the entire transcript for those involving RBPs known to act in the nucleus on unspliced RNAs;
                         </li>
-                        <li>the coverage represents the number of input sequences in which the motif has a score higher
-                            than its associated threshold, divided by the number of query sequences;
+                        <li>the coverage represents the number of input sequences in which the motif has a score higher than its associated threshold, divided by the number of query sequences;
                         </li>
-                        <li>oddsratio is the prior odds ratio and not a posterior estimate;</li>
-                        <li>the Fisher’s Test p-value. The Fisher’s Test is applied to determine if a motif is enriched
-                            in the input RNA molecules with respect to a set of background RNAs;
+                        <li>the Fisher’s Test p-value. The Fisher’s Test is applied to determine if a motif is enriched in the input RNA molecules with respect to a set of background RNAs;
                         </li>
-                        <li>the protein associated to the RNA secondary structure motif in the CLIP experiment analyzed
-                            in Adinolfi et al. (2019);
+                        <li>The type of the CLIP experiment analyzed by Adinolfi et al. (2019);</li>
+                        <li>the protein associated to the RNA secondary structure motif in the CLIP experiment analyzed in the article cited in the previous point;
+
                         </li>
-                        <li>the protein domain associated to the RNA secondary structure motif (this information is not
-                            always available);
+                        <li>the protein domain associated to the RNA secondary structure motif (this information is not always available);
+
                         </li>
                         <li>the organism in which the experiment was performed (human or mouse);</li>
                         <li>last column reports the link for the download of the information on the motif described in
@@ -146,10 +163,6 @@
                         </li>
                     </ol>
                 </div>
-                an example of the sequence motifs Table:<br>
-                <img src="../../images/output2.png" width="700"><br>
-                in the first column of the sequence motifs Table the sequence logo of the motifs identified is reported.
-                All logos have been obtained with WebLogo (Crooks et al., 2004).
 
             </fieldset>
 
