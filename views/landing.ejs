@@ -12,21 +12,18 @@
 
 <!-- INPUT FORM -->
 <div class='container'>
+<div style="min-height:1rem;padding:.5rem;width:80%;text-align:center;margin: auto"> <span style="font-size:20px;font-weight:bold;color:#0D3184">BRIO (BEAM RNA Interaction mOtifs) is a web server designed for searching known sequence and structure protein binding motifs in RNA molecules of interest</span></div>
     <div class="form-header p-3 ml-1">
         <% if (Object.keys(errors).length !== 0)  { %>
-            <h3 class="errors-heading text-danger">Oops, please correct the following (see at the bottom of the page for
-                more details):</h3>
+            <h3 class="errors-heading text-danger">Oops, please correct the following:</h3>
             <ul class="errors-list">
                 <% Object.values(errors).forEach(error => { %>
                     <li><%= error.msg %></li>
                 <% }) %>
             </ul>
         <% } %>
-
     </div>
 
-<div style="min-height:1rem;padding:.5rem;width:80%;text-align:center;margin: auto"> <span style="font-size:20px;font-weight:bold;color:#0D3184">BRIO (BEAM RNA Interaction mOtifs) is a web server designed for searching known sequence and structure protein binding motifs in RNA molecules of interest</span></div>
-<br><br>
     <!--INPUT-->
     <section class='input form'>
         <div class='form container'>
@@ -109,13 +106,13 @@
                     <div class="form-options form-group container mt-2">
                         <select data-placeholder="Select species (hg19, mm9)" multiple class="chosen-select form-control "
                                 name="options_species">
-                            <option value='hg19'>Human (hg19)</option>
+                            <option selected value='hg19'>Human (hg19)</option>
                             <option value='mm9'>Mouse (mm9)</option>
                         </select>
 
                         <select data-placeholder="Select experiments (PAR-CLIP, eCLIP, HITS)" multiple class="chosen-select form-control "
                                 name="options_experiments">
-                            <option value='PAR'>PAR-CLIP</option>
+                            <option selected value='PAR'>PAR-CLIP</option>
                             <option value='eCLIP'>eCLIP</option>
                             <option value='HITS'>HITS</option>
                         </select>

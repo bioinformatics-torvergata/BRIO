@@ -356,7 +356,7 @@ for str_or_nuc, input_or_background_to_output_paths in str_or_nuc_to_input_or_ba
                             if motif not in str_or_nuc_to_motifs_to_seq_to_info_dict[str_or_nuc]:
                                 str_or_nuc_to_motifs_to_seq_to_info_dict[str_or_nuc][motif] = {}
                             str_or_nuc_to_motifs_to_seq_to_info_dict[str_or_nuc][motif][seq] = [
-                                input_header_to_seq_and_bear_dict[seq][1 if str_or_nuc else 0][start:(start + length)],
+                                input_header_to_seq_and_bear_dict[seq][1 if str_or_nuc == 'str' else 0][start:(start + length)],
                                 score,
                                 len(input_header_to_seq_and_bear_dict[seq][0]),
                                 start,
