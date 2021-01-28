@@ -3,15 +3,14 @@ const express = require('express');
 const crypto = require("crypto");
 
 var input_validation_controller = require('../controllers/inputValidationController')
-//var ciccia_controller = require('../controllers/cicciaController')
-//var output_controller = require('../controllers/outputController')
+
 
 // Useful stuff
 const router = express.Router();
 
 // shortest RNA sequence in the dataset: 3 nt
 // shortest RNA structure in the dataset: 11 nt
-const MIN_LEN_RNA_SEQ = 3
+const MIN_LEN_RNA_SEQ = 50
 const MAX_LEN_RNA_SEQ = 3000
 const MAX_INPUT_SEQUENCES = 100
 

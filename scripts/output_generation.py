@@ -54,8 +54,6 @@ def generate_output(dir_base, path_complete_input_rna_molecules, path_results_ht
     # Dirty temporary solution
     # "best_score\tmotif_threshold\tposition\tmotif_size"
 
-
-
     table_empty = True
     for str_or_nuc in sequence_results_dict:
         for motif in motif_results_dict[str_or_nuc]:
@@ -73,7 +71,6 @@ def generate_output(dir_base, path_complete_input_rna_molecules, path_results_ht
         if not table_empty:
             break
 
-
     user = dir_user_download.split("/")[-2]
     os.system("mkdir " + dir_user_download + "/logos")
 
@@ -84,11 +81,9 @@ def generate_output(dir_base, path_complete_input_rna_molecules, path_results_ht
         for line in opened_file[1:]:
             split_line=line.split("\t")
             if file not in total_file_dict:
-                total_file_dict[file]={}
-           
-            total_file_dict[file][split_line[0]]=split_line[1:]
+                total_file_dict[file] = {}
 
-
+            total_file_dict[file][split_line[0]] = split_line[1:]
 
     with open(path_results_html, 'w') as fw:
         fw.write("<br>Click here to download your input\n")
@@ -103,8 +98,8 @@ def generate_output(dir_base, path_complete_input_rna_molecules, path_results_ht
             #fw.write(
             #    '<script>\n$(document).ready(function()\n{\n$("#sequence").tablesorter({\nsortList: [[4,0]],\nheaders: {0:{sorter:false},8:{sorter:false}}\n});\n}\n);\n</script>')
             fw.write(
-                '\n<script>\n$(document).ready(function()\n{\n$("#structure").tablesorter({\nsortList: [[6,0]],\nheaders: {0:{sorter:false},9:{sorter:false}}\n});\n}\n);\n</script>')
-                
+                '\n<script>\n$(document).ready(function()\n{\n$("#structure").tablesorter({\nsortList: [[4,0]],\nheaders: {0:{sorter:false},9:{sorter:false}}\n});\n}\n);\n</script>')
+
             count=1
             for single in seq_to_sign_motifs_dict:
                 fw.write('\n<script>\n$(document).ready(function()\n{\n$("#group-of-rows-'+str(count)+'").tablesorter({\nsortList: [[0,0]],\nheaders: {2:{sorter:false}}\n});\n}\n);\n</script>')
@@ -125,9 +120,9 @@ def generate_output(dir_base, path_complete_input_rna_molecules, path_results_ht
             for str_or_nuc in sequence_results_dict:
 
                 if str_or_nuc == "str":
-                    tipo="Structure"
+                    tipo = "Structure"
                 else:
-                    tipo="Sequence"
+                    tipo = "Sequence"
                 for motif in motif_results_dict[str_or_nuc]:
                     p_value = str("%.2g" % motif_results_dict[str_or_nuc][motif][2])
                     if float(p_value) >= 0.05:
@@ -153,9 +148,9 @@ def generate_output(dir_base, path_complete_input_rna_molecules, path_results_ht
                     protein = motif.split("_")[1]
 
                     if motif.startswith("ENC"):
-                    	experiment="eCLIP"
+                        experiment="eCLIP"
                     else:
-                    	experiment=motif.split("_")[0]
+                        experiment=motif.split("_")[0]
 
 
                     if motif_results_dict[str_or_nuc][motif][3]:
@@ -214,37 +209,36 @@ def generate_output(dir_base, path_complete_input_rna_molecules, path_results_ht
                 fw.write('<td><div style="width:170px">'+str(seq_number)+'</div></td>\n')
                 fw.write('<td><div style="width:170px">'+str(str_number)+'</div></td>\n')
                 fw.write('<td><div style="width:170px">'+length+' </div></td></tr>\n')
-            
+
                 fw.write('<table id="group-of-rows-'+str(count)+'" class="collapse">\n')
                 fw.write('<thead>\n<tr>\n<th>Start</th>\n<th>End</th>\n<th>Motif</th>\n<th>Type</th>\n<th>Protein</th>\n<th>Experiment</th>\n</thead>\n<tbody>\n')
                 for m in seq_to_sign_motifs_dict[single_input]:
                     if 'nuc' in m:
-                        motif_type="Sequence"
+                        motif_type = "Sequence"
                     else:
-                        motif_type="Structure"
+                        motif_type = "Structure"
                     if m.startswith("ENC"):
-                    	experiment="eCLIP"
+                        experiment = "eCLIP"
                     else:
-                    	experiment=m.split("_")[0]
-                    protein=m.split("_")[1]
-                    motif_string=total_file_dict[m][single_input][0]
-                    start=str(total_file_dict[m][single_input][3])
-                    end=str(total_file_dict[m][single_input][4])
+                        experiment = m.split("_")[0]
+                    protein = m.split("_")[1]
+                    motif_string = total_file_dict[m][single_input][0]
+                    start = str(total_file_dict[m][single_input][3])
+                    end = str(total_file_dict[m][single_input][4])
                     fw.write('<td>'+start+'</td>\n<td>'+end+'</td>\n<td>'+motif_string+'</td>\n<td>'+motif_type+'</td>\n')
-                    if protein in species_to_protein_to_link_dict[species] and species_to_protein_to_link_dict[species][
-                        protein]:
+                    if protein in species_to_protein_to_link_dict[species] and species_to_protein_to_link_dict[species][protein]:
                         fw.write(
                             f'<td><div><a href="{species_to_protein_to_link_dict[species][protein]}" target="_blank">' + protein + ' </div></td>\n')
                     else:
                         fw.write('<td><div> ' + protein + ' </div></td>\n')
                     fw.write('<td>'+experiment+'</td>\n</tr>\n')
-                    
+
                 fw.write('</table></tbody>')
-                count+=1
+                count += 1
 
             fw.write('</tbody>\n')
             fw.write('</table>\n')
-            
+
             fw.write('</div></div></div>')
 
             fw.write('\n<script>\nfunction openCity(evt, cityName) {\n')
@@ -260,7 +254,7 @@ def generate_output(dir_base, path_complete_input_rna_molecules, path_results_ht
             shutil.make_archive(os.path.join(os.path.dirname(dir_user_download), "download"), 'zip', dir_user_download)
         else:
             fw.write('<h2 class="text-center"">Sorry, no results found.</h2>')
-       
+
 
     shutil.copyfile(path_complete_input_rna_molecules, os.path.join(dir_user_download, 'input.txt'))
 
