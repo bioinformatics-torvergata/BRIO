@@ -1,9 +1,18 @@
 Contents
 --------
 
-*logos
+*input
 
-*motifs
+*results
+
+#######################INPUT#########################
+
+In the input download you will find a multiFASTA file with dot-bracket notation and BEAR alphabet representation for the secondary structure calculated using RNAfold tool from the ViennaRNA package(Lorenz et al., 2011).
+
+
+#######################RESULTS#######################
+
+In the results download you will find two folders: Logos and Motifs.
 
 Logos:
 ------
@@ -28,6 +37,6 @@ Each column represent:
 
 --------------------------------------------------------------------------------------------------------------------------------
 
-
+*Lorenz R, Bernhart S.H., Hoener zu Siederdissen C., Tafer H., Flamm C., Stadler P.F. and Hofacker I.L. (2011), "ViennaRNA Package 2.0", Algorithms for Molecular Biology: 6:26 
 *Crooks, Gavin E., et al. "WebLogo: a sequence logo generator." Genome research 14.6 (2004): 1188-1190
 *Pietrosanto,M., Mattei,E., Helmer-Citterich,M. and Ferrè,F. (2016) A novel method for the identification of conserved structural patterns in RNA: From small scale to high-throughput applications. Nucleic Acids Res., 44, 8600–8609.
