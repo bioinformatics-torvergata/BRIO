@@ -463,6 +463,7 @@ with open(path_protein_links) as f:
 
         species_to_protein_to_link_dict[species][protein_name] = link.strip()
 
+os.system("cp " + os.path.join(dir_base, 'public/examples/README.txt') + " " + dir_user_download)
 
 output_generation.generate_output(
     dir_base,

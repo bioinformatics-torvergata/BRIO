@@ -133,7 +133,6 @@ def generate_output(dir_base, path_complete_input_rna_molecules, path_results_ht
                 '<th title="The organism in which the experiment was performed">Organism </th>\n<th>Download</th></tr>\n</thead>\n<tbody>\n')
 
             for str_or_nuc in sequence_results_dict:
-
                 if str_or_nuc == "str":
                     tipo = "Structure"
                 else:
@@ -144,12 +143,10 @@ def generate_output(dir_base, path_complete_input_rna_molecules, path_results_ht
                         continue
 
                     if str_or_nuc == "nuc":
-                        path_logo_on_server = os.path.join(dir_base, 'public/images/logos',
-                                                           motif.split(".")[0] + "_wl.nuc.png")
+                        path_logo_on_server = os.path.join(dir_base, 'public/images/logos', motif.split(".")[0] + "_wl.nuc.png")
                         logo_link = "../images/logos/" + motif.split(".")[0] + "_wl.nuc.png"
                     else:
-                        path_logo_on_server = os.path.join(dir_base, 'public/images/logos',
-                                                           motif.split(".")[0] + "_wl.png")
+                        path_logo_on_server = os.path.join(dir_base, 'public/images/logos', motif.split(".")[0] + "_wl.png")
                         logo_link = "../images/logos/" + motif.split(".")[0] + "_wl.png"
 
                     os.system("cp " + path_logo_on_server + " " + dir_user_download + "/logos/")
