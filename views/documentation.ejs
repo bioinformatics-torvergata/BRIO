@@ -111,31 +111,11 @@
                 <legend class="text-secondary">Output</legend>
                 This server compares each RNA sequence and secondary structure with the dataset of sequence and secondary structure motifs identified in the CLIP experiments selected by the user.<br>
 
-                The output is composed of two tables, one focused on showing the results for each single input sequence provided, 
-                the other focused on showing the results regarding the enriched motifs found in the entire input set.<br>
-                Here follows an example of the sequence-focused results output Table (the Enriched Motifs Table can be accessed 
-                by selecting the appropriate tab, at the top of the Table, and is shown further below). <br>
-                <img src="../../images/seq_output1.png" width="700"><br>
-                Each row of this Table represents one of the input sequence/s given by the user, the four columns contains the
-                name of the sequence, the number of sequence motifs found in that sequence, the number of structural motifs, 
-                and the total length of the input sequence.<br>
-                For each sequence, by clicking on the “+” symbol, another table will appear, containing detailed informations 
-                about all the motifs found in that sequence:<br>
-                <img src="../../images/seq_output3.png" width="700"><br>
-                In particular, in this case, the columns will display the following information for each motif:<br>
-                <div class="container">
-                    <ul>
-                        <li>the start and the end position of the motif in the selected particular sequence;</li>
-                        <li>the representation of the motif in BEAR alphabet for structure motifs or in IUPAC nucleic acid notation for sequence motifs;</li>
-                        <li>the type of the motif: sequence or structural;</li>
-                        <li>the protein associated with the RNA secondary structure motif in the CLIP experiment analyzed by Adinolfi et al. (2019) and the type of the CLIP experiment.</li>
-                    </ul>
-                </div>
-
-                The Table contents can be sorted in ascending or descending order by clicking on the appropriate arrow of the single columns.<br>
-                In the Enriched Motifs Table, by default the different motifs are sorted according to the name of the protein associated with the RNA secondary structure motif in the CLIP experiment analyzed by Adinolfi et al. (2019):<br>
-                <img src="../../images/mot_output.png" width="700"><br>
-
+                The output is composed of two tables, one focused on showing the results regarding the enriched motifs found in the entire input set, 
+                the other focused on showing the results for each single input sequence provided.<br>
+                Here follows an example of the Enriched Motifs results output Table: <br>
+                <img src="../../images/mot_output2.png" width="700"><br>
+                In the Enriched Motifs Table, by default the different motifs are sorted according to their associated Fisher’s Test p-value (see below for more details):<br>
 
                 In each column the user can see:
                 <div class="container">
@@ -162,6 +142,35 @@
                         </li>
                     </ol>
                 </div>
+                The Table contents can be sorted in ascending or descending order by clicking on the appropriate arrow of the single columns.<br>
+
+
+                The sequence-focused table can be accessed by selecting the appropriate tab, at the top of the Table:
+                <img src="../../images/seq_output4.png" width="700"><br>
+
+                Each row of this Table represents one of the input sequence/s given by the user, the four columns contains the
+                name of the sequence, the number of sequence motifs found in that sequence, the number of structural motifs, 
+                and the total length of the input sequence.<br>
+                
+                For each sequence, by clicking on the “+” symbol, another table will appear, containing detailed informations 
+                about all the motifs found in that sequence:<br>
+                <img src="../../images/seq_output5.png" width="700"><br>
+                In particular, in this case, the columns will display the following information for each motif:<br>
+                <div class="container">
+                    <ul>
+                        <li>the start and the end position of the motif in the selected particular sequence;</li>
+                        <li>the representation of the motif in BEAR alphabet for structure motifs or in IUPAC nucleic acid notation for sequence motifs;</li>
+                        <li>the type of the motif: sequence or structural;</li>
+                        <li>the protein associated with the RNA secondary structure motif in the CLIP experiment analyzed by Adinolfi et al. (2019) and the type of the CLIP experiment.</li>
+                    </ul>
+                </div>
+
+               
+                
+                
+
+
+               
 
             </fieldset>
 
