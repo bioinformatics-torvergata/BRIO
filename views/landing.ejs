@@ -48,7 +48,6 @@
                                 <div class="form-field form-group <%= errors.message ? 'form-field-invalid' : '' %>">
                                     <label for="inputRNA">Input RNA</label>
 
-
                                     <textarea class="input form-control mt-0 seq-text-area" rows="5" id="inputRNA"
                                               name="inputRNA" placeholder="Paste your RNA sequences here..."
                                               autofocus><%= inputRNA %></textarea>
@@ -63,9 +62,11 @@
                                            class="btn btn-light btn-sm mt-2">
                                     <input type="button" value="Example with structures" id="ex_w_str"
                                            class="btn btn-light btn-sm mt-2">
-                                <button class="btn btn-light btn-sm mt-2" type="button"><a href="/waiting?uid=938b946cff087f6c8dae070a51e72ad3">Get an example result</a></button>
+                                 <br/>
+                                <button class="btn btn-light btn-sm mt-2" type="button"><a href="/waiting?uid=58205bf6ef26204293385d464c1558f4">HSUR example result</a></button>
+                                <button class="btn btn-light btn-sm mt-2" type="button"><a href="/waiting?uid=03d443de66bd7ad6756cde13678df0bc">U2 example result</a></button>
 
-				</div>
+				            </div>
                             </fieldset>
 
                         </td>
@@ -78,7 +79,7 @@
                                     <br/>
 
                                     <!--input file-->
-                                    <label for="fileRNA">Input File (multiFASTA w/ or w/o dot-bracket)</label>
+                                    <label for="fileRNA">Input File (multiFASTA w/ or w/o dot-bracket)</label><br/>
                                     <input type="file" id="fileRNA" name="fileRNA"/>
                                     <% if (errors.message) { %>
                                         <div class="error"><%= errors.message.msg %></div>
