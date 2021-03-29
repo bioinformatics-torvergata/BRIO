@@ -33,4 +33,4 @@ app.use(function(req, res, next){
   res.render('generic_error.ejs');
 });
 
-app.listen(8080);
+app.listen(80);

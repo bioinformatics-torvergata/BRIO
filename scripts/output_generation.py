@@ -206,7 +206,7 @@ def generate_output(dir_base, path_complete_input_rna_molecules, path_results_ht
             fw.write(
                 '<div id="Paris" class="tabcontent">\n<table id="sequence" class="table table-responsive table-hover out_table">\n')
             fw.write(
-                '<thead>\n<tr>\n<th></th>\n<th><div style="width:250px">Name</div></th>\n<th><div style="width:170px"># Sequence motifs</div></th>\n<th><div style="width:170px"># Structure motifs </div></th>\n<th> <div style="width:170px"> Length </div></th>\n</tr>\n</thead>\n<tbody>\n')
+                '<thead>\n<tr>\n<th></th>\n<th title="The name of the input sequence"><div style="width:250px">Name</div></th>\n<th title="The number of the identified sequence motifs"><div style="width:170px"># Sequence motifs</div></th>\n<th title="The number of the identified structural motifs"><div style="width:170px"># Structure motifs </div></th>\n<th title="The input sequence length"> <div style="width:170px"> Length </div></th>\n</tr>\n</thead>\n<tbody>\n')
             count = 1
             for single_input in seq_to_sign_motifs_dict:
                 if count != 1:
@@ -227,7 +227,7 @@ def generate_output(dir_base, path_complete_input_rna_molecules, path_results_ht
 
                 fw.write('<table id="group-of-rows-' + str(count) + '" class="collapse">\n')
                 fw.write(
-                    '<thead>\n<tr>\n<th>Start</th>\n<th>End</th>\n<th>Motif</th>\n<th>Type</th>\n<th>Protein</th>\n<th>Experiment</th>\n</thead>\n<tbody>\n')
+                    '<thead>\n<tr>\n<th title="The start position of the motif">Start</th>\n<th title="The end position of the motif">End</th>\n<th title="The representation of the motif in BEAR alphabet for structure motifs or in IUPAC nucleic acid notation for sequence motifs">Motif</th>\n<th title="The tipe of motif:sequence or structural">Type</th>\n<th title="The protein associated with the RNA secondary structure motif in the CLIP experiment">Protein</th>\n<th title="The tipe of CLIP experiment">Experiment</th>\n</thead>\n<tbody>\n')
                 for m in seq_to_sign_motifs_dict[single_input]:
                     if 'nuc' in m:
                         motif_type = "Sequence"
