@@ -6,7 +6,7 @@ import shutil
 
 def generate_output(dir_base, path_complete_input_rna_molecules, path_results_html, dir_user_download,
                     sequence_results_dict, motif_results_dict, seq_to_sign_motifs_dict,
-                    user_email, species_to_protein_to_link_dict):
+                    user_email, species_to_protein_to_link_dict, ReproduciblePeakFilename_to_RBP_CellLine_dict):
     """
     dir_base is the base directory of BRIO on the server
 
@@ -48,9 +48,14 @@ def generate_output(dir_base, path_complete_input_rna_molecules, path_results_ht
             }
     }
 
+    ReproduciblePeakFilename_to_RBP_CellLine_dict:
+    {
+        'ENCFF105AKX' : ['HNRNPC', 'HepG2'], ...
+    }
+
     :return: nothing
     """
-
+    print(ReproduciblePeakFilename_to_RBP_CellLine_dict)
     # Dirty temporary solution
     # "best_score\tmotif_threshold\tposition\tmotif_size"
 

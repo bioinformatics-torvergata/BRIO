@@ -463,6 +463,22 @@ with open(path_protein_links) as f:
 
         species_to_protein_to_link_dict[species][protein_name] = link.strip()
 
+
+ReproduciblePeakFilename_to_RBP_CellLine_dict = {}
+
+path_eclip_cell_lines = os.path.join(dir_base, 'resources/eCLIP_CellLines.txt')
+with open(path_eclip_cell_lines) as f:
+    f.readline()
+
+    for line in f:
+        RBP, CellLine, ReproduciblePeakFilename = line.strip().split('\t')
+
+        if ReproduciblePeakFilename not in ReproduciblePeakFilename_to_RBP_CellLine_dict:
+            ReproduciblePeakFilename_to_RBP_CellLine_dict[ReproduciblePeakFilename] = {}
+
+        ReproduciblePeakFilename_to_RBP_CellLine_dict[ReproduciblePeakFilename] = [RBP, CellLine]
+
+
 os.system("cp " + os.path.join(dir_base, 'public/examples/README.txt') + " " + dir_user_download)
 
 output_generation.generate_output(
@@ -474,7 +490,8 @@ output_generation.generate_output(
     motif_results_dict,
     seq_to_sign_motifs_dict,
     user_email,
-    species_to_protein_to_link_dict
+    species_to_protein_to_link_dict,
+    ReproduciblePeakFilename_to_RBP_CellLine_dict
 )
 
 with open(os.path.join(dir_user, 'Out.log'), 'w') as fw:
