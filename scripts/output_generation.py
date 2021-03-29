@@ -55,7 +55,7 @@ def generate_output(dir_base, path_complete_input_rna_molecules, path_results_ht
 
     :return: nothing
     """
-    print(ReproduciblePeakFilename_to_RBP_CellLine_dict)
+
     # Dirty temporary solution
     # "best_score\tmotif_threshold\tposition\tmotif_size"
 
