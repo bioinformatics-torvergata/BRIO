@@ -12,7 +12,9 @@
 
 <!-- INPUT FORM -->
 <div class='container'>
-<div style="min-height:1rem;padding:.5rem;width:80%;text-align:center;margin: auto"> <span style="font-size:20px;font-weight:bold;color:#0D3184">BRIO (BEAM RNA Interaction mOtifs) is a web server designed for searching known sequence and structure protein binding motifs in RNA molecules of interest</span></div>
+    <div style="min-height:1rem;padding:.5rem;width:80%;text-align:center;margin: auto"><span
+                style="font-size:20px;font-weight:bold;color:#0D3184">BRIO (BEAM RNA Interaction mOtifs) is a web server designed for searching known sequence and structure protein binding motifs in RNA molecules of interest</span>
+    </div>
     <div class="form-header p-3 ml-1">
         <% if (Object.keys(errors).length !== 0)  { %>
             <h3 class="errors-heading text-danger">Oops, please correct the following:</h3>
@@ -62,11 +64,15 @@
                                            class="btn btn-light btn-sm mt-2">
                                     <input type="button" value="Example with structures" id="ex_w_str"
                                            class="btn btn-light btn-sm mt-2">
-                                 <br/>
-                                <button class="btn btn-light btn-sm mt-2" type="button"><a href="/waiting?uid=58205bf6ef26204293385d464c1558f4">HSUR example result</a></button>
-                                <button class="btn btn-light btn-sm mt-2" type="button"><a href="/waiting?uid=03d443de66bd7ad6756cde13678df0bc">U2 example result</a></button>
+                                    <br/>
+                                    <button class="btn btn-light btn-sm mt-2" type="button"><a
+                                                href="/waiting?uid=58205bf6ef26204293385d464c1558f4">HSUR example
+                                            result</a></button>
+                                    <button class="btn btn-light btn-sm mt-2" type="button"><a
+                                                href="/waiting?uid=03d443de66bd7ad6756cde13678df0bc">U2 example
+                                            result</a></button>
 
-				            </div>
+                                </div>
                             </fieldset>
 
                         </td>
@@ -86,8 +92,9 @@
                                     <% } %>
                                     <br/>
                                     <hr>
-				    <!--background file? -->
-                                    <label for="fileBackground">Background File (multiFASTA w/ or w/o dot-bracket, optional)</label><br/>
+                                    <!--background file? -->
+                                    <label for="fileBackground">Background File (multiFASTA w/ or w/o dot-bracket,
+                                        optional)</label><br/>
                                     <input type="file" class="input" id="fileBackground" name="fileBackground">
                                     <% if (errors.message) { %>
                                         <div class="error"><%= errors.message.msg %></div>
@@ -98,20 +105,22 @@
                         </td>
                     </tr>
                 </table>
-<br>
+                <br>
                 <!-- FORM OPTIONS + MAIL-->
 
                 <fieldset class='in-box form-fieldset form-options container-fluid rounded' style="padding-top:.5rem">
                     <h3 class="text-left">Select at least one species and one type of experiments:</h3>
 
                     <div class="form-options form-group container mt-2">
-                        <select data-placeholder="Select species (hg19, mm9)" multiple class="chosen-select form-control "
+                        <select data-placeholder="Select species (hg19, mm9)" multiple
+                                class="chosen-select form-control "
                                 name="options_species">
                             <option selected value='hg19'>Human (hg19)</option>
                             <option value='mm9'>Mouse (mm9)</option>
                         </select>
 
-                        <select data-placeholder="Select experiments (PAR-CLIP, eCLIP, HITS)" multiple class="chosen-select form-control "
+                        <select data-placeholder="Select experiments (PAR-CLIP, eCLIP, HITS)" multiple
+                                class="chosen-select form-control "
                                 name="options_experiments">
                             <option selected value='PAR'>PAR-CLIP</option>
                             <option value='eCLIP'>eCLIP</option>
@@ -144,67 +153,44 @@
 </section>
 <!-- ERROR TABS -->
 
-
-<% if (false && Object.keys(errors).length !== 0 && (!errors.email || Object.keys(errors).length > 1)) { %>
+<% if (Object.keys(errors).length !== 0 && (!errors.email || Object.keys(errors).length > 1)) { %>
 
     <div class='container'>
         <ul class="nav nav-pills error-tabs bg-warning border border-danger">
-            <li class="active"><a data-toggle="pill" href="#menu1">
-                    <span class="text-secondary">Input errors</span>
-                </a></li>
-            <li><a data-toggle="pill" href="#menu2">
-                    <span class="text-secondary">Background errors</span>
-                </a></li>
+            <% if (inputRNA_processed.error_message_str !== '') { %>
+                <li class="active">
+                    <a data-toggle="pill" href="#menu1">
+                        <span class="text-secondary">Input errors</span>
+                    </a>
+                </li>
+            <% } %>
+            <% if (inputBackground_processed.error_message_str !== '') { %>
+                <li>
+                    <a data-toggle="pill" href="#menu2">
+                        <span class="text-secondary">Background errors</span>
+                    </a>
+                </li>
+            <% } %>
         </ul>
 
         <div class="tab-content">
-            <div id="menu1" class="tab-pane fade in active">
+            <% if (inputRNA_processed.error_message_str !== '') { %>
+                <div id="menu1" class="tab-pane fade in active">
+                    <h3> There are problems with your input:</h3>
+                    <div>
+                        <%= inputRNA_processed.error_message_str %>
+                    </div>
+                </div>
+            <% } %>
+            <% if (inputBackground_processed.error_message_str !== '') { %>
+                <div id="menu2" class="tab-pane fade">
+                    <h3> There are problems with your background:</h3>
 
-                <h3> There are problems with your input:</h3>
-                <div>
-                    Not valid input(s):<br/>
-                    <%= inputRNA_processed.not_valid_inputs %>
+                    <div>
+                        <%= inputBackground_processed.error_message_str %>
+                    </div>
                 </div>
-                <br/>
-                <div>
-                    Not valid RNA molecule(s):<br/>
-                    <%= inputRNA_processed.not_valid_rna_molecules %>
-                </div>
-                <br/>
-                <div>
-                    Not valid secondary structure(s):<br/>
-                    <%= inputRNA_processed.not_valid_secondary_structures %>
-                </div>
-                <br/>
-                <div>
-                    Valid input RNA(s):<br/>
-                    <%= inputRNA_processed.valid_rnas %>
-                </div>
-                <br/>
-            </div>
-            <div id="menu2" class="tab-pane fade">
-                <h3> There are problems with your background:</h3>
-
-                <div>
-                    Not valid input(s):<br/>
-                    <%= inputBackground_processed.not_valid_inputs %>
-                </div>
-                <br/>
-                <div>
-                    Not valid RNA molecule(s):<br/>
-                    <%= inputBackground_processed.not_valid_rna_molecules %>
-                </div>
-                <br/>
-                <div>
-                    Not valid secondary structure(s):<br/>
-                    <%= inputBackground_processed.not_valid_secondary_structures %>
-                </div>
-                <div>
-                    Valid input RNA(s):<br/>
-                    <%= inputBackground_processed.valid_rnas %>
-                </div>
-                <br/>
-            </div>
+            <% } %>
         </div>
     </div>
 
