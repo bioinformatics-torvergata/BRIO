@@ -6,7 +6,8 @@ import shutil
 
 def generate_output(dir_base, path_complete_input_rna_molecules, path_results_html, dir_user_download,
                     sequence_results_dict, motif_results_dict, seq_to_sign_motifs_dict,
-                    user_email, species_to_protein_to_link_dict, ReproduciblePeakFilename_to_RBP_CellLine_dict):
+                    user_email, species_to_protein_to_link_dict,
+                    reproduciblePeakFilename_to_RBP_CellLine_dict, publication_to_Link_dict):
     """
     dir_base is the base directory of BRIO on the server
 
@@ -51,6 +52,11 @@ def generate_output(dir_base, path_complete_input_rna_molecules, path_results_ht
     ReproduciblePeakFilename_to_RBP_CellLine_dict:
     {
         'ENCFF105AKX' : ['HNRNPC', 'HepG2'], ...
+    }
+
+    publication_to_Link_dict:
+    {
+        'Kishore2011a' : 'https://www.nature.com/articles/nmeth.1608?page=14', ...
     }
 
     :return: nothing
