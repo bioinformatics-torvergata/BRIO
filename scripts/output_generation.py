@@ -115,7 +115,7 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
             # fw.write(
             #    '<script>\n$(document).ready(function()\n{\n$("#sequence").tablesorter({\nsortList: [[4,0]],\nheaders: {0:{sorter:false},8:{sorter:false}}\n});\n}\n);\n</script>')
             fw.write(
-                '\n<script>\n$(document).ready(function()\n{\n$("#structure").tablesorter({\nsortList: [[4,0]],\nheaders: {0:{sorter:false},9:{sorter:false}}\n});\n}\n);\n</script>')
+                '\n<script>\n$(document).ready(function()\n{\n$("#structure").tablesorter({\nsortList: [[4,0]],\nheaders: {0:{sorter:false},11:{sorter:false}}\n});\n}\n);\n</script>')
 
             count = 1
             for single in seq_to_sign_motifs_dict:
@@ -146,6 +146,10 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
                 '<th title="The protein associated to the RNA secondary structure motif in the CLIP experiment analyzed">Protein </th>\n')
             fw.write(
                 '<th title="The protein domain associated to the RNA secondary structure motif (this information is not always available)">Domains </th>\n')
+            fw.write(
+                '<th title="Cell line used in this experiment (available only for eCLIP)">Cell line </th>\n')
+            fw.write(
+                '<th title="Experiment information:\n Reproducible Peak Filename (eCLIP)\n Article link (PAR-CLIP,HIT-CLIP)">Experiment Info </th>\n')
             fw.write(
                 '<th title="The organism in which the experiment was performed">Organism </th>\n<th>Download</th></tr>\n</thead>\n<tbody>\n')
 
@@ -210,8 +214,26 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
                             f'<td><div><a href="{species_to_protein_to_link_dict[species][protein]}" target="_blank">' + protein + ' </div></td>\n')
                     else:
                         fw.write('<td><div> ' + protein + ' </div></td>\n')
-
+                    
                     fw.write('<td><div> ' + domains + ' </div></td>\n')
+
+                    cell_lines=" - "
+                    info=" - "
+                    if experiment=="eCLIP":
+                    	if motif.split("_")[0] in reproduciblePeakFilename_to_RBP_CellLine_dict:
+                    		cell_lines=reproduciblePeakFilename_to_RBP_CellLine_dict[motif.split("_")[0]][1]
+                    		info=motif.split("_")[0]
+                    else:
+                    	if motif.split("_")[2] in publication_to_Link_dict:
+                    		info=publication_to_Link_dict[motif.split("_")[2]]
+                    
+                    fw.write('<td><div> ' + cell_lines + ' </div></td>\n')
+                    
+                    if experiment=="eCLIP":
+                    	fw.write('<td><div> ' + info + ' </div></td>\n')
+                    else:
+	                    fw.write('<td><div> <a href="' + info + '" target="_blank"> Article link </div></td>\n')
+
                     fw.write('<td><div><i>' + organism + ' </i></div></td>\n')
                     # fw.write('<td><div > prova </div></td>\n</tr>\n')
                     fw.write(
