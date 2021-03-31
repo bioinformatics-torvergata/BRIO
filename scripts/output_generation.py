@@ -4,7 +4,9 @@ import my_email
 import shutil
 
 
-def generate_output(dir_base, path_complete_input_rna_molecules, path_results_html, dir_user_download,
+def generate_output(dir_base, path_complete_input_rna_molecules,
+                    path_results_html, path_tab_sequences_txt, path_tab_enriched_motifs_txt,
+                    dir_user_download,
                     sequence_results_dict, motif_results_dict, seq_to_sign_motifs_dict,
                     user_email, species_to_protein_to_link_dict,
                     reproduciblePeakFilename_to_RBP_CellLine_dict, publication_to_Link_dict):
@@ -20,6 +22,10 @@ def generate_output(dir_base, path_complete_input_rna_molecules, path_results_ht
     ...
 
     path_results_html is the path of the output page to create
+
+    path_tab_sequences_txt is the path of the txt file to create for the tab sequences
+
+    path_tab_enriched_motifs_txt is the path of the txt file to create for the tab enriched motifs
 
     dir_user_download: subfolder which contains a file for each motif, with information regarding the matches in each input sequence
 
