@@ -108,6 +108,10 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
             '<a href="results/' + user + '/complete_input_with_dot_bracket_and_bear.txt" download><button class="btn"><i class="fa fa-download"></i> Download</button></a>\n<br>')
 
         if not table_empty:
+            tab1 = open(path_tab_enriched_motifs_txt, "w")
+            tab2 = open(path_tab_sequences_txt, "w")
+            tab2.write("Name\tStart\tEnd\tMotif\tType\tProtein\tExperiment\n")
+
             fw.write('Click here to download all your results \n')
             fw.write(
                 '<a href="results/' + user + '/download.zip" download><button class="btn"><i class="fa fa-download"></i> Download</button></a>\n<br>\n')
@@ -153,6 +157,8 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
             fw.write(
                 '<th title="The organism in which the experiment was performed">Organism </th>\n<th>Download</th></tr>\n</thead>\n<tbody>\n')
 
+            tab1.write(
+                "Type\tRegion\tCoverage\tp-value\tExperiment\tProtein\tDomains\tCell_lines\tExperiment_Info\tOrganism\n")
             for str_or_nuc in sequence_results_dict:
                 if str_or_nuc == "str":
                     tipo = "Structure"
@@ -164,10 +170,12 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
                         continue
 
                     if str_or_nuc == "nuc":
-                        path_logo_on_server = os.path.join(dir_base, 'public/images/logos', motif.split(".")[0] + "_wl.nuc.png")
+                        path_logo_on_server = os.path.join(dir_base, 'public/images/logos',
+                                                           motif.split(".")[0] + "_wl.nuc.png")
                         logo_link = "../images/logos/" + motif.split(".")[0] + "_wl.nuc.png"
                     else:
-                        path_logo_on_server = os.path.join(dir_base, 'public/images/logos', motif.split(".")[0] + "_wl.png")
+                        path_logo_on_server = os.path.join(dir_base, 'public/images/logos',
+                                                           motif.split(".")[0] + "_wl.png")
                         logo_link = "../images/logos/" + motif.split(".")[0] + "_wl.png"
 
                     os.system("cp " + path_logo_on_server + " " + dir_user_download + "/logos/")
@@ -189,7 +197,7 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
                     if motif_results_dict[str_or_nuc][motif][3]:
                         domains = ";<br/>".join(motif_results_dict[str_or_nuc][motif][3]) + ';'
                     else:
-                        domains = " - "
+                        domains = "-"
                     if "_mm9_" in motif:
                         organism = "Mus musculus"
                     else:
@@ -208,33 +216,37 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
                     else:
                         species = "hg19"
 
-                    if protein in species_to_protein_to_link_dict[species] and species_to_protein_to_link_dict[species][
-                        protein]:
+                    if protein in species_to_protein_to_link_dict[species] and species_to_protein_to_link_dict[species][protein]:
                         fw.write(
                             f'<td><div><a href="{species_to_protein_to_link_dict[species][protein]}" target="_blank">' + protein + ' </div></td>\n')
                     else:
                         fw.write('<td><div> ' + protein + ' </div></td>\n')
-                    
+
                     fw.write('<td><div> ' + domains + ' </div></td>\n')
 
-                    cell_lines=" - "
-                    info=" - "
-                    if experiment=="eCLIP":
-                    	if motif.split("_")[0] in reproduciblePeakFilename_to_RBP_CellLine_dict:
-                    		cell_lines=reproduciblePeakFilename_to_RBP_CellLine_dict[motif.split("_")[0]][1]
-                    		info=motif.split("_")[0]
+                    cell_lines = "-"
+                    info = "-"
+                    if experiment == "eCLIP":
+                        if motif.split("_")[0] in reproduciblePeakFilename_to_RBP_CellLine_dict:
+                            cell_lines = reproduciblePeakFilename_to_RBP_CellLine_dict[motif.split("_")[0]][1]
+                            info = motif.split("_")[0]
                     else:
-                    	if motif.split("_")[2] in publication_to_Link_dict:
-                    		info=publication_to_Link_dict[motif.split("_")[2]]
-                    
+                        if motif.split("_")[2] in publication_to_Link_dict:
+                            info = publication_to_Link_dict[motif.split("_")[2]]
+
                     fw.write('<td><div> ' + cell_lines + ' </div></td>\n')
-                    
-                    if experiment=="eCLIP":
-                    	fw.write('<td><div> ' + info + ' </div></td>\n')
+
+                    if experiment == "eCLIP":
+                        fw.write('<td><div> ' + info + ' </div></td>\n')
                     else:
-	                    fw.write('<td><div> <a href="' + info + '" target="_blank"> Article link </div></td>\n')
+                        fw.write('<td><div> <a href="' + info + '" target="_blank"> Article link </div></td>\n')
 
                     fw.write('<td><div><i>' + organism + ' </i></div></td>\n')
+
+                    tab1.write(
+                        tipo + "\t" + region + "\t" + coverage + "\t" + p_value + "\t" + experiment + "\t" + protein + "\t" + domains.replace(
+                            '<br/>', '') + "\t" + cell_lines + "\t" + info + "\t" + organism + "\n")
+                    # tab1.write(tipo+"\t"+region+"\t"+coverage+"\t"+p_value+"\t"+experiment+"\n")
                     # fw.write('<td><div > prova </div></td>\n</tr>\n')
                     fw.write(
                         '<td><div ><a href="results/' + user + '/download/motifs/' + motif + '" Download><button class="btn"><i class="fa fa-download"></i>Download</button></a></div></td>\n</tr>\n')
@@ -290,7 +302,7 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
                     else:
                         fw.write('<td><div> ' + protein + ' </div></td>\n')
                     fw.write('<td>' + experiment + '</td>\n</tr>\n')
-
+                    tab2.write(single_input + "\t" + start + "\t" + end + "\t" + motif_string + "\t" + motif_type + "\t" + protein + "\t" + experiment + "\n")
                 fw.write('</table></tbody>')
                 count += 1
 
@@ -308,6 +320,9 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
             fw.write('document.getElementById(cityName).style.display = "block";\n')
             fw.write('evt.currentTarget.className += " active";\n}\n')
             fw.write('document.getElementById("defaultOpen").click();\n</script>\n')
+
+            tab1.close()
+            tab2.close()
 
             shutil.make_archive(os.path.join(os.path.dirname(dir_user_download), "download"), 'zip', dir_user_download)
         else:
