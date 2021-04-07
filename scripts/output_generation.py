@@ -333,7 +333,6 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
             shutil.make_archive(os.path.join(os.path.dirname(dir_user_download), "download"), 'zip', dir_user_download)
         else:
             fw.write('<h2 class="text-center"">Sorry, no results found.</h2>')
-        fw.write('</div>')
     shutil.copyfile(path_complete_input_rna_molecules, os.path.join(dir_user_download, 'input.txt'))
 
     if user_email != '':
