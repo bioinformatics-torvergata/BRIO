@@ -103,11 +103,16 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
             total_file_dict[file][split_line[0]] = split_line[1:]
 
     with open(path_results_html, 'w') as fw:
+        
+        fw.write('<button type="button" class="btn btn-primary" onclick="document.getElementById(\'qbear_legend\').style.display=\'block\'">show qBEAR legend</button>\n')
+        fw.write("<img src='../../images/bear_horizontal.png', id='qbear_legend' style='display:none'><br>\n")
+
         fw.write("<br>Click here to download your input\n")
         fw.write(
             '<a href="results/' + user + '/complete_input_with_dot_bracket_and_bear.txt" download><button class="btn"><i class="fa fa-download"></i> Download</button></a>\n<br>')
 
         if not table_empty:
+            
             tab1 = open(path_tab_enriched_motifs_txt, "w")
             tab2 = open(path_tab_sequences_txt, "w")
             tab2.write("Name\tStart\tEnd\tMotif\tType\tProtein\tExperiment\n")
@@ -136,6 +141,7 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
             fw.write('<div id="London" class="tabcontent">\n<table id="structure"')
             # else:
             #    fw.write('<div id="Paris" class="tabcontent">\n<table id="sequence"')
+
             fw.write(' class="out_table">\n<thead>\n<tr>\n')
             fw.write(
                 '<th title="The logo of the secondary structure motif in the BEAR alphabet or, in case of sequence motifs, in the IUPAC nucleic acid notation (logos have been generated using WebLogo (Crooks et al., 2004)">Logo</th>\n')
@@ -327,7 +333,7 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
             shutil.make_archive(os.path.join(os.path.dirname(dir_user_download), "download"), 'zip', dir_user_download)
         else:
             fw.write('<h2 class="text-center"">Sorry, no results found.</h2>')
-
+        fw.write('</div>')
     shutil.copyfile(path_complete_input_rna_molecules, os.path.join(dir_user_download, 'input.txt'))
 
     if user_email != '':
