@@ -17,7 +17,7 @@
     </div>
     <div class="form-header p-3 ml-1">
         <% if (Object.keys(errors).length !== 0)  { %>
-            <h3 class="errors-heading text-danger">Oops, please correct the following:</h3>
+            <h3 class="errors-heading text-danger">Please correct the following:</h3>
             <ul class="errors-list">
                 <% Object.values(errors).forEach(error => { %>
                     <li><%= error.msg %></li>
