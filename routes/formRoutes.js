@@ -40,6 +40,8 @@ _are_nums_consecutives = function (num_list) {
 }
 
 _check_rna_sequences = function (input_rna_sequences_str, input_name_str) {
+    console.log('\t_check_rna_sequences');
+
     let valid_rnas_xxx_str = '';
     let not_valid_inputs_xxx_str = '';
     let not_valid_rna_molecules_xxx_str = '';
@@ -80,44 +82,44 @@ _check_rna_sequences = function (input_rna_sequences_str, input_name_str) {
         // (header + rna_seq) or (header + rna_seq + rna_sec_struct)
         if ((valid_rna_row_list.length + putative_sec_str_row_list.length) !== header_seq_struct_list.length - 1) {
             not_valid_inputs_xxx_str += '>' + header_seq
-            error_message_str += header_seq + ": sequence and structure have different lengths.\n"
+            error_message_str += header_seq + ": sequence and structure have different lengths; "
             return
         }
 
         if (valid_rna_row_list.length === 0) {
             not_valid_inputs_xxx_str += '>' + header_seq
-            error_message_str += header_seq + ": there are invalid nucleotides.\n"
+            error_message_str += header_seq + ": there are invalid nucleotides; "
             return
         }
 
         if (!_are_nums_consecutives(valid_rna_row_list)) {
             not_valid_inputs_xxx_str += '>' + header_seq
-            error_message_str += header_seq + ": sequence rows are not contiguous.\n"
+            error_message_str += header_seq + ": sequence rows are not contiguous; "
             return
         }
 
         if (rna_molecule.length < MIN_LEN_RNA_SEQ) {
             not_valid_inputs_xxx_str += '>' + header_seq
-            error_message_str += header_seq + ": too short (min length: " + MIN_LEN_RNA_SEQ + " nt).\n"
+            error_message_str += header_seq + ": too short (min length: " + MIN_LEN_RNA_SEQ + " nt); "
             return
         }
 
         if (rna_molecule.length > MAX_LEN_RNA_SEQ) {
             not_valid_inputs_xxx_str += '>' + header_seq
-            error_message_str += header_seq + ": too long (max length: " + MAX_LEN_RNA_SEQ + " nt).\n"
+            error_message_str += header_seq + ": too long (max length: " + MAX_LEN_RNA_SEQ + " nt); "
             return
         }
 
         if (putative_sec_str_row_list.length > 0) {
             if (!_are_nums_consecutives(putative_sec_str_row_list)) {
                 not_valid_inputs_xxx_str += '>' + header_seq
-                error_message_str += header_seq + ": structure rows are not contiguous.\n"
+                error_message_str += header_seq + ": structure rows are not contiguous; "
                 return
             }
 
             if (!input_validation_controller.check_rna_secondary_structure(dot_bracket)) {
                 not_valid_inputs_xxx_str += '>' + header_seq
-                error_message_str += header_seq + ": the dot-bracket notation is not valid.\n"
+                error_message_str += header_seq + ": the dot-bracket notation is not valid; "
                 return
             }
         }
@@ -139,6 +141,20 @@ _check_rna_sequences = function (input_rna_sequences_str, input_name_str) {
 };
 
 check_user_input_handler = function (value, {req}) {
+    console.log('check_user_input_handler');
+
+    valid_rnas_str = '';
+    not_valid_inputs_str = '';
+    not_valid_rna_molecules_str = '';
+    not_valid_secondary_structures_str = '';
+    error_message_str = '';
+
+    valid_rnas_background_str = '';
+    not_valid_inputs_background_str = '';
+    not_valid_rna_molecules_background_str = '';
+    not_valid_secondary_structures_background_str = '';
+    error_message_background_str = '';
+
     [valid_rnas_str, not_valid_inputs_str, not_valid_rna_molecules_str, not_valid_secondary_structures_str, error_message_str] = _check_rna_sequences(
         req.files && req.files.fileRNA ?
             req.files.fileRNA.data.toString('utf8') :
@@ -158,6 +174,8 @@ check_user_input_handler = function (value, {req}) {
 }
 
 check_user_background_handler = function (value, {req}) {
+    console.log('check_user_background_handler');
+
     [valid_rnas_background_str, not_valid_inputs_background_str, not_valid_rna_molecules_background_str, not_valid_secondary_structures_background_str] = ['', '', '', '']
     if (req.files && req.files.fileBackground) {
         [valid_rnas_background_str, not_valid_inputs_background_str, not_valid_rna_molecules_background_str, not_valid_secondary_structures_background_str, error_message_background_str] = _check_rna_sequences(
@@ -165,7 +183,7 @@ check_user_background_handler = function (value, {req}) {
         )
 
         const not_valid_rnas_background_str = not_valid_inputs_background_str + not_valid_rna_molecules_background_str + not_valid_secondary_structures_background_str
-        if (error_message_str === '') {
+        if (error_message_background_str === '') {
             return true
         } else {
             throw new Error(
