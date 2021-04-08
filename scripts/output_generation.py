@@ -104,8 +104,11 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
 
     with open(path_results_html, 'w') as fw:
         
-        fw.write('<button type="button" class="btn btn-primary" onclick="document.getElementById(\'qbear_legend\').style.display=\'block\'">show qBEAR legend</button>\n')
-        fw.write("<img src='../../images/bear_horizontal.png', id='qbear_legend' style='display:none'><br>\n")
+        fw.write("<button class='btn btn-primary mb-3' type='button' data-toggle='collapse' data-target='#collapseExample' aria-expanded='false' aria-controls='collapseExample'>")
+        fw.write("show qBEAR legend </button>")
+        fw.write("<div class='collapse' id='collapseExample'>")
+        fw.write("<img src='../../images/bear_horizontal.png', id='qbear_legend'><br>\n")
+        fw.write("</div>")
 
         fw.write("<br>Click here to download your input\n")
         fw.write(
@@ -121,6 +124,8 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
             fw.write(
                 '<a href="results/' + user + '/download.zip" download><button class="btn"><i class="fa fa-download"></i> Download</button></a>\n<br>\n')
 
+            fw.write("</div>")
+            
             # fw.write(
             #    '<script>\n$(document).ready(function()\n{\n$("#sequence").tablesorter({\nsortList: [[4,0]],\nheaders: {0:{sorter:false},8:{sorter:false}}\n});\n}\n);\n</script>')
             fw.write(
@@ -131,12 +136,12 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
                 fw.write('\n<script>\n$(document).ready(function()\n{\n$("#group-of-rows-' + str(
                     count) + '").tablesorter({\nsortList: [[0,0]],\nheaders: {2:{sorter:false}}\n});\n}\n);\n</script>')
                 count += 1
-
+            fw.write("<div class='container'>")
             fw.write(
                 '<div class="tab">\n<button class="tablinks" onclick="openCity(event, \'London\')" id="defaultOpen">Enriched Motifs</button>\n')
             fw.write('<button class="tablinks" onclick="openCity(event, \'Paris\')" >Sequences</button>\n')
             fw.write('</div>')
-
+            fw.write('</div>')
             # if str_or_nuc == "str":
             fw.write('<div id="London" class="tabcontent">\n<table id="structure"')
             # else:
@@ -259,7 +264,7 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
                     # <button class="btn"><i class="fa fa-download"></i> Show file</button></a></div></td>\n</tr>\n')
 
             fw.write("</tbody>\n</table>\n</div>\n")
-
+            fw.write("<div class='container'>")
             fw.write(
                 '<div id="Paris" class="tabcontent">\n<table id="sequence" class="table table-responsive table-hover out_table">\n')
             fw.write(
@@ -331,6 +336,7 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
             tab2.close()
 
             shutil.make_archive(os.path.join(os.path.dirname(dir_user_download), "download"), 'zip', dir_user_download)
+            fw.write("</div>")
         else:
             fw.write('<h2 class="text-center"">Sorry, no results found.</h2>')
     shutil.copyfile(path_complete_input_rna_molecules, os.path.join(dir_user_download, 'input.txt'))
