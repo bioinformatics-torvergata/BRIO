@@ -17,7 +17,7 @@
     </div>
     <div class="form-header p-3 ml-1">
         <% if (Object.keys(errors).length !== 0)  { %>
-            <h3 class="errors-heading text-danger">Please correct the following:</h3>
+            <h3 class="errors-heading text-danger">Please correct the following problems:</h3>
             <ul class="errors-list">
                 <% Object.values(errors).forEach(error => { %>
                     <li><%= error.msg %></li>
@@ -30,44 +30,23 @@
     <% if (Object.keys(errors).length !== 0 && (!errors.email || Object.keys(errors).length > 1)) { %>
 
         <div class='container'>
-            <ul class="nav nav-pills error-tabs bg-warning border border-danger">
-                <% if (inputRNA_processed.error_message_str !== '') { %>
-                    <li class="active">
-                        <a data-toggle="pill" href="#menu1">
-                            <span class="text-secondary">Input errors</span>
-                        </a>
-                    </li>
-                <% } %>
-                <% if (inputBackground_processed.error_message_str !== '') { %>
-                    <li>
-                        <a data-toggle="pill" href="#menu2">
-                            <span class="text-secondary">Background errors</span>
-                        </a>
-                    </li>
-                <% } %>
-            </ul>
+            <% if (inputRNA_processed.error_message_str !== '') { %>
+                <div>
+                    <h3>Input problems:</h3>
+                    <%= inputRNA_processed.error_message_str %>
+                </div>
 
-            <div class="tab-content">
-                <% if (inputRNA_processed.error_message_str !== '') { %>
-                    <div id="menu1" class="tab-pane fade in active">
-                        <h3> There are problems with your input:</h3>
-                        <div>
-                            <%= inputRNA_processed.error_message_str %>
-                        </div>
-                    </div>
-                <% } %>
                 <% if (inputBackground_processed.error_message_str !== '') { %>
-                    <div id="menu2" class="tab-pane fade">
-                        <h3> There are problems with your background:</h3>
-
-                        <div>
-                            <%= inputBackground_processed.error_message_str %>
-                        </div>
-                    </div>
+                    <br/>
                 <% } %>
-            </div>
+            <% } %>
+            <% if (inputBackground_processed.error_message_str !== '') { %>
+                <div>
+                    <h3>Background problems:</h3>
+                    <%= inputBackground_processed.error_message_str %>
+                </div>
+            <% } %>
         </div>
-
     <% } %>
 
     <!--INPUT-->
