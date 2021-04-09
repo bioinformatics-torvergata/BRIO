@@ -250,10 +250,7 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
 
                     fw.write('<td><div> ' + cell_lines + ' </div></td>\n')
 
-                    if experiment == "eCLIP":
-                        fw.write('<td><div> <a href="' + info + '" target="_blank"> Experiment page </div></td>\n')
-                    else:
-                        fw.write('<td><div> <a href="' + info + '" target="_blank"> Article link </div></td>\n')
+                    fw.write('<td><div> <a href="' + info + '" target="_blank"> Link </div></td>\n')
 
                     fw.write('<td><div><i>' + organism + ' </i></div></td>\n')
 
