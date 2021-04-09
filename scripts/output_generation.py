@@ -240,7 +240,7 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
                     if experiment == "eCLIP":
                         if motif.split("_")[0] in reproduciblePeakFilename_to_RBP_CellLine_dict:
                             cell_lines = reproduciblePeakFilename_to_RBP_CellLine_dict[motif.split("_")[0]][1]
-                            info = motif.split("_")[0]
+                            info = "https://www.encodeproject.org/search/?searchTerm="+motif.split("_")[0]
                     else:
                         if motif.split("_")[2] in publication_to_Link_dict:
                             info = publication_to_Link_dict[motif.split("_")[2]]
@@ -248,7 +248,7 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
                     fw.write('<td><div> ' + cell_lines + ' </div></td>\n')
 
                     if experiment == "eCLIP":
-                        fw.write('<td><div> ' + info + ' </div></td>\n')
+                        fw.write('<td><div> <a href="' + info + '" target="_blank"> Experiment page </div></td>\n')
                     else:
                         fw.write('<td><div> <a href="' + info + '" target="_blank"> Article link </div></td>\n')
 
