@@ -132,7 +132,7 @@ h3 {
     text-justify: inter-word;
  }
 
- #London{
-    padding-left: 300px;
-    padding-right: 300px;
- }
+.big-container{
+    margin-left: auto;
+    margin-right: auto;
+}

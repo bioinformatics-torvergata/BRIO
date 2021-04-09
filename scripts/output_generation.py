@@ -120,7 +120,7 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
             tab2 = open(path_tab_sequences_txt, "w")
             tab2.write("Name\tStart\tEnd\tMotif\tType\tProtein\tExperiment\n")
 
-            fw.write('Click here to download all your results \n')
+            fw.write('Click here to download all your results prova \n')
             fw.write(
                 '<a href="results/' + user + '/download.zip" download><button class="btn"><i class="fa fa-download"></i> Download</button></a>\n<br>\n')
 
@@ -142,7 +142,10 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
             fw.write('<button class="tablinks" onclick="openCity(event, \'Paris\')" >Sequences</button>\n')
             fw.write('</div>')
             fw.write('</div>')
+
             # if str_or_nuc == "str":
+            fw.write('<div class="container-fluid big-container">')
+
             fw.write('<div id="London" class="tabcontent">\n<table id="structure"')
             # else:
             #    fw.write('<div id="Paris" class="tabcontent">\n<table id="sequence"')
@@ -247,7 +250,10 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
 
                     fw.write('<td><div> ' + cell_lines + ' </div></td>\n')
 
-                    fw.write('<td><div> <a href="' + info + '" target="_blank"> Link </div></td>\n')
+                    if experiment == "eCLIP":
+                        fw.write('<td><div> <a href="' + info + '" target="_blank"> Experiment page </div></td>\n')
+                    else:
+                        fw.write('<td><div> <a href="' + info + '" target="_blank"> Article link </div></td>\n')
 
                     fw.write('<td><div><i>' + organism + ' </i></div></td>\n')
 
@@ -261,6 +267,7 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
                     # <button class="btn"><i class="fa fa-download"></i> Show file</button></a></div></td>\n</tr>\n')
 
             fw.write("</tbody>\n</table>\n</div>\n")
+            fw.write('</div>')
             fw.write("<div class='container'>")
             fw.write(
                 '<div id="Paris" class="tabcontent">\n<table id="sequence" class="table table-responsive table-hover out_table">\n')
