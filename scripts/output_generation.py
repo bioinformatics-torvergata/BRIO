@@ -120,7 +120,7 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
             tab2 = open(path_tab_sequences_txt, "w")
             tab2.write("Name\tStart\tEnd\tMotif\tType\tProtein\tExperiment\n")
 
-            fw.write('Click here to download all your results prova \n')
+            fw.write('Click here to download all your results\n')
             fw.write(
                 '<a href="results/' + user + '/download.zip" download><button class="btn"><i class="fa fa-download"></i> Download</button></a>\n<br>\n')
 
