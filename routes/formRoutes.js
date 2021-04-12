@@ -77,7 +77,7 @@ _check_rna_sequences = function (input_rna_sequences_str, input_name_str) {
             num_row += 1
         }
 
-        header_seq = header_seq_struct.split('\n')[0].replace(/'\n'/, '')
+        let header_seq = header_seq_struct.split('\n')[0].replace('\n', '')
 
         // (header + rna_seq) or (header + rna_seq + rna_sec_struct)
         if ((valid_rna_row_list.length + putative_sec_str_row_list.length) !== header_seq_struct_list.length - 1) {
@@ -218,13 +218,11 @@ router.post('/fileInput',
     (req, res) => {
         const errors = validationResult(req);
 
-        let userID = ''
+        let userID = crypto.randomBytes(16).toString("hex");
+        console.log('user run ID: ' + userID);
         let page_to_go;
         if (errors.isEmpty()) {
             page_to_go = 'loading'
-
-            userID = crypto.randomBytes(16).toString("hex");
-            console.log('user run ID: ' + userID);
 
             const pythonProcess = spawn('python3', ["scripts/_completeWithDotBracketAndBEAR.py",
                 valid_rnas_str, valid_rnas_background_str, userID, req.body.options_species, req.body.options_experiments, req.body.email
@@ -240,6 +238,46 @@ router.post('/fileInput',
             })
         } else {
             page_to_go = 'landing'
+
+            const fs = require('fs');
+            const stream = fs.createWriteStream("public/results/" + userID + ".wrong_input.txt");
+            stream.once('open', function (fd) {
+                stream.write("UserInput" + ((req.files && req.files.fileRNA) ? ' (in a file)\n' : '\n'));
+                stream.write(
+                    (req.files && req.files.fileRNA) ? req.files.fileRNA.data.toString('utf8') : req.body.inputRNA
+                );
+                stream.write("\n\nUserBackground (in a file)\n");
+                stream.write(
+                    (req.files && req.files.fileBackground) ? req.files.fileBackground.data.toString('utf8') : ''
+                );
+
+                stream.write("\n\nvalid_rnas_str\n");
+                stream.write(valid_rnas_str + "\n");
+                stream.write("not_valid_inputs_str\n");
+                stream.write(not_valid_inputs_str + "\n");
+                stream.write("not_valid_rna_molecules_str\n");
+                stream.write(not_valid_rna_molecules_str + "\n");
+                stream.write("not_valid_secondary_structures_str\n");
+                stream.write(not_valid_secondary_structures_str + "\n");
+                stream.write("error_message_str\n" + "\n");
+                stream.write(error_message_str + "\n");
+
+                stream.write("valid_rnas_background_str\n");
+                stream.write(valid_rnas_background_str + "\n");
+                stream.write("not_valid_inputs_background_str\n");
+                stream.write(not_valid_inputs_background_str + "\n");
+                stream.write("not_valid_rna_molecules_background_str\n");
+                stream.write(not_valid_rna_molecules_background_str + "\n");
+                stream.write("not_valid_secondary_structures_background_str\n");
+                stream.write(not_valid_secondary_structures_background_str + "\n");
+                stream.write("error_message_background_str\n");
+                stream.write(error_message_background_str + "\n");
+
+                stream.write("options_species: " + req.body.options_species + "\n");
+                stream.write("options_experiments: " + req.body.options_experiments + "\n");
+                stream.write("email: " + req.body.email + "\n");
+                stream.end();
+            });
         }
 
         res.render(page_to_go,
