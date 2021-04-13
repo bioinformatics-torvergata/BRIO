@@ -290,7 +290,7 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
 
                 fw.write('<table id="group-of-rows-' + str(count) + '" class="collapse">\n')
                 fw.write(
-                    '<thead>\n<tr>\n<th title="The start position of the motif">Start</th>\n<th title="The end position of the motif">End</th>\n<th title="The representation of the motif in BEAR alphabet for structure motifs or in IUPAC nucleic acid notation for sequence motifs">Motif</th>\n<th title="The tipe of motif:sequence or structural">Type</th>\n<th title="The protein associated with the RNA secondary structure motif in the CLIP experiment">Protein</th>\n<th title="The tipe of CLIP experiment">Experiment</th>\n</thead>\n<tbody>\n')
+                    '<thead>\n<tr>\n<th title="The start position of the motif">Start</th>\n<th title="The end position of the motif">End</th>\n<th title="The representation of the motif in BEAR alphabet for structure motifs or in IUPAC nucleic acid notation for sequence motifs">Enriched Motif</th>\n<th title="The tipe of motif:sequence or structural">Type</th>\n<th title="The protein associated with the RNA secondary structure motif in the CLIP experiment">Protein</th>\n<th title="The tipe of CLIP experiment">Experiment</th>\n</thead>\n<tbody>\n')
                 for m in seq_to_sign_motifs_dict[single_input]:
                     if 'nuc' in m:
                         motif_type = "Sequence"
