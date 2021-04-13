@@ -114,8 +114,9 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
         fw.write(
             '<a href="results/' + user + '/complete_input_with_dot_bracket_and_bear.txt" download><button class="btn"><i class="fa fa-download"></i> Download</button></a>\n<br>')
 
+        shutil.copyfile(path_complete_input_rna_molecules, os.path.join(dir_user_download, 'input.txt'))
+
         if not table_empty:
-            
             tab1 = open(path_tab_enriched_motifs_txt, "w")
             tab2 = open(path_tab_sequences_txt, "w")
             tab2.write("Name\tStart\tEnd\tEnriched Motif\tType\tProtein\tExperiment\n")
@@ -336,11 +337,13 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
             tab1.close()
             tab2.close()
 
-            shutil.make_archive(os.path.join(os.path.dirname(dir_user_download), "download"), 'zip', dir_user_download)
             fw.write("</div>")
+
+            shutil.make_archive(os.path.join(os.path.dirname(dir_user_download), "download"), 'zip', dir_user_download)
         else:
             fw.write('<h2 class="text-center"">Sorry, no results found.</h2>')
-    shutil.copyfile(path_complete_input_rna_molecules, os.path.join(dir_user_download, 'input.txt'))
+
+
 
     if user_email != '':
         my_email.send_email_with_code(code=user, user_email=user_email)
