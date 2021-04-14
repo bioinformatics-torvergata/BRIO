@@ -16,15 +16,14 @@ Contents
     - the link to the experiment page (for eCLIP data), or to the corresponding paper for PAR-CLIP and HITS data);
     - the organism in which the experiment was performed (Homo sapiens or Mus musculus).
 
-tab_sequences.txt: this file contains the information present in the "Sequences" table of the output page, where each tab-separated column represents:
+-tab_sequences.txt: this file contains the information present in the "Sequences" table of the output page, where each tab-separated column represents:
     - the start and the end position of the motif in the selected sequence;
     - the representation of the motif in BEAR alphabet for structure motifs or in IUPAC nucleic acid notation for sequence motifs;
     - the type of the motif: sequence or structure;
     - the protein associated with the RNA sequence or secondary structure motif in the experiments analyzed by Adinolfi et al.;
     - the type of the experiment (PAR-CLIP, eCLIP, HITS).
 
-- "logos" folder: this folder contains all the Weblogos of the motifs that BRIO has found in the input RNA sequences. The
-    structure motifs are in qBEAR alphabet, the sequence motifs in IUPAC nucleic acid notation. All Weblogos have been generated using WebLogo (Crooks et al., 2004).
+- "logos" folder: this folder contains all the Weblogos of the motifs that BRIO has found in the input RNA sequences and for each motif a file in .csv format containing its position frequency matrix (PFM). The structure motifs are in qBEAR alphabet, the sequence motifs in IUPAC nucleic acid notation. All Weblogos have been generated using WebLogo (Crooks et al., 2004).
 
 - "motifs" folder: this folder contains a text file for each motif found enriched in the input RNA sequences.
     In each file, every row represent an occurrence of the motif in one of the input sequence/s. In particular, each column represents:
