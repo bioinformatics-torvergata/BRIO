@@ -185,21 +185,24 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
                         continue
 
                     if str_or_nuc == "nuc":
-                        path_logo_on_server = os.path.join(dir_base, 'public/images/logos',
-                                                           motif.split(".")[0] + "_wl.nuc.png")
+                        path_logo_on_server = os.path.join(dir_base, 'public/images/logos', motif.split(".")[0] + "_wl.nuc.png")
                         logo_link = "../images/logos/" + motif.split(".")[0] + "_wl.nuc.png"
+
+                        path_pfm_on_server = os.path.join(dir_base, 'public/PFMs', motif.split(".")[0] + "_wl.nuc.pfm.csv")
                     else:
-                        path_logo_on_server = os.path.join(dir_base, 'public/images/logos',
-                                                           motif.split(".")[0] + "_wl.png")
+                        path_logo_on_server = os.path.join(dir_base, 'public/images/logos', motif.split(".")[0] + "_wl.png")
                         logo_link = "../images/logos/" + motif.split(".")[0] + "_wl.png"
 
+                        path_pfm_on_server = os.path.join(dir_base, 'public/PFMs', motif.split(".")[0] + "_wl.pfm.csv")
+
                     os.system("cp " + path_logo_on_server + " " + dir_user_download + "/logos/")
+                    os.system("cp " + path_pfm_on_server + " " + dir_user_download + "/logos/")
 
                     coverage = str("%.2g" % motif_results_dict[str_or_nuc][motif][0])
                     if float(coverage) <= 0.5:
                         continue
 
-                    oddsratio = str("%.2g" % motif_results_dict[str_or_nuc][motif][1])
+                    #oddsratio = str("%.2g" % motif_results_dict[str_or_nuc][motif][1])
 
                     region = motif.split("_")[-3]
                     protein = motif.split("_")[1]
