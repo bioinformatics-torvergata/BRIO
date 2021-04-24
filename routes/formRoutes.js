@@ -10,7 +10,7 @@ const router = express.Router();
 
 // shortest RNA sequence in the dataset: 3 nt
 // shortest RNA structure in the dataset: 11 nt
-const MIN_LEN_RNA_SEQ = 50
+const MIN_LEN_RNA_SEQ = 3
 const MAX_LEN_RNA_SEQ = 3000
 const MAX_INPUT_SEQUENCES = 100
 

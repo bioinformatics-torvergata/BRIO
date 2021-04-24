@@ -23,6 +23,8 @@ import scipy.stats as stats
 
 import json
 
+MIN_LEN_SEQ_FOR_STR_MOTIFS = 50
+
 outer = re.compile(" (.+)$")
 
 
@@ -167,10 +169,10 @@ user_email = sys.argv[6]
 
 is_there_a_background = sys.argv[2]
 
-default_search = False
-
 # todo to activate at the end removing this line
 '''
+default_search = False
+
 # Check if the input is the default one
 DEFAULT_SEARCH_ID = 'dc4464c5cfef2f5c2fc4b08c516bfa4e'
 DEFAULT_SEARCH_NUM_SEQ = 2
@@ -223,10 +225,14 @@ dir_user = os.path.join(dir_base, 'public/results', user_id)
 if not os.path.exists(dir_user):
     os.makedirs(dir_user)
 
+# todo to activate at the end removing this line
+'''
 if default_search:
     with open(os.path.join(dir_user, 'Out.log'), 'w') as fw:
         fw.write('dc4464c5cfef2f5c2fc4b08c516bfa4e')
         sys.exit()
+'''
+# todo to activate at the end removing this line
 
 path_complete_input_rna_molecules, input_rna_to_length_dict = process_input_rna_molecules(sys.argv[1], dir_user)
 
@@ -240,6 +246,29 @@ if is_there_a_background:
     )
 
 path_str_or_nuc_motif_to_search_dict = {}
+
+# Check if there are sequences available for searching structural motifs
+for path_complete_input_rna_molecules_xxx in [path_complete_input_rna_molecules,
+                                              path_complete_input_rna_molecules_background]:
+    num_valid_seq_for_str_motifs = 0
+
+    # The background path can be empty
+    if path_complete_input_rna_molecules_xxx:
+        with open(path_complete_input_rna_molecules_xxx) as f:
+            for line in f:
+                if line.startswith('>'):
+                    # header = line.split()
+                    seq = f.readline()
+                    # print(header, len(seq))
+                    if len(seq) >= MIN_LEN_SEQ_FOR_STR_MOTIFS:
+                        num_valid_seq_for_str_motifs += 1
+                    f.readline()
+                    f.readline()
+
+        if num_valid_seq_for_str_motifs == 0:
+            # Disable it
+            search_struct_motifs = ''
+            break
 
 for str_or_nuc, dir_str_or_nuc_motifs in zip(
         [search_struct_motifs, search_seq_motifs],
@@ -314,7 +343,6 @@ with open(path_complete_input_rna_molecules) as f:
 str_or_nuc_to_motifs_to_seq_to_info_dict = {}
 str_or_nuc_to_motif_to_input_or_background_to_count_dict = {}
 
-
 seq_to_str_or_nuc_to_all_motifs_dict = {}
 
 for str_or_nuc, input_or_background_to_output_paths in str_or_nuc_to_input_or_background_to_output_paths_dict.items():
@@ -356,7 +384,8 @@ for str_or_nuc, input_or_background_to_output_paths in str_or_nuc_to_input_or_ba
                             if motif not in str_or_nuc_to_motifs_to_seq_to_info_dict[str_or_nuc]:
                                 str_or_nuc_to_motifs_to_seq_to_info_dict[str_or_nuc][motif] = {}
                             str_or_nuc_to_motifs_to_seq_to_info_dict[str_or_nuc][motif][seq] = [
-                                input_header_to_seq_and_bear_dict[seq][1 if str_or_nuc == 'str' else 0][start:(start + length)],
+                                input_header_to_seq_and_bear_dict[seq][1 if str_or_nuc == 'str' else 0][
+                                start:(start + length)],
                                 score,
                                 len(input_header_to_seq_and_bear_dict[seq][0]),
                                 start,
@@ -374,7 +403,6 @@ if not is_there_a_background:
                     str_or_nuc_to_motif_to_input_or_background_to_count_dict[str_or_nuc][motif]['background'] = [
                         int(minor), int(major)
                     ]
-
 
 # Read domain information
 motifs_to_domains_dict = {}
@@ -408,7 +436,6 @@ for str_or_nuc, motif_to_input_or_background_to_count_dict in str_or_nuc_to_moti
             motifs_to_domains_dict[motif] if motif in motifs_to_domains_dict else []
         ]
 
-
 input_str_or_nuc_to_to_output_paths_dict = {}
 for str_or_nuc, input_or_background_to_output_paths_dict in str_or_nuc_to_input_or_background_to_output_paths_dict.items():
     input_str_or_nuc_to_to_output_paths_dict[str_or_nuc] = input_or_background_to_output_paths_dict['input']
@@ -418,24 +445,23 @@ dir_user_download_motifs = os.path.join(dir_user, 'download/motifs')
 if not os.path.exists(dir_user_download_motifs):
     os.makedirs(dir_user_download_motifs)
 
-
-#print(seq_to_str_or_nuc_to_all_motifs_dict)
+# print(seq_to_str_or_nuc_to_all_motifs_dict)
 
 ################################################
-#seq_to_str_or_nuc_to_filt_motifs_dict = {}
+# seq_to_str_or_nuc_to_filt_motifs_dict = {}
 seq_to_sign_motifs_dict = {}
 
 for seq, str_or_nuc_to_all_motifs_dict in seq_to_str_or_nuc_to_all_motifs_dict.items():
-    #seq_to_str_or_nuc_to_filt_motifs_dict[seq] = {
+    # seq_to_str_or_nuc_to_filt_motifs_dict[seq] = {
     #    'str': [],
     #    'nuc': []
-    #}
+    # }
     seq_to_sign_motifs_dict[seq] = []
 
     for str_or_nuc, motif_list in str_or_nuc_to_all_motifs_dict.items():
         for motif in motif_list:
             if motif_results_dict[str_or_nuc][motif][0] > 0.5 and motif_results_dict[str_or_nuc][motif][2] < 0.05:
-                #seq_to_str_or_nuc_to_filt_motifs_dict[seq][str_or_nuc].append(motif)
+                # seq_to_str_or_nuc_to_filt_motifs_dict[seq][str_or_nuc].append(motif)
                 seq_to_sign_motifs_dict[seq].append(motif)
 ################################################
 
@@ -447,7 +473,6 @@ for str_or_nuc, motifs_to_seq_to_info_dict in str_or_nuc_to_motifs_to_seq_to_inf
 
                 for seq, info_list in seq_to_info.items():
                     fw.write('\t'.join([seq] + [str(x) for x in info_list]) + '\n')
-
 
 species_to_protein_to_link_dict = {}
 
@@ -463,7 +488,6 @@ with open(path_protein_links) as f:
 
         species_to_protein_to_link_dict[species][protein_name] = link.strip()
 
-
 reproduciblePeakFilename_to_RBP_CellLine_dict = {}
 
 path_eclip_cell_lines = os.path.join(dir_base, 'resources/eCLIP_CellLines.txt')
@@ -478,7 +502,6 @@ with open(path_eclip_cell_lines) as f:
 
         reproduciblePeakFilename_to_RBP_CellLine_dict[ReproduciblePeakFilename] = [RBP, CellLine]
 
-
 publication_to_Link_dict = {}
 
 path_eclip_cell_lines = os.path.join(dir_base, 'resources/publications_CLIP_data.txt')
@@ -492,8 +515,6 @@ with open(path_eclip_cell_lines) as f:
             publication_to_Link_dict[publication] = {}
 
         publication_to_Link_dict[publication] = link
-
-
 
 os.system("cp " + os.path.join(dir_base, 'public/examples/README.txt') + " " + dir_user_download)
 
