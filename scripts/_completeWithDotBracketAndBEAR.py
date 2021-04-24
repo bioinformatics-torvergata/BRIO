@@ -28,13 +28,14 @@ MIN_LEN_SEQ_FOR_STR_MOTIFS = 50
 outer = re.compile(" (.+)$")
 
 
-def run_search(dir_base, path_motif, path_input_seq_struct_bear, str_else_nuc, path_output):
+def run_search(dir_base, path_motif, path_input_seq_struct_bear, str_else_nuc, path_output, min_seq_len=3):
     subprocess.Popen(
         [
             'python3', os.path.join(dir_base, 'scripts', 'search2.0.py'),
             '--input', path_input_seq_struct_bear,
             '--motifs', path_motif,
-            '--output', path_output
+            '--output', path_output,
+            '--min-seq-len', str(min_seq_len)
         ] + ([] if str_else_nuc else ['--sequence']),
         # To get strings
         universal_newlines=True
@@ -289,9 +290,10 @@ for str_or_nuc, dir_str_or_nuc_motifs in zip(
 str_or_nuc_to_input_or_background_to_output_paths_dict = {}
 
 with open(os.path.join(dir_user, 'Out.log'), 'w') as fw:
-    for str_or_nuc, dir_str_or_nuc_motifs in zip(
+    for str_or_nuc, dir_str_or_nuc_motifs, min_seq_len_str_or_nuc in zip(
             [search_struct_motifs, search_seq_motifs],
             [dir_struct_motifs, dir_nucleotide_motifs],
+            [MIN_LEN_SEQ_FOR_STR_MOTIFS, 3]
     ):
         if str_or_nuc:
             fw.write('{} search\n'.format(str_or_nuc))
@@ -322,7 +324,8 @@ with open(os.path.join(dir_user, 'Out.log'), 'w') as fw:
                             path_motif,
                             path_complete_input_rna_molecules_xxx,
                             str_or_nuc == 'str',
-                            path_str_or_nuc_search_out
+                            path_str_or_nuc_search_out,
+                            min_seq_len_str_or_nuc
                         )
                         str_or_nuc_to_input_or_background_to_output_paths_dict[str_or_nuc][
                             input_or_background

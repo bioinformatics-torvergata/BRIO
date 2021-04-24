@@ -229,12 +229,14 @@ parser.add_argument('--motifs', '-m', dest='motifsFile', action='store',
                     help='target motifs file')
 parser.add_argument('--sequence', dest='seqFlag', action='store_true',
                     help='for running the search on sequences instead of structures')
+parser.add_argument('--min-seq-len', dest='minSeqLen', action='store', default=3,
+                    help='minimum sequence length to consider')
 parser.add_argument('--output', '-o', dest='output', action='store', default="stdout",
                     help='output file. Default: stdout')
 args = parser.parse_args()
 
 
-def parse_input(inputpath):
+def parse_input(inputpath, min_seq_len):
     seqs = {}
     seq_regex = re.compile("^[ACGTUacgtu]+$")
     db_regex = re.compile("^[\(\)\.]+$")
@@ -245,7 +247,7 @@ def parse_input(inputpath):
             if line.startswith(">"):
                 # new sequence
 
-                if counter > 0:
+                if counter > 0 and len(seq) >= min_seq_len:
                     # Save the previous sequence
                     seqs[name] = {'seq': seq, 'db': db, 'bear': bear, 'counter': counter}
 
@@ -264,7 +266,8 @@ def parse_input(inputpath):
                 bear += line
 
         # Last sequence
-        seqs[name] = {'seq': seq, 'db': db, 'bear': bear, 'counter': counter}
+        if counter > 0 and len(seq) >= min_seq_len:
+            seqs[name] = {'seq': seq, 'db': db, 'bear': bear, 'counter': counter}
 
     return seqs
 
@@ -406,7 +409,7 @@ def score(rna, pssm, motif_size, mbr_dict, seq_flag=False, match=3, mismatch=-2)
     return best_score, position
 
 
-seqs = parse_input(args.inputFile)
+seqs = parse_input(args.inputFile, int(args.minSeqLen))
 motifs = parse_motif(args.motifsFile, args.seqFlag)
 # print(seqs)
 # print(motifs)
