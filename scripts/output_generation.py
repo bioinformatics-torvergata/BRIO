@@ -119,7 +119,7 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
         if not table_empty:
             tab1 = open(path_tab_enriched_motifs_txt, "w")
             tab2 = open(path_tab_sequences_txt, "w")
-            tab2.write("Name\tStart\tEnd\tEnriched Motif\tType\tProtein\tExperiment\n")
+            tab2.write("Name\tMotif_ID\tStart\tEnd\tEnriched Motif\tType\tProtein\tExperiment\n")
 
             fw.write('Click here to download all your results\n')
             fw.write(
@@ -173,7 +173,7 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
                 '<th title="The organism in which the experiment was performed">Organism </th>\n<th>Download</th></tr>\n</thead>\n<tbody>\n')
 
             tab1.write(
-                "Type\tRegion\tCoverage\tp-value\tExperiment\tProtein\tDomains\tCell_lines\tExperiment_Info\tOrganism\n")
+                "Motif_ID\tType\tRegion\tCoverage\tp-value\tExperiment\tProtein\tDomains\tCell_lines\tExperiment_Info\tOrganism\n")
             for str_or_nuc in sequence_results_dict:
                 if str_or_nuc == "str":
                     tipo = "Structure"
@@ -259,9 +259,9 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
                     fw.write('<td><div><i>' + organism + ' </i></div></td>\n')
 
                     tab1.write(
-                        tipo + "\t" + region + "\t" + coverage + "\t" + p_value + "\t" + experiment + "\t" + protein + "\t" + domains.replace(
+                        logo_link.split("/")[-1][:-4]+"\t"+tipo + "\t" + region + "\t" + coverage + "\t" + p_value + "\t" + experiment + "\t" + protein + "\t" + domains.replace(
                             '<br/>', '') + "\t" + cell_lines + "\t" + info + "\t" + organism + "\n")
-                    # tab1.write(tipo+"\t"+region+"\t"+coverage+"\t"+p_value+"\t"+experiment+"\n")
+                    # tab1.write(motif+"\t"+tipo+"\t"+region+"\t"+coverage+"\t"+p_value+"\t"+experiment+"\n")
                     # fw.write('<td><div > prova </div></td>\n</tr>\n')
                     fw.write(
                         '<td><div ><a href="results/' + user + '/download/motifs/' + motif + '" Download><button class="btn"><i class="fa fa-download"></i>Download</button></a></div></td>\n</tr>\n')
@@ -318,7 +318,7 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
                     else:
                         fw.write('<td><div> ' + protein + ' </div></td>\n')
                     fw.write('<td>' + experiment + '</td>\n</tr>\n')
-                    tab2.write(single_input + "\t" + start + "\t" + end + "\t" + motif_string + "\t" + motif_type + "\t" + protein + "\t" + experiment + "\n")
+                    tab2.write(single_input + "\t" + m[:-4] + "\t" + start + "\t" + end + "\t" + motif_string + "\t" + motif_type + "\t" + protein + "\t" + experiment + "\n")
                 fw.write('</table></tbody>')
                 count += 1
 
