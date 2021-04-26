@@ -101,9 +101,23 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
                 total_file_dict[file] = {}
 
             total_file_dict[file][split_line[0]] = split_line[1:]
+    len_dict={}
+    count_len=0
+    input_file = open(path_complete_input_rna_molecules,'r')
+    line=input_file.readline()
+    while(line):
+        if line.startswith(">"):
+            nome=line[1:-1]
+            print(nome)
+            line=input_file.readline()
+            len_dict[nome]=len(line)
+            if len(line) < 50:
+                count_len+=1
+        line=input_file.readline()
+    input_file.close()
 
     with open(path_results_html, 'w') as fw:
-        
+
         fw.write("<button class='btn btn-primary mb-3' type='button' data-toggle='collapse' data-target='#collapseExample' aria-expanded='false' aria-controls='collapseExample'>")
         fw.write("show qBEAR legend </button>")
         fw.write("<div class='collapse' id='collapseExample'>")
@@ -125,8 +139,11 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
             fw.write(
                 '<a href="results/' + user + '/download.zip" download><button class="btn"><i class="fa fa-download"></i> Download</button></a>\n<br>\n')
 
+            if count_len > 0:
+                fw.write("<span style=\"background-color:#FA8072; padding:0.5em;\">"+str(count_len)+" sequence(s) shorter than 50 nucleotides was(were) not scanned for structure motifs </span> <br><br><br>")
+
             fw.write("</div>")
-            
+
             # fw.write(
             #    '<script>\n$(document).ready(function()\n{\n$("#sequence").tablesorter({\nsortList: [[4,0]],\nheaders: {0:{sorter:false},8:{sorter:false}}\n});\n}\n);\n</script>')
             fw.write(
@@ -283,10 +300,10 @@ def generate_output(dir_base, path_complete_input_rna_molecules,
                 fw.write('<td><i class="fa fa-plus" aria-hidden="true"></i></td>')
                 seq_number = sum(['nuc' in x for x in seq_to_sign_motifs_dict[single_input]])
                 str_number = len(seq_to_sign_motifs_dict[single_input]) - seq_number
-                for k in total_file_dict:
-                    if single_input in total_file_dict[k]:
-                        length = str(total_file_dict[k][single_input][2])
-
+                #for k in total_file_dict:
+                #    if single_input in total_file_dict[k]:
+                #        length = str(total_file_dict[k][single_input][2])
+                length=str(len_dict[single_input])
                 fw.write('<td><div style="width:250px">' + single_input + '</div></td>\n')
                 fw.write('<td><div style="width:170px">' + str(seq_number) + '</div></td>\n')
                 fw.write('<td><div style="width:170px">' + str(str_number) + '</div></td>\n')
