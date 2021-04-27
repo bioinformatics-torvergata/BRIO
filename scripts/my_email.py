@@ -3,7 +3,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 def send_email_with_code(user_email, code):
-    link_results = f'http://160.80.35.91:8080/waiting?uid={code}'
+    link_results = f'http://brio.bio.uniroma2.it/waiting?uid={code}'
 
     mail_content = "Dear BRIO's user,\nyou can find the result of your research at the following link:\n\n" + \
                    link_results + "\n\n\nBest regards,\nBRIO Team"
