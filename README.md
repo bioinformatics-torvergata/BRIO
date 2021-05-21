@@ -1,6 +1,10 @@
 # BRIO
 BRIO webserver - Helmer-Citterich Lab
 
+## Citation
+Guarracino A, Pepe G, Ballesio F, Adinolﬁ M, Pietrosanto M, Sangiovanni E, Vitale I, Ausiello G, Helmer-Citterich M.<br/>
+BRIO: a web server for RNA sequence and structure motif scan. Nucleic Acids Res (In Press).
+
 * To lunch the server in background: 
 	```
 	sudo forever start index.js 

@@ -34,7 +34,8 @@
                 and the corresponding secondary structure in the dot-bracket notation, in multiFASTA format.
                 Alternatively, the input upload is also available. Sequences submitted without the secondary structure
                 are folded with the RNAfold program (Lorenz et al., 2011). The RNA molecules have to be at least 3
-                nucleotides long, and shorter than 3000. To search for structure motifs, sequences in input are requested
+                nucleotides long, and shorter than 3000. To search for structure motifs, sequences in input are
+                requested
                 to be at least 50 nucleotides long. At most 100 sequences can be submitted at a time.<br><br>
                 Example of an input in multiFASTA format with dot-braket notations:<br><br>
                 <p class="seq_font">
@@ -79,8 +80,10 @@
 
             <fieldset id='Dataset of protein binding motifs'>
                 <legend class="text-secondary">Data collected</legend>
-                BRIO compares the input RNA molecules with the secondary structure and sequence motifs identified in <a href="/examples/proteins.html" target="_blank">186
-                RNA binding proteins</a> and <a href="/examples/domains.html" target="_blank">69 protein domains</a> analyzing 228 PAR-CLIP, eCLIP, HITS-CLIP experiments in human
+                BRIO compares the input RNA molecules with the secondary structure and sequence motifs identified in <a
+                        href="/examples/proteins.html" target="_blank">186
+                    RNA binding proteins</a> and <a href="/examples/domains.html" target="_blank">69 protein domains</a>
+                analyzing 228 PAR-CLIP, eCLIP, HITS-CLIP experiments in human
                 and mouse (Blin et al., 2014; Adinolfi et al., 2019).<br>
                 <div class="container-sm mt-3">
                     <table class="table">
@@ -110,33 +113,45 @@
 
             <fieldset id='output'>
                 <legend class="text-secondary">Output</legend>
-                This server compares each RNA sequence and secondary structure with the dataset of sequence and secondary structure motifs identified in the CLIP experiments selected by the user.<br>
+                This server compares each RNA sequence and secondary structure with the dataset of sequence and
+                secondary structure motifs identified in the CLIP experiments selected by the user.<br>
 
-                The output is composed of two tables, one focused on showing the results regarding the enriched motifs found in the entire input set, 
+                The output is composed of two tables, one focused on showing the results regarding the enriched motifs
+                found in the entire input set,
                 the other focused on showing the results for each single input sequence provided.<br>
                 Here follows an example of the Enriched Motifs results output Table: <br>
                 <img src="../../images/mot_output3.png" width="700"><br>
-                In the Enriched Motifs Table, by default the different motifs are sorted according to their associated Fisher’s Test p-value (see below for more details):<br>
+                In the Enriched Motifs Table, by default the different motifs are sorted according to their associated
+                Fisher’s Test p-value (see below for more details):<br>
 
                 In each column the user can see:
                 <div class="container">
                     <ol>
-                        <li>the logo of the secondary structure motif in the BEAR alphabet or, in case of sequence motifs, in the IUPAC nucleic acid notation (logos have been generated using WebLogo (Crooks et al., 2004);
+                        <li>the logo of the secondary structure motif in the BEAR alphabet or, in case of sequence
+                            motifs, in the IUPAC nucleic acid notation (logos have been generated using WebLogo (Crooks
+                            et al., 2004);
                         </li>
                         <li>the type of motif: structural or sequence motif;</li>
-                        <li>The type of mapping regions from gencode annotation of the RNAs datasets where the motif was originally found, includes UTR, CDS and the entire transcript for those involving RBPs known to act in the nucleus on unspliced RNAs;
+                        <li>The type of mapping regions from gencode annotation of the RNAs datasets where the motif was
+                            originally found, includes UTR, CDS and the entire transcript for those involving RBPs known
+                            to act in the nucleus on unspliced RNAs;
                         </li>
-                        <li>the coverage represents the number of input sequences in which the motif has a score higher than its associated threshold, divided by the number of query sequences;
+                        <li>the coverage represents the number of input sequences in which the motif has a score higher
+                            than its associated threshold, divided by the number of query sequences;
                         </li>
-                        <li>the Fisher’s Test p-value. The Fisher’s Test is applied to determine if a motif is enriched in the input RNA molecules with respect to a set of background RNAs;
+                        <li>the Fisher’s Test p-value. The Fisher’s Test is applied to determine if a motif is enriched
+                            in the input RNA molecules with respect to a set of background RNAs;
                         </li>
                         <li>The type of the CLIP experiment analyzed (parCLIP/eCLIP/hitsCLIP);</li>
                         <li>the protein associated to the RNA secondary structure motif in the CLIP experiment analyzed;
 
                         </li>
-                        <li>the protein domain associated to the RNA secondary structure motif (this information is not always available);
+                        <li>the protein domain associated to the RNA secondary structure motif (this information is not
+                            always available);
                         <li>the cellular line used in the eCLIP experiments;</li>
-                        <li>the link to the experiment page (for eCLIP data), or to the corresponding paper for PAR-CLIP and HITS data);</li>
+                        <li>the link to the experiment page (for eCLIP data), or to the corresponding paper for PAR-CLIP
+                            and HITS data);
+                        </li>
                         </li>
                         <li>the organism in which the experiment was performed (human or mouse);</li>
                         <li>last column reports the link for the download of the information on the motif described in
@@ -144,35 +159,37 @@
                         </li>
                     </ol>
                 </div>
-                The Table contents can be sorted in ascending or descending order by clicking on the appropriate arrow of the single columns.<br>
+                The Table contents can be sorted in ascending or descending order by clicking on the appropriate arrow
+                of the single columns.<br>
 
 
                 The sequence-focused table can be accessed by selecting the appropriate tab, at the top of the Table:
                 <img src="../../images/seq_output4.png" width="700"><br>
 
-                Each row of this Table represents one of the input sequence/s given by the user, the four columns contains the
-                name of the sequence, the number of sequence motifs found in that sequence, the number of structural motifs, 
+                Each row of this Table represents one of the input sequence/s given by the user, the four columns
+                contains the
+                name of the sequence, the number of sequence motifs found in that sequence, the number of structural
+                motifs,
                 and the total length of the input sequence.<br>
-                
-                For each sequence, by clicking on the “+” symbol, another table will appear, containing detailed informations 
+
+                For each sequence, by clicking on the “+” symbol, another table will appear, containing detailed
+                informations
                 about all the motifs found in that sequence:<br>
                 <img src="../../images/seq_output5.png" width="700"><br>
                 In particular, in this case, the columns will display the following information for each motif:<br>
                 <div class="container">
                     <ul>
                         <li>the start and the end position of the motif in the selected particular sequence;</li>
-                        <li>the representation of the motif in BEAR alphabet for structure motifs or in IUPAC nucleic acid notation for sequence motifs;</li>
+                        <li>the representation of the motif in BEAR alphabet for structure motifs or in IUPAC nucleic
+                            acid notation for sequence motifs;
+                        </li>
                         <li>the type of the motif: sequence or structural;</li>
-                        <li>the protein associated with the RNA secondary structure motif in the CLIP experiment analyzed by Adinolfi et al. (2019) and the type of the CLIP experiment.</li>
+                        <li>the protein associated with the RNA secondary structure motif in the CLIP experiment
+                            analyzed by Adinolfi et al. (2019) and the type of the CLIP experiment.
+                        </li>
                     </ul>
                 </div>
 
-               
-                
-                
-
-
-               
 
             </fieldset>
 
@@ -249,7 +266,24 @@
 
             </fieldset>
         </div>
+
         <div class="container doc_bubble rounded">
+            <fieldset id='references'>
+                <legend class="text-secondary">Citation</legend>
+                Please cite us if you make use of BRIO:
+                <br/>
+                <br/>
+                <blockquote style="margin-left: 1em">
+                    Guarracino A, Pepe G, Ballesio F, Adinolﬁ M, Pietrosanto M, Sangiovanni E, Vitale I, Ausiello G,
+                    Helmer-Citterich M.
+                    BRIO: a web server for RNA sequence and structure motif scan. Nucleic Acids Res (In Press).
+                </blockquote>
+            </fieldset>
+        </div>
+
+
+        <div class="container doc_bubble rounded">
+
             <fieldset id='references'>
                 <legend class="text-secondary">References</legend>
                 <ul>
@@ -261,7 +295,8 @@
                     </li>
 
                     <li>Blin, K., Dieterich, C., Wurmus, R., Rajewsky, N., Landthaler, M., & Akalin, A. (2014).
-                        DoRiNA 2.0—upgrading the doRiNA database of RNA interactions in post-transcriptional regulation. Nucleic Acids Research.
+                        DoRiNA 2.0—upgrading the doRiNA database of RNA interactions in post-transcriptional regulation.
+                        Nucleic Acids Research.
                     </li>
                     <li>Crooks, Gavin E., et al. "WebLogo: a sequence logo generator." Genome research 14.6 (2004):
                         1188-1190.
