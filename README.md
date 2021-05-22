@@ -1,35 +1,37 @@
 # BRIO
 BRIO webserver - Helmer-Citterich Lab
 
+http://brio.bio.uniroma2.it/
+
+
 ## Citation
 Guarracino A, Pepe G, Ballesio F, Adinolﬁ M, Pietrosanto M, Sangiovanni E, Vitale I, Ausiello G, Helmer-Citterich M.<br/>
 BRIO: a web server for RNA sequence and structure motif scan. Nucleic Acids Res (<i>in press</i>).
 
-* To lunch the server in background: 
-	```
-	sudo forever start index.js 
-	```
 	
-## Important things
+### Technical Notes
 
-* first time after git clone:
-	```
- 	npm cache clean --force
-	rm -rf node_modules package-lock.json
-	npm install
- 	```
+* To lunch the server in background: 
+```
+sudo forever start index.js 
+```
+ 
+* First time after git clone:
+```
+npm cache clean --force
+rm -rf node_modules package-lock.json
+npm install
+```
 
-
-* to change port:
-	```
-	change ports on index.js
-	first 1024 ports can only be assigned by sudoers
-	```
+* To change port:
+```
+change ports on index.js
+first 1024 ports can only be assigned by sudoers
+```
  	
+* Before to put online new things
 
-* before to put online new things
-  
-	```sudo killall -9 node```
+```sudo killall -9 node```
 
 
 * docs
