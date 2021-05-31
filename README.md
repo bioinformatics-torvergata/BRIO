@@ -6,7 +6,7 @@ http://brio.bio.uniroma2.it/
 
 ## Citation
 Guarracino A, Pepe G, Ballesio F, Adinolﬁ M, Pietrosanto M, Sangiovanni E, Vitale I, Ausiello G, Helmer-Citterich M.<br/>
-BRIO: a web server for RNA sequence and structure motif scan. Nucleic Acids Res (<i>in press</i>).
+BRIO: a web server for RNA sequence and structure motif scan. Nucleic Acids Res ([Link](https://doi.org/10.1093/nar/gkab400)).
 
 	
 ### Technical Notes
