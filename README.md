@@ -1,8 +1,8 @@
-# BRIO
-BRIO webserver - Helmer-Citterich Lab
+# BRIO webserver
 
 http://brio.bio.uniroma2.it/
 
+<img src="BRIO_GraphicalAbstract.png" alt="BRIO Graphical Abstract" style="max-height:500px;"/>
 
 ## Citation
 Guarracino A, Pepe G, Ballesio F, Adinolﬁ M, Pietrosanto M, Sangiovanni E, Vitale I, Ausiello G, Helmer-Citterich M.<br/>
